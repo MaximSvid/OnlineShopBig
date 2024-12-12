@@ -82,7 +82,7 @@ struct CreateAccount: View {
                 .shadow(radius: 3)
                 
                 NavigationLink(
-                    destination: AuthView()) {
+                    destination: AuthView(authViewModel: authViewModel)) {
                         Text("Don't have an account? ")
                             .foregroundStyle(.gray)
                         + Text("Sign up")
@@ -181,5 +181,5 @@ struct CreateAccount: View {
 }
 
 #Preview {
-    CreateAccount(authViewModel: AuthViewModel())
+    CreateAccount(authViewModel: AuthViewModel(userViewModel: UserViewModel()))
 }

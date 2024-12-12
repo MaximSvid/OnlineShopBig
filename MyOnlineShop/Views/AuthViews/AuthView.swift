@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AuthView: View {
     
-    @StateObject private var authViewModel = AuthViewModel()
+    @ObservedObject var authViewModel: AuthViewModel
    
     var body: some View {
         NavigationStack {
@@ -157,5 +157,5 @@ struct AuthView: View {
 }
 
 #Preview {
-    AuthView()
+    AuthView(authViewModel: AuthViewModel(userViewModel: UserViewModel()))
 }
