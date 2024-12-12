@@ -7,7 +7,9 @@
 
 import Foundation
 
-struct FireGuestUser: Codable, Identifiable {
+struct FireUser: Codable, Identifiable {
     var id: String
     var registeredOn: Date = Date()
+    
+    var name: String
 }

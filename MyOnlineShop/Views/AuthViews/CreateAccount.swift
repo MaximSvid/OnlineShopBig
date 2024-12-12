@@ -1,5 +1,5 @@
 //
-//  AuthView.swift
+//  RegisterView.swift
 //  MyOnlineShop
 //
 //  Created by Maxim Svidrak on 11.12.24.
@@ -7,15 +7,26 @@
 
 import SwiftUI
 
-struct AuthView: View {
-    
-    @StateObject private var authViewModel = AuthViewModel()
-   
+struct CreateAccount: View {
+    @ObservedObject var authViewModel: AuthViewModel
     var body: some View {
         NavigationStack {
             VStack {
                 
                 Spacer()
+                
+                TextField("Name", text: $authViewModel.userName)
+                    .textFieldStyle(.plain)
+                    .padding(.bottom, 8)
+                    .overlay(
+                        VStack {
+                            Spacer()
+                            Rectangle()
+                                .frame(height: 0.5)
+                                .foregroundStyle(.gray.opacity(0.4))
+                        }
+                    )
+                    .padding(.bottom)
                 
                 TextField("Email", text: $authViewModel.email)
                     .textFieldStyle(.plain)
@@ -28,7 +39,7 @@ struct AuthView: View {
                                 .foregroundStyle(.gray.opacity(0.4))
                         }
                     )
-                    .padding(.bottom, 50)
+                    .padding(.bottom)
                 
                 TextField("Password", text: $authViewModel.password)
                     .textFieldStyle(.plain)
@@ -41,7 +52,20 @@ struct AuthView: View {
                                 .foregroundStyle(.gray.opacity(0.4))
                         }
                     )
-                    .padding(.bottom, 50)
+                    .padding(.bottom)
+                
+                TextField("Password", text: $authViewModel.confirmPassword)
+                    .textFieldStyle(.plain)
+                    .padding(.bottom, 8)
+                    .overlay(
+                        VStack {
+                            Spacer()
+                            Rectangle()
+                                .frame(height: 0.5)
+                                .foregroundStyle(.gray.opacity(0.4))
+                        }
+                    )
+                    .padding(.bottom)
                 
                 
                 Button (action: {
@@ -58,7 +82,7 @@ struct AuthView: View {
                 .shadow(radius: 3)
                 
                 NavigationLink(
-                    destination: CreateAccount(authViewModel: authViewModel)) {
+                    destination: AuthView()) {
                         Text("Don't have an account? ")
                             .foregroundStyle(.gray)
                         + Text("Sign up")
@@ -157,5 +181,5 @@ struct AuthView: View {
 }
 
 #Preview {
-    AuthView()
+    CreateAccount(authViewModel: AuthViewModel())
 }
