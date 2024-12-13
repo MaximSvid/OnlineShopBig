@@ -24,6 +24,7 @@ struct AuthWrapper: View {
                 AuthView()
             }
         }
+        
         .environmentObject(authViewModel)
         .environmentObject(userViewModel)
         .onAppear {

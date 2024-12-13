@@ -79,7 +79,20 @@ class AuthViewModel: ObservableObject {
             withEmail: email,
             password: password
         ) { result , error in
-            if let error {
+            //bearbeitung fehler von Firebase
+            if let error = error as NSError? {
+                switch AuthErrorCode(rawValue: error.code) {
+                case .invalidEmail:
+                    self.errorMessage = "Invalid email address"
+                case .wrongPassword:
+                    self.errorMessage = "Incorrect password. Please try again."
+                case .networkError:
+                    self.errorMessage = "Network error. Please check your internet."
+                case .userNotFound:
+                    self.errorMessage = "No account found with this email."
+                default:
+                    self.errorMessage = "An unknown error occurred: \(error.localizedDescription)"
+                }
                 print("Error signing in: \(error.localizedDescription)")
                 return
             }
@@ -126,16 +139,31 @@ class AuthViewModel: ObservableObject {
     
     func logout() {
         do {
-            guard let userId = fb.userId
-            else {
-                print("No user id")
+            guard Auth.auth().currentUser != nil else {
+                print("No user is currently logged in")
                 return
             }
-            
-            try fb.auth.signOut()
+            try Auth.auth().signOut()
             self.user = nil
+            self.role = nil
+            print ("User successfully signed out")
         } catch {
-            print("Error signing out: \(error.localizedDescription)")
+            print ("Error signing out: \(error.localizedDescription)")
         }
     }
+    
+//    func logout() {
+//        do {
+//            guard fb.userId != nil
+//            else {
+//                print("No user id")
+//                return
+//            }
+//            
+//            try fb.auth.signOut()
+//            self.user = nil
+//        } catch {
+//            print("Error signing out: \(error.localizedDescription)")
+//        }
+//    }
 }

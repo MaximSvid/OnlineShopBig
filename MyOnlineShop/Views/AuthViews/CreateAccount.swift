@@ -67,6 +67,12 @@ struct CreateAccount: View {
                     )
                     .padding(.bottom)
                 
+                if let errorMessage = authViewModel.errorMessage {
+                    Text(errorMessage)
+                        .foregroundStyle(.red)
+                        .font(.caption)
+                }
+                
                 
                 Button (action: {
                     authViewModel.registerWithEmail(name: authViewModel.userName)

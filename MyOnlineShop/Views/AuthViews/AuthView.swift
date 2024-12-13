@@ -43,6 +43,12 @@ struct AuthView: View {
                     )
                     .padding(.bottom, 50)
                 
+                if let errorMessage = authViewModel.errorMessage {
+                    Text(errorMessage)
+                        .foregroundStyle(.red)
+                        .font(.caption)
+                }
+                
                 
                 Button (action: {
                     authViewModel.loginWithEmail()
