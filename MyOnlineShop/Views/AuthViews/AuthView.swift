@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AuthView: View {
     
-    @ObservedObject var authViewModel: AuthViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
    
     var body: some View {
         NavigationStack {
@@ -30,7 +30,7 @@ struct AuthView: View {
                     )
                     .padding(.bottom, 50)
                 
-                TextField("Password", text: $authViewModel.password)
+                SecureField("Password", text: $authViewModel.password)
                     .textFieldStyle(.plain)
                     .padding(.bottom, 8)
                     .overlay(
@@ -45,7 +45,7 @@ struct AuthView: View {
                 
                 
                 Button (action: {
-                    
+                    authViewModel.loginWithEmail()
                 }) {
                     Text("Login")
                         .font(.headline.bold())
@@ -58,7 +58,7 @@ struct AuthView: View {
                 .shadow(radius: 3)
                 
                 NavigationLink(
-                    destination: CreateAccount(authViewModel: authViewModel)) {
+                    destination: CreateAccount()) {
                         Text("Don't have an account? ")
                             .foregroundStyle(.gray)
                         + Text("Sign up")
@@ -157,5 +157,6 @@ struct AuthView: View {
 }
 
 #Preview {
-    AuthView(authViewModel: AuthViewModel(userViewModel: UserViewModel()))
+    AuthView()
+        .environmentObject(AuthViewModel(userViewModel: UserViewModel()))
 }

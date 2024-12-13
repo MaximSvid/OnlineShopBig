@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CreateAccount: View {
-    @ObservedObject var authViewModel: AuthViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
     var body: some View {
         NavigationStack {
             VStack {
@@ -41,7 +41,7 @@ struct CreateAccount: View {
                     )
                     .padding(.bottom)
                 
-                TextField("Password", text: $authViewModel.password)
+                SecureField("Password", text: $authViewModel.password)
                     .textFieldStyle(.plain)
                     .padding(.bottom, 8)
                     .overlay(
@@ -54,7 +54,7 @@ struct CreateAccount: View {
                     )
                     .padding(.bottom)
                 
-                TextField("Password", text: $authViewModel.confirmPassword)
+                SecureField("Confirm Passoword", text: $authViewModel.confirmPassword)
                     .textFieldStyle(.plain)
                     .padding(.bottom, 8)
                     .overlay(
@@ -69,9 +69,9 @@ struct CreateAccount: View {
                 
                 
                 Button (action: {
-                    
+                    authViewModel.registerWithEmail(name: authViewModel.userName)
                 }) {
-                    Text("Login")
+                    Text("Create Account")
                         .font(.headline.bold())
                         .frame(maxWidth: .infinity, maxHeight: 50)
                         .foregroundStyle(.white)
@@ -82,7 +82,7 @@ struct CreateAccount: View {
                 .shadow(radius: 3)
                 
                 NavigationLink(
-                    destination: AuthView(authViewModel: authViewModel)) {
+                    destination: AuthView()) {
                         Text("Don't have an account? ")
                             .foregroundStyle(.gray)
                         + Text("Sign up")
@@ -181,5 +181,6 @@ struct CreateAccount: View {
 }
 
 #Preview {
-    CreateAccount(authViewModel: AuthViewModel(userViewModel: UserViewModel()))
+    CreateAccount()
+        .environmentObject(AuthViewModel(userViewModel: UserViewModel()))
 }

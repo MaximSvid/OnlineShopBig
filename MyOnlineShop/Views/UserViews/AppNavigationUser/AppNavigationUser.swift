@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AppNavigationUser: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
     var body: some View {
         TabView {
             Tab("Home", systemImage: "house") {
@@ -22,4 +23,5 @@ struct AppNavigationUser: View {
 
 #Preview {
     AppNavigationUser()
+         .environmentObject(AuthViewModel(userViewModel: UserViewModel()))
 }

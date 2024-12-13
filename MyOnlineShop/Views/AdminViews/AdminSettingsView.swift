@@ -8,12 +8,21 @@
 import SwiftUI
 
 struct AdminSettingsView: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
     var body: some View {
-        Text("Settings View Admin")
-            .font(.title)
+        VStack {
+            Text("Admin Settings View")
+                .font(.title)
+            Button("Logout") {
+                authViewModel.logout()
+            }
+            .buttonStyle(.borderedProminent)
+        }
     }
 }
 
 #Preview {
     AdminSettingsView()
+        .environmentObject(AuthViewModel(userViewModel: UserViewModel()))
+    
 }

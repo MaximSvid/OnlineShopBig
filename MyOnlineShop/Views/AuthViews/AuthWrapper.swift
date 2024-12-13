@@ -13,7 +13,7 @@ struct AuthWrapper: View {
     
     
     var body: some View {
-        Group {
+        VStack {
             if let role = authViewModel.role {
                 if role == "admin" {
                     AppNavigationAdmin()
@@ -21,9 +21,11 @@ struct AuthWrapper: View {
                     AppNavigationUser()
                 }
             } else {
-                AuthView(authViewModel: authViewModel)
+                AuthView()
             }
         }
+        .environmentObject(authViewModel)
+        .environmentObject(userViewModel)
         .onAppear {
                 if authViewModel.user != nil {
                     Task {
@@ -37,4 +39,6 @@ struct AuthWrapper: View {
 
 #Preview {
     AuthWrapper()
+        .environmentObject(AuthViewModel(userViewModel: UserViewModel()))
+        
 }

@@ -25,7 +25,9 @@ class UserViewModel: ObservableObject {
         do {
             try await db.collection("users").document(id).setData([
                 "id": newUser.id,
-                "name": newUser.name
+                "name": newUser.name,
+                "registeredOn": Timestamp(date: newUser.registeredOn),
+                "role": "user"
             ])
             self.user = newUser
             print("User created \(newUser)")

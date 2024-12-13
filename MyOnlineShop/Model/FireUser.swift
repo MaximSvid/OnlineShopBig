@@ -12,10 +12,5 @@ struct FireUser: Codable, Identifiable {
     var registeredOn: Date = Date()
     
     var name: String
-    var role: UserRole = .user
 }
 
-enum UserRole: String, Codable {
-    case user
-    case admin
-}

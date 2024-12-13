@@ -28,7 +28,6 @@ class AuthViewModel: ObservableObject {
         
     }
     
-    
     private let fb = FirebaseService.shared
     private let db = Firestore.firestore()
     
@@ -70,6 +69,7 @@ class AuthViewModel: ObservableObject {
                     id: result.user.uid,
                     name: name
                 )
+                await self.checkUserRole()
             }
         }
     }
@@ -87,6 +87,10 @@ class AuthViewModel: ObservableObject {
             print("Signed in with \(result.user.uid)")
             
             self.user = result.user
+            
+            Task {
+                await self.checkUserRole() // prüfen user / admin
+            }
         }
     }
     
@@ -101,12 +105,14 @@ class AuthViewModel: ObservableObject {
             
             if let data = document.data(),
                 let userRole = data["role"] as? String {
-                
+                await MainActor.run {
                     self.role = userRole
-                
-                
+                }
+                    
             } else {
-                self.role = nil // when user keine role hast
+                await MainActor.run {
+                    self.role = nil // when user keine role hast
+                }
             }
             
         } catch {
@@ -118,13 +124,18 @@ class AuthViewModel: ObservableObject {
         user != nil
     }
     
-//    func logout() {
-//        do {
-//            guard let userId = FirebaseService.shared.userId else {
-//                print("No user id")
-//                return
-//            }
-//            let snippet
-//        }
-//    }
+    func logout() {
+        do {
+            guard let userId = fb.userId
+            else {
+                print("No user id")
+                return
+            }
+            
+            try fb.auth.signOut()
+            self.user = nil
+        } catch {
+            print("Error signing out: \(error.localizedDescription)")
+        }
+    }
 }
