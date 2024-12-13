@@ -152,18 +152,16 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-//    func logout() {
-//        do {
-//            guard fb.userId != nil
-//            else {
-//                print("No user id")
-//                return
-//            }
-//            
-//            try fb.auth.signOut()
-//            self.user = nil
-//        } catch {
-//            print("Error signing out: \(error.localizedDescription)")
-//        }
-//    }
+    func checkIfUserIsLoggenIn() {
+        if let currentUser = fb.auth.currentUser {
+            self.user = currentUser
+            Task {
+                await checkUserRole()
+            }
+        } else  {
+            self.user = nil
+            self.role = nil
+        }
+    }
+
 }

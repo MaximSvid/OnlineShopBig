@@ -37,9 +37,22 @@
 		15CB3CF32D086C0600B90978 /* MyOnlineShopUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyOnlineShopUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		1544B04E2D0C528100AD15DD /* Exceptions for "MyOnlineShop" folder in "MyOnlineShop" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 15CB3CD62D086C0400B90978 /* MyOnlineShop */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		15CB3CD92D086C0400B90978 /* MyOnlineShop */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				1544B04E2D0C528100AD15DD /* Exceptions for "MyOnlineShop" folder in "MyOnlineShop" target */,
+			);
 			path = MyOnlineShop;
 			sourceTree = "<group>";
 		};
@@ -223,6 +236,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				15CB3D972D088B0700B90978 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				1544B04C2D0C522F00AD15DD /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 15CB3CD82D086C0400B90978 /* Products */;
@@ -427,6 +441,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"MyOnlineShop/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MyOnlineShop/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -459,6 +474,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"MyOnlineShop/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MyOnlineShop/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -591,6 +607,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1544B04C2D0C522F00AD15DD /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
 		15CB3D972D088B0700B90978 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";

@@ -94,6 +94,12 @@ struct CreateAccount: View {
                         + Text("Sign up")
                             .foregroundStyle(.green)
                     }
+                //Felder beim Wechsel zu einer anderen Ansicht löschen
+                    .onDisappear {
+                        authViewModel.password = ""
+                        authViewModel.confirmPassword = ""
+                        authViewModel.errorMessage = ""
+                    }
                     .padding(.bottom, 30)
                 
                 HStack {

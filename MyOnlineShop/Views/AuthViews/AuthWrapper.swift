@@ -14,11 +14,17 @@ struct AuthWrapper: View {
     
     var body: some View {
         VStack {
-            if let role = authViewModel.role {
-                if role == "admin" {
-                    AppNavigationAdmin()
+            if authViewModel.userIsLoggedIn {
+                if let role = authViewModel.role {
+                    if role == "admin" {
+                        AppNavigationAdmin()
+                    } else {
+                        AppNavigationUser()
+                    }
                 } else {
-                    AppNavigationUser()
+                    //when ich manuel ein user aus Cloud Firestore lösche kommt user ohne role
+//                    ProgressView("Cook mal Firebase Authentication und Cloud Firestore (user auth = user cloudFirestore")
+                    ProgressView()
                 }
             } else {
                 AuthView()
@@ -28,11 +34,7 @@ struct AuthWrapper: View {
         .environmentObject(authViewModel)
         .environmentObject(userViewModel)
         .onAppear {
-                if authViewModel.user != nil {
-                    Task {
-                        await authViewModel.checkUserRole()
-                    }
-                }
+            authViewModel.checkIfUserIsLoggenIn()
             }
     }
     
