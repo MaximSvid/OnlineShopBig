@@ -12,24 +12,33 @@ import SwiftUI
 
 
 struct AddProductSheet: View {
-//    @ObservedObject var productViewModel: ProductViewModel
+    //    @ObservedObject var productViewModel: ProductViewModel
     @EnvironmentObject var productViewModel: ProductViewModel
     @State private var priceString: String = ""
     @State private var countString: String = ""
     @State private var ratingString: String = ""
+    @State private var toast: Toast? = nil
+
     
     var body: some View {
         ScrollView {
             VStack {
                 Text("Add Product")
                     .font(.title)
-                Text("Product Name")
-                    .font(.body)
-                TextField("Product Name", text: $productViewModel.title)
-                    .textFieldStyle(.roundedBorder)
+                    .padding([.top, .bottom])
                 
                 HStack {
-                    VStack {
+                    Text("Product Name")
+                        .font(.body)
+                    Spacer()
+                }
+                
+                TextField("Product Name", text: $productViewModel.title)
+                    .textFieldStyle(.roundedBorder)
+                    .padding(.bottom)
+                
+                HStack {
+                    VStack (alignment: .leading) {
                         Text("Price")
                             .font(.body)
                         TextField("Price", text: $priceString)
@@ -45,7 +54,7 @@ struct AddProductSheet: View {
                     
                     Spacer()
                     
-                    VStack {
+                    VStack (alignment: .leading) {
                         Text("Count Products")
                             .font(.body)
                         
@@ -60,26 +69,53 @@ struct AddProductSheet: View {
                     }
                     
                 }
-                Text ("Brand")
-                    .font(.body)
+                .padding(.bottom
+                )
+                HStack {
+                    Text ("Brand")
+                        .font(.body)
+                    Spacer()
+                }
+                
                 TextField("Brand", text: $productViewModel.brand)
                     .textFieldStyle(.roundedBorder)
+                    .padding(.bottom)
                 
-                Text("Description")
-                    .font(.body)
-                TextField("Description", text: $productViewModel.description)
-                    .textFieldStyle(.roundedBorder)
-                    .lineLimit(3)
+                HStack {
+                    Text("Description")
+                        .font(.body)
+                    Spacer()
+                }
                 
-                Text("Category")
-                    .font(.body)
+                TextEditor (text: $productViewModel.description)
+                    .frame(height: 100)
+                    .padding(.vertical, 8)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(.gray.opacity(0.4), lineWidth: 0.5)
+                    )
+                    .padding(.bottom)
+                
+                HStack {
+                    Text("Category")
+                        .font(.body)
+                    Spacer()
+                }
+                
+                
                 TextField("Category", text: $productViewModel.category)
                     .textFieldStyle(.roundedBorder)
+                    .padding(.bottom)
                 
                 HStack {
                     VStack {
-                        Text("Rating")
-                            .font(.body)
+                        
+                        HStack {
+                            Text("Rating")
+                                .font(.body)
+                            Spacer()
+                        }
+                        
                         TextField("Rating", text: $ratingString)
                             .onChange(of: ratingString) {
                                 productViewModel.rating = Double(Int(ratingString) ?? 0)
@@ -88,32 +124,40 @@ struct AddProductSheet: View {
                                 ratingString = String(productViewModel.rating)
                             }
                             .keyboardType(.numberPad)
+                            .textFieldStyle(.roundedBorder)
                     }
                     
                     Spacer()
                     VStack {
-                        Text("Visibility")
-                            .font(.body)
+                        HStack {
+                            Text("Visibility")
+                                .font(.body)
+                            Spacer()
+                        }
+                        
                         Toggle("Visibility", isOn: $productViewModel.isVisible)
                     }
                 }
                 
                 HStack {
-                    Text("Color")
-                        .font(.body)
-                    Picker("Select Color", selection: $productViewModel.selectedColor) {
-                        ForEach (ColorEnum.allCases) { color in
-                            HStack {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 16) { // Расстояние между цветами
+                            ForEach(ColorEnum.allCases, id: \.self) { color in
                                 Circle()
                                     .fill(color.color)
-                                    .frame(width: 20, height: 20)
-                                Text(color.rawValue)
+                                    .frame(width: 30, height: 30)
+                                    .overlay(
+                                        Circle()
+                                            .stroke(productViewModel.selectedColor == color ? Color.black : Color.clear, lineWidth: 0.3)
+                                    )
+                                    .onTapGesture {
+                                        productViewModel.selectedColor = color                                    }
                             }
-                            .tag(color)
                         }
+                        .padding(.horizontal, 8)
                     }
-                    .pickerStyle(.inline)
                 }
+                .padding([.top, .bottom])
                 
                 Button(action: {
                     
@@ -121,23 +165,39 @@ struct AddProductSheet: View {
                           !productViewModel.description.isEmpty,
                           !productViewModel.description.isEmpty,
                           !productViewModel.category.isEmpty else {
-                        print("Enter all fields")
+                        toast = Toast(style: .error, message: "Please fill all fields")
+//                        print("Enter all fields")
                         return
                     }
+                    productViewModel.addNewProduct()
+                    productViewModel.isAddSheetOpen.toggle()
                     
-                    productViewModel.addSheet.toggle()
+                    productViewModel.title = ""
+                    productViewModel.price = 0.0
+                    productViewModel.description = ""
+                    productViewModel.brand = ""
+                    productViewModel.countProduct = 0
+                    productViewModel.category = ""
+                    productViewModel.rating = 0.0
+                    productViewModel.isVisible = true
+                    priceString = ""
+                    countString = ""
+                    ratingString = ""
                 }) {
                     Text ("Add+")
-                        .font(.headline)
-                        .foregroundColor(.white)
+                        .font(.headline.bold())
+                        .frame(width: .infinity, height: 50)
+                        .frame(maxWidth: .infinity)
+                        .foregroundStyle(.white)
+                        .background(.blue.opacity(0.8))
+                        .clipShape(.buttonBorder)
                 }
-                .frame(maxWidth: .infinity, maxHeight: 50)
-                .clipShape(.buttonBorder)
                 .shadow(radius: 3)
             }
             .padding([.trailing, .leading])
+            .toastView(toast: $toast)
         }
-       
+        
     }
 }
 
@@ -145,3 +205,4 @@ struct AddProductSheet: View {
     AddProductSheet()
         .environmentObject(ProductViewModel())
 }
+

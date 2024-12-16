@@ -10,7 +10,7 @@ import FirebaseFirestore
 
 @MainActor
 class ProductViewModel: ObservableObject {
-    @Published var addSheet: Bool = false
+    @Published var isAddSheetOpen: Bool = false
     
     @Published var products: [Product] = []
     
@@ -23,8 +23,9 @@ class ProductViewModel: ObservableObject {
     @Published var image: String = ""
     @Published var rating: Double = 0.0
     @Published var isVisible: Bool = false
-    @Published var selectedColor: ColorEnum = .black
-//    @Published var selectedColor: String = ""
+    @Published var selectedColor: ColorEnum = .blue
+    
+    @Published var productErrorMessage: String = ""
     
     private let fb = FirebaseService.shared
     

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-    // не испльзую
 
 struct ToastView: View {
     
@@ -16,26 +15,32 @@ struct ToastView: View {
     var onCancelTapped: (() -> Void)
     
     var body: some View {
-        HStack (alignment: .center, spacing: 12) {
-            Image(systemName: style.iconFileName)
-                .foregroundStyle(style.themeColor)
-            Text(message)
-                .font(.caption)
-//                .foregroundStyle(style.themeColor)
-            
-            Spacer(minLength: 10)
-            
-            Button {
-                onCancelTapped()
-            } label: {
-                Image(systemName: "xmark")
-                    .foregroundStyle(style.themeColor)
-            }
+        HStack(alignment: .center, spacing: 12) {
+          Image(systemName: style.iconFileName)
+            .foregroundColor(style.themeColor)
+          Text(message)
+            .font(Font.caption)
+            .foregroundColor(.black)
+          
+          Spacer(minLength: 10)
+          
+          Button {
+            onCancelTapped()
+          } label: {
+            Image(systemName: "xmark")
+              .foregroundColor(style.themeColor)
+          }
         }
         .padding()
-        .clipShape(.buttonBorder)
-        
-    }
+        .frame(minWidth: 0, maxWidth: width)
+        .background(Color("toastBackground"))
+        .cornerRadius(8)
+        .overlay(
+          RoundedRectangle(cornerRadius: 8)
+            .opacity(0.6)
+        )
+        .padding(.horizontal, 16)
+      }
 }
 
 #Preview {

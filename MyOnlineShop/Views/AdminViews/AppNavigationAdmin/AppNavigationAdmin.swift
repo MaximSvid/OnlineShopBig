@@ -13,7 +13,7 @@ struct AppNavigationAdmin: View {
     var body: some View {
         TabView {
             Tab("Admin Home", systemImage: "house") {
-                AdminHomeView()
+                AdminHome()
             }
             Tab("Admin Settings", systemImage: "gear") {
                 AdminSettingsView()
@@ -23,6 +23,6 @@ struct AppNavigationAdmin: View {
 }
 
 #Preview {
-    AdminHomeView()
+    AdminHome()
         .environmentObject(AuthViewModel(userViewModel: UserViewModel()))
 }
