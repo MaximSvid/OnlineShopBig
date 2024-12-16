@@ -10,6 +10,7 @@ import SwiftUI
 struct AuthWrapper: View {
     @StateObject private var userViewModel = UserViewModel()
     @StateObject private var authViewModel = AuthViewModel(userViewModel: UserViewModel())
+    @StateObject private var productViewModel = ProductViewModel()
     
     
     var body: some View {
@@ -33,6 +34,7 @@ struct AuthWrapper: View {
         
         .environmentObject(authViewModel)
         .environmentObject(userViewModel)
+        .environmentObject(productViewModel)
         .onAppear {
             authViewModel.checkIfUserIsLoggenIn()
             }
@@ -43,5 +45,6 @@ struct AuthWrapper: View {
 #Preview {
     AuthWrapper()
         .environmentObject(AuthViewModel(userViewModel: UserViewModel()))
+        .environmentObject(ProductViewModel())
         
 }

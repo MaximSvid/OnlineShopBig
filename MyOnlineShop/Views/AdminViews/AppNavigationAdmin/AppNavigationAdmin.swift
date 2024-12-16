@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AppNavigationAdmin: View {
     @EnvironmentObject var authViewModel: AuthViewModel
+    
     var body: some View {
         TabView {
             Tab("Admin Home", systemImage: "house") {
