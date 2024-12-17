@@ -14,6 +14,7 @@ struct AdminHome: View {
         NavigationStack {
             ScrollView {
                 VStack {
+                    Category(categories: Categories.allCases)
                     
                     ProductGridAdmin(columns: columns)
 
@@ -28,7 +29,7 @@ struct AdminHome: View {
                 }
             }
             .onAppear {
-                productViewModel.listenToSnippets()//herunterladen products aus firebase
+                productViewModel.observeProducts()//herunterladen products aus Firebase
             }
             
         }

@@ -19,15 +19,23 @@ class ProductViewModel: ObservableObject {
     @Published var description: String = ""
     @Published var brand: String = ""
     @Published var countProduct: Int = 0
-    @Published var category: String = ""
+    @Published var category: Categories = .allProducts
     @Published var image: String = ""
     @Published var rating: Double = 0.0
     @Published var isVisible: Bool = true
     @Published var selectedColor: ColorEnum = .blue
+    @Published var isFavorite: Bool = false
     
     @Published var productErrorMessage: String = ""
     
+    @Published var selectedCategory: Categories? = nil
+    @Published var filteredProducts: [Product] = []
+    
     private let fb = FirebaseService.shared
+    
+    init() {
+        observeProducts()
+    }
     
     func addNewProduct() {
         let newProduct = Product(
@@ -36,11 +44,12 @@ class ProductViewModel: ObservableObject {
             description: description,
             brand: brand,
             countProduct: countProduct,
-            category: category,
+            category: category.rawValue,
             image: image,
             rating: rating,
             isVisible: isVisible,
-            selectedColor: selectedColor.rawValue
+            selectedColor: selectedColor.rawValue,
+            isFavorite: isFavorite
         )
         
         do {
@@ -51,9 +60,9 @@ class ProductViewModel: ObservableObject {
         }
     }
     
-    //ich möchte im realTime producte becommen aud Firebase
+    //ich möchte im realTime producte becommen aus Firebase
     
-    func listenToSnippets() {
+    func observeProducts() {
         fb.database.collection("products").addSnapshotListener { querySnapshot, error in
             if let error {
                 print("Error fetching products: \(error.localizedDescription)")
@@ -76,6 +85,7 @@ class ProductViewModel: ObservableObject {
                 }
             }
             print("Products loaded: \(self.products.count)")
+            self.showAllProducts()// am Anfang zeigen wir alle waren
         }
     }
     
@@ -91,19 +101,70 @@ class ProductViewModel: ObservableObject {
         }
     }
     
+    //visibility bei admin
     func toggleVisibility (for product: Product) {
         guard let productId = product.id else { return }
         
         fb.database.collection("products").document(productId).updateData([
             "isVisible": !product.isVisible
         ]) { error in
-            if let erroe = error {
+            if error != nil {
                 print("Error updating visibility: \(String(describing: error))")
             } else {
                 print("Visibility updated")
             }
         }
     }
+    
+    func showAllProducts() {
+        filteredProducts = products
+        print("Showing all products. Ohne filter")
+    }
+    
+    func filterProducts(by category: Categories) {
+        if category == .allProducts {
+            showAllProducts()
+        } else {
+            filteredProducts = products.filter { $0.category == category.rawValue }
+            print("Filtered products by category: \(category.rawValue)")
+        }
+    }
+    
+//    func filterByCategory() {
+//        if selectedCategory == .allProducts {
+//            filteredProducts = products
+//            print("Showing all products. Ohne filter")
+//        } else {
+//            filteredProducts = products.filter { $0.category == selectedCategory?.rawValue }
+//            print("Filtered products by category")
+//        }
+//    }
+    
+//    func loadProducts() {
+//        
+//        fb.database.collection("products") // Название вашей коллекции в Firestore
+//            .getDocuments { snapshot, error in
+//                if let error = error {
+//                    print("Error fetching products: \(error.localizedDescription)")
+//                    return
+//                }
+//                
+//                
+//                guard let documents = snapshot?.documents else {
+//                    print("No products found.")
+//                    return
+//                }
+//                
+//                // Преобразование данных из Firestore в массив `Product`
+//                self.products = documents.compactMap { document in
+//                    try? document.data(as: Product.self)
+//                }
+//                
+//                // После загрузки данных обновляем фильтрацию
+//                self.filterByCategory()
+//            }
+//    }
+    
 }
     
 

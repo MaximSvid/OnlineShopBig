@@ -18,7 +18,7 @@ struct AddProductSheet: View {
     @State private var countString: String = ""
     @State private var ratingString: String = ""
     @State private var toast: Toast? = nil
-
+    
     
     var body: some View {
         ScrollView {
@@ -103,9 +103,21 @@ struct AddProductSheet: View {
                 }
                 
                 
-                TextField("Category", text: $productViewModel.category)
-                    .textFieldStyle(.roundedBorder)
-                    .padding(.bottom)
+                //                TextField("Category", text: $productViewModel.category)
+                //                    .textFieldStyle(.roundedBorder)
+                //                    .padding(.bottom)
+                
+                Picker("Category", selection: $productViewModel.category) {
+                    ForEach(Categories.allCases, id: \.self) {category in
+                        Text(category.rawValue)
+                            .tag(category)
+                    }
+                }
+                .pickerStyle(.wheel)
+                .padding(.bottom)
+                
+                
+                
                 
                 HStack {
                     VStack {
@@ -129,12 +141,6 @@ struct AddProductSheet: View {
                     
                     Spacer()
                     VStack {
-                        HStack {
-                            Text("Visibility")
-                                .font(.body)
-                            Spacer()
-                        }
-                        
                         Toggle("Visibility", isOn: $productViewModel.isVisible)
                     }
                 }
@@ -163,8 +169,8 @@ struct AddProductSheet: View {
                     
                     guard !productViewModel.title.isEmpty,
                           !productViewModel.description.isEmpty,
-                          !productViewModel.description.isEmpty,
-                          !productViewModel.category.isEmpty else {
+                          !productViewModel.description.isEmpty
+                    else {
                         toast = Toast(style: .error, message: "Please fill all fields")
                         return
                     }
@@ -176,7 +182,6 @@ struct AddProductSheet: View {
                     productViewModel.description = ""
                     productViewModel.brand = ""
                     productViewModel.countProduct = 0
-                    productViewModel.category = ""
                     productViewModel.rating = 0.0
                     productViewModel.isVisible = true
                     priceString = ""
