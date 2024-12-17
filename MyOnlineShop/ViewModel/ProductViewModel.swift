@@ -25,6 +25,7 @@ class ProductViewModel: ObservableObject {
     @Published var isVisible: Bool = true
     @Published var selectedColor: ColorEnum = .blue
     @Published var isFavorite: Bool = false
+    @Published var action: Bool = false
     
     @Published var productErrorMessage: String = ""
     
@@ -49,7 +50,8 @@ class ProductViewModel: ObservableObject {
             rating: rating,
             isVisible: isVisible,
             selectedColor: selectedColor.rawValue,
-            isFavorite: isFavorite
+            isFavorite: isFavorite,
+            action: action
         )
         
         do {

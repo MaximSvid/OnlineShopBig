@@ -22,4 +22,6 @@ struct Product: Codable, Identifiable {
     var isVisible: Bool = true
     var selectedColor: String = ""
     var isFavorite: Bool = false
+    var action: Bool = false
+    
 }

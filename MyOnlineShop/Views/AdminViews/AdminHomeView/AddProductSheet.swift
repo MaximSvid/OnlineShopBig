@@ -102,13 +102,8 @@ struct AddProductSheet: View {
                     Spacer()
                 }
                 
-                
-                //                TextField("Category", text: $productViewModel.category)
-                //                    .textFieldStyle(.roundedBorder)
-                //                    .padding(.bottom)
-                
                 Picker("Category", selection: $productViewModel.category) {
-                    ForEach(Categories.allCases, id: \.self) {category in
+                    ForEach(Categories.allCases.filter {$0 != .allProducts && $0 != .action }, id: \.self) {category in
                         Text(category.rawValue)
                             .tag(category)
                     }
@@ -144,6 +139,8 @@ struct AddProductSheet: View {
                         Toggle("Visibility", isOn: $productViewModel.isVisible)
                     }
                 }
+                
+                Toggle("Action", isOn: $productViewModel.action)
                 
                 HStack {
                     ScrollView(.horizontal, showsIndicators: false) {
@@ -184,6 +181,7 @@ struct AddProductSheet: View {
                     productViewModel.countProduct = 0
                     productViewModel.rating = 0.0
                     productViewModel.isVisible = true
+                    productViewModel.action = false
                     priceString = ""
                     countString = ""
                     ratingString = ""

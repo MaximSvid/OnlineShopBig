@@ -7,6 +7,7 @@
 
 enum Categories: String, CaseIterable {
     case allProducts
+    case action
     case livingRoom
     case bedroom
     case kitchen
@@ -18,7 +19,8 @@ enum Categories: String, CaseIterable {
     
     var icon: String {
         switch self {
-        case .allProducts: return "box"
+        case .allProducts: return "list.bullet.clipboard"
+        case .action: return "tag"
         case .livingRoom: return "sofa"
         case .bedroom: return "bed.double"
         case .kitchen: return "cup.and.saucer"
@@ -33,6 +35,7 @@ enum Categories: String, CaseIterable {
     var title: String {
         switch self {
         case .allProducts: return "All Products"
+        case .action : return "Action"
         case .livingRoom: return "Living Room"
         case .bedroom: return "Bedroom"
         case .kitchen: return "Kitchen"
