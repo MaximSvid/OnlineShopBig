@@ -36,8 +36,9 @@ struct Category: View {
                         )
                         .shadow(radius: 3)
                         .onTapGesture {
-                            productViewModel.selectedCategory = category
+//                            productViewModel.selectedCategory = category
                             productViewModel.filterProducts(by: category)
+//                            productViewModel.filterByAction()
                             
                         }
                     }

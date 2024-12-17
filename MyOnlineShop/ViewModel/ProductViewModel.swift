@@ -124,48 +124,35 @@ class ProductViewModel: ObservableObject {
     }
     
     func filterProducts(by category: Categories) {
-        if category == .allProducts {
+        switch category {
+        case .allProducts:
+            // Показать все продукты
             showAllProducts()
-        } else {
+        case .action:
+            // Фильтрация по признаку action
+            filteredProducts = products.filter { $0.action }
+            print("Filtered products where action is true: \(filteredProducts.count)")
+        default:
+            // Фильтрация по категории
             filteredProducts = products.filter { $0.category == category.rawValue }
             print("Filtered products by category: \(category.rawValue)")
         }
     }
     
-//    func filterByCategory() {
-//        if selectedCategory == .allProducts {
-//            filteredProducts = products
-//            print("Showing all products. Ohne filter")
+//    func filterProducts(by category: Categories) {
+//        if category == .allProducts {
+//            showAllProducts()
 //        } else {
-//            filteredProducts = products.filter { $0.category == selectedCategory?.rawValue }
-//            print("Filtered products by category")
+//            filteredProducts = products.filter { $0.category == category.rawValue }
+//            print("Filtered products by category: \(category.rawValue)")
 //        }
 //    }
-    
-//    func loadProducts() {
-//        
-//        fb.database.collection("products") // Название вашей коллекции в Firestore
-//            .getDocuments { snapshot, error in
-//                if let error = error {
-//                    print("Error fetching products: \(error.localizedDescription)")
-//                    return
-//                }
-//                
-//                
-//                guard let documents = snapshot?.documents else {
-//                    print("No products found.")
-//                    return
-//                }
-//                
-//                // Преобразование данных из Firestore в массив `Product`
-//                self.products = documents.compactMap { document in
-//                    try? document.data(as: Product.self)
-//                }
-//                
-//                // После загрузки данных обновляем фильтрацию
-//                self.filterByCategory()
-//            }
+//    
+//    func filterByAction () {
+//        filteredProducts = products.filter {$0.action}
+//        print("Filtered products where action is true: \(filteredProducts.count)")
 //    }
+    
     
 }
     
