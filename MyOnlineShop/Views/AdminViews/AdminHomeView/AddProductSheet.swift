@@ -141,7 +141,7 @@ struct AddProductSheet: View {
                 
                 HStack {
                     ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 16) { // Расстояние между цветами
+                        HStack(spacing: 16) {
                             ForEach(ColorEnum.allCases, id: \.self) { color in
                                 Circle()
                                     .fill(color.color)

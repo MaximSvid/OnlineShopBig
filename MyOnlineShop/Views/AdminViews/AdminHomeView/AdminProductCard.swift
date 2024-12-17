@@ -24,15 +24,18 @@ struct AdminProductCard: View {
                     HStack {
                         Text(product.title)
                             .font(.caption)
+                            .foregroundStyle(product.isVisible ? .black : .gray) // isVisible color
                         
                         Spacer()
                         
                         Image(systemName: "star.fill")
-                            .foregroundStyle(.yellow)
+                            .foregroundStyle(product.isVisible ? .yellow : .gray)
                             .font(.caption2)
+
                         
                         Text(String(format: "%.1f", product.rating))
                             .font(.caption2)
+                            .foregroundStyle(product.isVisible ? .black : .gray)
                     }
                     .padding(.trailing, 4)
                     .padding(.leading, 4)
@@ -40,6 +43,7 @@ struct AdminProductCard: View {
                     HStack {
                         Text(product.brand)
                             .font(.caption)
+                            .foregroundStyle(product.isVisible ? .black : .gray)
                         
                         Spacer()
                     }
@@ -49,6 +53,7 @@ struct AdminProductCard: View {
                     HStack {
                         Text(String(format: "€%.2f", product.price))
                             .font(.headline)
+                            .foregroundStyle(product.isVisible ? .black : .gray)
                         Spacer()
                     }
                     .padding(.trailing, 4)
@@ -60,10 +65,10 @@ struct AdminProductCard: View {
             
             HStack {
                 Button(action: {
-//                    product.isVisible.toggle()
+                    productViewModel.toggleVisibility(for: product)
                 }) {
-                    Image(systemName: product.isVisible ? "eye.slash" : "eye")
-                        .foregroundStyle(.blue)
+                    Image(systemName: product.isVisible ? "eye" : "eye.slash")
+                        .foregroundStyle(product.isVisible ? .blue : .gray)
                         .padding(8)
                 }
                 .background(Color.white.opacity(0.7))
@@ -76,7 +81,7 @@ struct AdminProductCard: View {
                     productViewModel.deleteProduct(product: product)
                 }) {
                     Image(systemName: "trash")
-                        .foregroundStyle(.red)
+                        .foregroundStyle(product.isVisible ? .red : .gray)
                         .padding(8)
                 }
                 .background(Color.white.opacity(0.7))

@@ -31,8 +31,8 @@ struct ProductGridAdmin: View {
                 .shadow(radius: 3)
             }
             
-            LazyVGrid(columns: columns) {
-                ForEach(productViewModel.products) { product in
+            LazyVGrid(columns: columns, spacing: 10) {
+                ForEach(productViewModel.products.sorted { $0.isVisible && !$1.isVisible }) { product in //sort: if !isVisble geht zum ende des Lists
                     NavigationLink (destination: DetailHomeAdmin()) {
                         AdminProductCard(product: product)
                             

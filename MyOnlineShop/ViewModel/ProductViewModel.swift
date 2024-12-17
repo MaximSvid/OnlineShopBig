@@ -22,7 +22,7 @@ class ProductViewModel: ObservableObject {
     @Published var category: String = ""
     @Published var image: String = ""
     @Published var rating: Double = 0.0
-    @Published var isVisible: Bool = false
+    @Published var isVisible: Bool = true
     @Published var selectedColor: ColorEnum = .blue
     
     @Published var productErrorMessage: String = ""
@@ -90,4 +90,20 @@ class ProductViewModel: ObservableObject {
             print("Product deleted")
         }
     }
+    
+    func toggleVisibility (for product: Product) {
+        guard let productId = product.id else { return }
+        
+        fb.database.collection("products").document(productId).updateData([
+            "isVisible": !product.isVisible
+        ]) { error in
+            if let erroe = error {
+                print("Error updating visibility: \(String(describing: error))")
+            } else {
+                print("Visibility updated")
+            }
+        }
+    }
 }
+    
+
