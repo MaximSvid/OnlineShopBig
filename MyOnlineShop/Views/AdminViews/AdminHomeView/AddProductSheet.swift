@@ -166,7 +166,6 @@ struct AddProductSheet: View {
                           !productViewModel.description.isEmpty,
                           !productViewModel.category.isEmpty else {
                         toast = Toast(style: .error, message: "Please fill all fields")
-//                        print("Enter all fields")
                         return
                     }
                     productViewModel.addNewProduct()

@@ -56,7 +56,7 @@ class ProductViewModel: ObservableObject {
     func listenToSnippets() {
         fb.database.collection("products").addSnapshotListener { querySnapshot, error in
             if let error {
-                print(error.localizedDescription)
+                print("Error fetching products: \(error.localizedDescription)")
                 return
             }
             guard let documents = querySnapshot?.documents else {
@@ -66,33 +66,28 @@ class ProductViewModel: ObservableObject {
             self.products = documents.compactMap { document -> Product? in
                 
                 do {
-                    return try document.data(as: Product.self)
+                    let product = try document.data(as: Product.self)
+                    print("Loaded product: \(product)")
+                    return product
+                    
                 } catch {
                     print("Error decoding document: \(error)")
                     return nil
                 }
             }
+            print("Products loaded: \(self.products.count)")
         }
     }
     
-//    func listenToSnippets() {
-//        fb.database.collection( "products").addSnapshotListener { querySnapshot, error in
-//            if let error {
-//                print(error.localizedDescription)
-//                return
-//            }
-//            guard let documents = querySnapshot?.documents else {
-//                print("No documents")
-//                return
-//            }
-//            let products = documents.compactMap { snapShot in
-//                return try? snapShot.data(as: Product.self)
-//            }
-//        }
-//    }
-    
-    
-    
-    
-    
+    func deleteProduct(product: Product) {
+        guard let productId = product.id else { return }
+        
+        fb.database.collection("products").document(productId).delete() { error in
+            if let error {
+                print("Error deleting product: \(error.localizedDescription)")
+                return
+            }
+            print("Product deleted")
+        }
+    }
 }

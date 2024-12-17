@@ -9,26 +9,14 @@ import SwiftUI
 
 struct AdminHome: View {
     @EnvironmentObject var productViewModel: ProductViewModel
+    let columns = [GridItem(.flexible()), GridItem(.flexible())]
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack {
-                    HStack {
-                        Text("Products")
-                            .font(.headline)
-                        Spacer()
-                        
-                        Button(action: {
-                            productViewModel.isAddSheetOpen.toggle()
-                        }) {
-                            Text("Add+")
-                                .font(.headline)
-                                .foregroundStyle(.white)
-                                .background(.blue.opacity(0.8))
-                                .clipShape(.buttonBorder)
-                        }
-                        .shadow(radius: 3)
-                    }
+                    
+                    ProductGridAdmin(columns: columns)
+
                     Spacer()
                 }
                 .navigationTitle("Admin Home View")
@@ -38,6 +26,9 @@ struct AdminHome: View {
                         .presentationDragIndicator(.visible)
                         
                 }
+            }
+            .onAppear {
+                productViewModel.listenToSnippets()//herunterladen products aus firebase
             }
             
         }

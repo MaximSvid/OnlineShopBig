@@ -19,7 +19,6 @@ struct Product: Codable, Identifiable {
     var category: String = ""
     var image: String = ""
     var rating: Double = 0.0
-    var isVisible: Bool = false
+    var isVisible: Bool = true
     var selectedColor: String = ""
-//    var delivery: String = ""
 }
