@@ -23,8 +23,7 @@ struct AuthWrapper: View {
                         AppNavigationUser()
                     }
                 } else {
-                    //when ich manuel ein user aus Cloud Firestore lösche kommt user ohne role
-//                    ProgressView("Cook mal Firebase Authentication und Cloud Firestore (user auth = user cloudFirestore")
+
                     ProgressView()
                 }
             } else {

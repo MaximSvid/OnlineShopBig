@@ -7,8 +7,8 @@
 
 protocol ProductRepositoryAdmin {
     func addNewProduct(product: Product) throws
-    func observeProducts()
-    func deleteProduct(product: Product)
-    func toggleVisibility(for product: Product)
-    func showAllProducts()
+    func observeProducts(completion: @escaping (Result<[Product], Error>) -> Void)
+    func deleteProduct(productId: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func toggleVisibility(for productId: String, isVisible: Bool, completion: @escaping (Result<Void, Error>) -> Void)
+    
 }

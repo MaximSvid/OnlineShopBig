@@ -20,7 +20,7 @@ class ProductViewModel: ObservableObject {
     @Published var description: String = ""
     @Published var brand: String = ""
     @Published var countProduct: Int = 0
-    @Published var category: Categories = .allProducts
+    @Published var category: Categories = .livingRoom
     @Published var image: String = ""
     @Published var rating: Double = 0.0
     @Published var isVisible: Bool = true
@@ -63,7 +63,6 @@ class ProductViewModel: ObservableObject {
         do {
             try productRepository.addNewProduct(product: newProduct)
             print("Product added successfully: \(newProduct)")
-//            fb.database.collection("products").addDocument(from: newProduct)
         } catch {
             print("Error adding new product: \(error)")
         }
@@ -72,63 +71,50 @@ class ProductViewModel: ObservableObject {
     //ich möchte im realTime producte becommen aus Firebase
     
     func observeProducts() {
-        fb.database.collection("products").addSnapshotListener { querySnapshot, error in
-            if let error {
-                print("Error fetching products: \(error.localizedDescription)")
-                return
-            }
-            guard let documents = querySnapshot?.documents else {
-                print("No documents")
-                return
-            }
-            self.products = documents.compactMap { document -> Product? in
-                
-                do {
-                    let product = try document.data(as: Product.self)
-                    print("Loaded product: \(product)")
-                    return product
-                    
-                } catch {
-                    print("Error decoding document: \(error)")
-                    return nil
+            productRepository.observeProducts { result in
+                switch result {
+                case .success(let products):
+                        self.products = products
+                        self.showAllProducts()
+                case .failure(let error):
+                    print("Error observing products: \(error.localizedDescription)")
                 }
             }
-            print("Products loaded: \(self.products.count)")
-            self.showAllProducts()// am Anfang zeigen wir alle waren
         }
-    }
-    
-    func deleteProduct(product: Product) {
-        guard let productId = product.id else { return }
-        
-        fb.database.collection("products").document(productId).delete() { error in
-            if let error {
-                print("Error deleting product: \(error.localizedDescription)")
-                return
-            }
-            print("Product deleted")
-        }
-    }
-    
-    //visibility bei admin
-    func toggleVisibility (for product: Product) {
-        guard let productId = product.id else { return }
-        
-        fb.database.collection("products").document(productId).updateData([
-            "isVisible": !product.isVisible
-        ]) { error in
-            if error != nil {
-                print("Error updating visibility: \(String(describing: error))")
-            } else {
-                print("Visibility updated")
-            }
-        }
-    }
     
     func showAllProducts() {
         filteredProducts = products
         print("Showing all products. Ohne filter")
     }
+    
+    func deleteProduct(product: Product) {
+        guard let productId = product.id else {
+            productErrorMessage = "Product ID is missing"
+            return
+        }
+    }
+    
+    //visibility bei admin
+    func toggleVisibility(for product: Product) {
+            guard let productId = product.id else {
+                return
+            }
+            
+            let newVisibility = !product.isVisible
+            productRepository.toggleVisibility(for: productId, isVisible: newVisibility) { result in
+                switch result {
+                case .success:
+                        if let index = self.products.firstIndex(where: { $0.id == productId }) {
+                            self.products[index].isVisible = newVisibility
+                        }
+                    print("Visibility updated successfully")
+                case .failure(let error):
+                    print("Error updating visibility: \(error.localizedDescription)")
+                }
+            }
+        }
+    
+    
     
     func filterProducts(by category: Categories) {
         switch category {
