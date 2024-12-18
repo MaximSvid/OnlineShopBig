@@ -16,10 +16,11 @@ class UserViewModel: ObservableObject {
     
     private let db = Firestore.firestore()
     
-    func createUser(id: String, name: String) async {
+    func createUser(id: String, name: String, role: String) async {
         let newUser = FireUser(
             id: id,
-            name: name
+            name: name,
+            role: role
         )
         
         do {
@@ -36,7 +37,7 @@ class UserViewModel: ObservableObject {
         }
     }
     
-    func fetchUser(id: String, name: String) async {
+    func fetchUser(id: String, name: String, role: String) async {
         do {
             let document = try await
             db.collection("users").document(id).getDocument()
@@ -47,7 +48,8 @@ class UserViewModel: ObservableObject {
                 let loadedUser = FireUser(
                     id: id,
                     registeredOn: registeredOn.dateValue(),
-                    name: name
+                    name: name,
+                    role: role
                 )
                 
                 self.user = loadedUser

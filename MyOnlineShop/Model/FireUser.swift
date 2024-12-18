@@ -6,11 +6,13 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 struct FireUser: Codable, Identifiable {
     var id: String
     var registeredOn: Date = Date()
     
     var name: String
+    var role: String
 }
 

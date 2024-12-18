@@ -28,110 +28,80 @@ class AuthViewModel: ObservableObject {
         
     }
     
+    private let userRepository = UserRepositoryImplementation()
+    
     private let fb = FirebaseService.shared
     private let db = Firestore.firestore()
     
     func registerWithEmail(name: String) {
-        guard !email.isEmpty, !password.isEmpty, !confirmPassword.isEmpty, !userName.isEmpty else {
-            errorMessage = "Please fill all fields"
-            return
-        }
-        
-        guard password == confirmPassword else {
-            errorMessage = "Passwords don't match"
-            return
-        }
-        
-        guard password.count >= 6 else {
-            errorMessage = "Password must be at least 6 characters long"
-            return
-        }
-        errorMessage = nil
-        
-        fb.auth.createUser(withEmail: email, password: password) {
-            result,
-            error in
-            if let error {
-                print("Error signing up with email: \(error.localizedDescription)")
+            guard !email.isEmpty, !password.isEmpty, !confirmPassword.isEmpty, !userName.isEmpty else {
+                errorMessage = "Please fill all fields"
                 return
             }
-            
-            guard let result else { return }
-            print("User signed up with email: \(result.user.uid)")
-            
-            self.user = result.user
+
+            guard password == confirmPassword else {
+                errorMessage = "Passwords don't match"
+                return
+            }
+
+            guard password.count >= 6 else {
+                errorMessage = "Password must be at least 6 characters long"
+                return
+            }
+
+            errorMessage = nil
+
             Task {
-                await self.userViewModel.createUser(
-                    id: result.user.uid,
-                    name: name
-                )
-                await self.userViewModel.fetchUser(
-                    id: result.user.uid,
-                    name: name
-                )
-                await self.checkUserRole()
+                do {
+                    try await userRepository.registerWithEmail(name: userName, email: email, password: password)
+                    self.user =  fb.auth.currentUser
+                    await self.userViewModel.createUser(id: self.user?.uid ?? "", name: name, role: role ?? "user")
+                    await self.userViewModel.fetchUser(id: self.user?.uid ?? "", name: name, role: role ?? "user")
+                    await checkUserRole()
+                } catch {
+                    errorMessage = "Registration failed: \(error.localizedDescription)"
+                }
             }
         }
-    }
     
     func loginWithEmail() {
-        fb.auth.signIn(
-            withEmail: email,
-            password: password
-        ) { result , error in
-            //bearbeitung fehler von Firebase
-            if let error = error as NSError? {
-                switch AuthErrorCode(rawValue: error.code) {
-                case .invalidEmail:
-                    self.errorMessage = "Invalid email address"
-                case .wrongPassword:
-                    self.errorMessage = "Incorrect password. Please try again."
-                case .networkError:
-                    self.errorMessage = "Network error. Please check your internet."
-                case .userNotFound:
-                    self.errorMessage = "No account found with this email."
-                default:
-                    self.errorMessage = "An unknown error occurred: \(error.localizedDescription)"
-                }
-                print("Error signing in: \(error.localizedDescription)")
-                return
-            }
-            guard let result else { return }
-            print("Signed in with \(result.user.uid)")
-            
-            self.user = result.user
-            
             Task {
-                await self.checkUserRole() // prüfen user / admin
+                do {
+                    try await userRepository.loginWithEmail(email: email, password: password)
+                    self.user = fb.auth.currentUser
+                    await checkUserRole()
+                } catch let error as NSError {
+                    switch AuthErrorCode(rawValue: error.code) {
+                    case .invalidEmail:
+                        errorMessage = "Invalid email address"
+                    case .wrongPassword:
+                        errorMessage = "Incorrect password. Please try again."
+                    case .networkError:
+                        errorMessage = "Network error. Please check your internet."
+                    case .userNotFound:
+                        errorMessage = "No account found with this email."
+                    default:
+                        errorMessage = "An unknown error occurred: \(error.localizedDescription)"
+                    }
+                }
             }
         }
-    }
     
     //func überpruft wer macht login user oder admin
     func checkUserRole() async {
-        guard let uid = user?.uid else {
-            print("User is not logged in")
-            return
-        }
-        do {
-            let document = try await db.collection("users").document(uid).getDocument()
-            
-            if let data = document.data(),
-                let userRole = data["role"] as? String {
-                await MainActor.run {
+            do {
+                try await userRepository.checkUserRole()
+                guard let currentUser = FirebaseService.shared.auth.currentUser else { return }
+                let document = try await Firestore.firestore().collection("users").document(currentUser.uid).getDocument()
+                if let data = document.data(), let userRole = data["role"] as? String {
                     self.role = userRole
+                } else {
+                    self.role = nil
                 }
-                    
-            } else {
-                await MainActor.run {
-                    self.role = nil // when user keine role hast
-                }
+            } catch {
+                print("Error fetching user role: \(error.localizedDescription)")
             }
-            
-        } catch {
-            print("Error fetching user role: \(error.localizedDescription)")
         }
-    }
     
     var userIsLoggedIn: Bool {
         user != nil
@@ -139,29 +109,29 @@ class AuthViewModel: ObservableObject {
     
     func logout() {
         do {
-            guard Auth.auth().currentUser != nil else {
-                print("No user is currently logged in")
-                return
-            }
-            try Auth.auth().signOut()
+            
+            try userRepository.logout()
             self.user = nil
             self.role = nil
             print ("User successfully signed out")
         } catch {
-            print ("Error signing out: \(error.localizedDescription)")
+            print("Error signing out: \(error.localizedDescription)")
         }
     }
     
+
+    
     func checkIfUserIsLoggenIn() {
-        if let currentUser = fb.auth.currentUser {
-            self.user = currentUser
             Task {
-                await checkUserRole()
+                do {
+                    try await userRepository.checkIfUserIsLoggedIn()
+                    self.user = FirebaseService.shared.auth.currentUser
+                    await checkUserRole()
+                } catch {
+                    self.user = nil
+                    self.role = nil
+                }
             }
-        } else  {
-            self.user = nil
-            self.role = nil
         }
-    }
 
 }
