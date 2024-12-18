@@ -35,7 +35,11 @@ class ProductViewModel: ObservableObject {
     
     private let fb = FirebaseService.shared
     
-    init() {
+    private let productRepository: ProductRepositoryAdmin
+    
+    init(productRepository: ProductRepositoryAdmin = ProductRepositoryImplementation()) {
+        
+        self.productRepository = productRepository //dependensy injection
         observeProducts()
     }
     
@@ -57,8 +61,9 @@ class ProductViewModel: ObservableObject {
         )
         
         do {
-            try
-            fb.database.collection("products").addDocument(from: newProduct)
+            try productRepository.addNewProduct(product: newProduct)
+            print("Product added successfully: \(newProduct)")
+//            fb.database.collection("products").addDocument(from: newProduct)
         } catch {
             print("Error adding new product: \(error)")
         }
