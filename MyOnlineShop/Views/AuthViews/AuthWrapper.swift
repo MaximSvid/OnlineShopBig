@@ -34,7 +34,7 @@ struct AuthWrapper: View {
         
         .environmentObject(authViewModel)
         .environmentObject(userViewModel)
-//        .environmentObject(productViewModel)
+        .environmentObject(productViewModel)
         .onAppear {
             authViewModel.checkIfUserIsLoggenIn()
             }
