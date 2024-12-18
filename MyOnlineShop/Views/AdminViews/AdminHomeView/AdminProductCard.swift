@@ -51,9 +51,25 @@ struct AdminProductCard: View {
                     .padding(.leading, 4)
                     
                     HStack {
-                        Text(String(format: "€%.2f", product.price))
-                            .font(.headline)
-                            .foregroundStyle(product.isVisible ? .black : .gray)
+                        if product.action && product.actionPrice > 0.0 {
+                            // main price mit linie
+                            Text(String(format: "€%.2f", product.price))
+                                .font(.headline)
+                                .foregroundStyle(product.isVisible ? .gray : .gray.opacity(0.5))
+                                .strikethrough(true, color: .gray) // linie
+                            
+                            Spacer()
+                            
+                            // ActionPrice
+                            Text(String(format: "€%.2f", product.actionPrice))
+                                .font(.caption)
+                                .foregroundStyle(.red)
+                        } else {
+                            // Nur main price
+                            Text(String(format: "€%.2f", product.price))
+                                .font(.headline)
+                                .foregroundStyle(product.isVisible ? .black : .gray)
+                        }
                         Spacer()
                     }
                     .padding(.trailing, 4)

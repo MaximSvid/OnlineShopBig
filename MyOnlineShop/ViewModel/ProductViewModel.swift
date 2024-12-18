@@ -16,6 +16,7 @@ class ProductViewModel: ObservableObject {
     
     @Published var title: String = ""
     @Published var price: Double = 0.0
+    @Published var actionPrice: Double = 0.0
     @Published var description: String = ""
     @Published var brand: String = ""
     @Published var countProduct: Int = 0
@@ -42,6 +43,7 @@ class ProductViewModel: ObservableObject {
         let newProduct = Product(
             title: title,
             price: price,
+            actionPrice: actionPrice,
             description: description,
             brand: brand,
             countProduct: countProduct,
@@ -138,22 +140,6 @@ class ProductViewModel: ObservableObject {
             print("Filtered products by category: \(category.rawValue)")
         }
     }
-    
-//    func filterProducts(by category: Categories) {
-//        if category == .allProducts {
-//            showAllProducts()
-//        } else {
-//            filteredProducts = products.filter { $0.category == category.rawValue }
-//            print("Filtered products by category: \(category.rawValue)")
-//        }
-//    }
-//    
-//    func filterByAction () {
-//        filteredProducts = products.filter {$0.action}
-//        print("Filtered products where action is true: \(filteredProducts.count)")
-//    }
-    
-    
 }
     
 

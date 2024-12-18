@@ -13,6 +13,7 @@ struct Product: Codable, Identifiable {
     
     var title: String
     var price: Double
+    var actionPrice: Double = 0.0
     var description: String = ""
     var brand: String = ""
     var countProduct: Int = 0
@@ -23,4 +24,5 @@ struct Product: Codable, Identifiable {
     var selectedColor: String = ""
     var isFavorite: Bool = false
     var action: Bool = false
+    var dateCreated: Date = Date()
 }

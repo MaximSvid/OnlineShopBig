@@ -15,6 +15,7 @@ struct AddProductSheet: View {
     //    @ObservedObject var productViewModel: ProductViewModel
     @EnvironmentObject var productViewModel: ProductViewModel
     @State private var priceString: String = ""
+    @State private var actionPriceString: String = ""
     @State private var countString: String = ""
     @State private var ratingString: String = ""
     @State private var toast: Toast? = nil
@@ -55,22 +56,38 @@ struct AddProductSheet: View {
                     Spacer()
                     
                     VStack (alignment: .leading) {
-                        Text("Count Products")
+                        Text("Action Price")
                             .font(.body)
-                        
-                        TextField("Count Products", text: $countString)
-                            .onChange(of: countString) {
-                                productViewModel.countProduct = Int(countString) ?? 0
+                        TextField("Action Price", text: $actionPriceString)
+                            .keyboardType(.decimalPad)
+                            .onChange(of: actionPriceString) {
+                                productViewModel.actionPrice = Double(actionPriceString) ?? 0.0
                             }
                             .onAppear {
-                                countString = String(productViewModel.countProduct)
+                                actionPriceString = String(format: "%.2f", productViewModel.actionPrice)
                             }
                             .textFieldStyle(.roundedBorder)
                     }
                     
+                    
+                    
                 }
-                .padding(.bottom
-                )
+                .padding(.bottom)
+                
+                VStack (alignment: .leading) {
+                    Text("Count Products")
+                        .font(.body)
+                    
+                    TextField("Count Products", text: $countString)
+                        .onChange(of: countString) {
+                            productViewModel.countProduct = Int(countString) ?? 0
+                        }
+                        .onAppear {
+                            countString = String(productViewModel.countProduct)
+                        }
+                        .textFieldStyle(.roundedBorder)
+                }
+                
                 HStack {
                     Text ("Brand")
                         .font(.body)
@@ -183,6 +200,7 @@ struct AddProductSheet: View {
                     productViewModel.isVisible = true
                     productViewModel.action = false
                     priceString = ""
+                    actionPriceString = ""
                     countString = ""
                     ratingString = ""
                 }) {
