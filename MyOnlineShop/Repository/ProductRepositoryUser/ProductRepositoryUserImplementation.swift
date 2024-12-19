@@ -35,18 +35,52 @@ class ProductRepositoryUserImplementation: ProductRepositoryUser {
             completion(.success(products))
         }
     }
+    
+    func updateFavoriteStatus(userID: String, productID: String, product: Product, isFavorite: Bool, completion: @escaping (Result<Void, Error>) -> Void) {
+        let userFavoritesRef = db.collection("users").document(userID).collection("favorites").document(productID)
         
-    func updatefavoriteStatus(product: Product, isFavorite: Bool, completion: @escaping (Result<Void, Error>) -> Void) {
-        guard let productId = product.id else {
-            completion(.failure(NSError(domain: "No product id", code: -1)))
-            return
+        if isFavorite {
+            do {
+                try userFavoritesRef.setData(from: product) { error in
+                    if let error = error {
+                        completion(.failure(error))
+                    } else {
+                        completion(.success(()))
+                    }
+                }
+            } catch {
+                completion(.failure(error))
+            }
+        } else {
+            userFavoritesRef.delete { error in
+                if let error = error {
+                    completion(.failure(error))
+                } else {
+                    completion(.success(()))
+                }
+            }
         }
-        db.collection("products").document(productId).updateData(["isFavorite": isFavorite]) { error in
-            if let error {
+    }
+    
+    func loadFavoriteProducts(userID: String, completion: @escaping (Result<[Product], Error>) -> Void) {
+        let favoritesRef = db.collection("users").document(userID).collection("favorites")
+        
+        favoritesRef.getDocuments { snapshot, error in
+            if let error = error {
                 completion(.failure(error))
                 return
             }
-            completion(.success(()))
+            
+            guard let documents = snapshot?.documents else {
+                completion(.success([])) // Пустой массив, если нет избранных товаров
+                return
+            }
+            
+            let products = documents.compactMap { doc -> Product? in
+                try? doc.data(as: Product.self)
+            }
+            
+            completion(.success(products))
         }
     }
 }

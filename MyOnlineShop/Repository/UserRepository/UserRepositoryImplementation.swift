@@ -60,7 +60,7 @@ class UserRepositoryImplementation: UserRepository {
                 .document(currentUser.uid)
                 .getDocument()
             
-            guard let userData = document.data() else {
+        guard document.data() != nil else {
                 throw NSError(domain: "User data not found", code: -1)
             }
             

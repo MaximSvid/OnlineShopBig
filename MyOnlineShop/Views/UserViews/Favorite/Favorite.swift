@@ -31,7 +31,8 @@ struct Favorite: View {
                 }
             }
             .onAppear {
-                userProductViewModel.updateFavoriteList()
+//                userProductViewModel.updateFavoriteList()
+                userProductViewModel.loadFavorites()
             }
         }
     }

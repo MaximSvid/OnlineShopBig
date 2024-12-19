@@ -92,6 +92,22 @@ class ProductViewModel: ObservableObject {
             productErrorMessage = "Product ID is missing"
             return
         }
+        
+        // Удаление продукта из Firestore
+        productRepository.deleteProduct(productId: productId) { result in
+            switch result {
+            case .success:
+                // Успешное удаление: обновляем локальный массив
+                if let index = self.products.firstIndex(where: { $0.id == productId }) {
+                    self.products.remove(at: index)
+                }
+                print("Product deleted successfully")
+            case .failure(let error):
+                // Обработка ошибок
+                self.productErrorMessage = "Error deleting product: \(error.localizedDescription)"
+                print("Error deleting product: \(error.localizedDescription)")
+            }
+        }
     }
     
     //visibility bei admin

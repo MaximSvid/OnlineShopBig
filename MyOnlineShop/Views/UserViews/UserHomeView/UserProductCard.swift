@@ -87,13 +87,11 @@ struct UserProductCard: View {
                 Button(action: {
                     withAnimation(.spring()) {
                         userProductViewModel.toggleFavorite(for: product)
-//                        userProductViewModel.isLiked.toggle()
                     }
                 }) {
                     Image(systemName: product.isFavorite ? "heart.fill" : "heart")
                         .resizable()
-                        .frame(width: 25, height: 25)
-//                        .foregroundStyle(product.isVisible ? .red : .gray)
+                        .frame(width: 20, height: 20)
                         .foregroundStyle(product.isFavorite ? .red : .gray)
                         .scaleEffect(product.isFavorite ? 1.3 : 1.0)
                         .padding(8)

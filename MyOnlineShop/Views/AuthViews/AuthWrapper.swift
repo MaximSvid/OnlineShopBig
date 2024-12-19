@@ -31,7 +31,6 @@ struct AuthWrapper: View {
                 AuthView()
             }
         }
-        
         .environmentObject(authViewModel)
         .environmentObject(userViewModel)
         .environmentObject(productViewModel)

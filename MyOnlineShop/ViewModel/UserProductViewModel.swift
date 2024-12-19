@@ -14,13 +14,10 @@ class UserProductViewModel: ObservableObject {
     @Published var products: [Product] = []
     @Published var filteredProducts: [Product] = []
     @Published var favoriteProducts: [Product] = []
-//    @Published var isLiked: Bool = false
-    
     private let productRepositoryUser: ProductRepositoryUser
-    
+
     init(productRepositoryUser: ProductRepositoryUser = ProductRepositoryUserImplementation()) {
         self.productRepositoryUser = productRepositoryUser
-        
     }
     
     func observeUserProducts() {
@@ -57,24 +54,41 @@ class UserProductViewModel: ObservableObject {
     }
     
     func toggleFavorite(for product: Product) {
-        guard let index = products.firstIndex(where: { $0.id == product.id }) else { return }
-            
-            let newFavoriteStatus = !products[index].isFavorite
-            products[index].isFavorite = newFavoriteStatus
+            guard let userID = FirebaseService.shared.userId,
+                  let productID = product.id,
+                  let index = products.firstIndex(where: { $0.id == productID }) else { return }
         
-        productRepositoryUser.updatefavoriteStatus(product: product, isFavorite: newFavoriteStatus) { result in
+        products[index].isFavorite.toggle()
+
+            productRepositoryUser.updateFavoriteStatus(
+                userID: userID,
+                productID: productID,
+                product: product,
+                isFavorite: products[index].isFavorite
+            ) { result in
+                switch result {
+                case .success:
+                    print("Favorite status successfully updated for product \(productID)")
+                    self.loadFavorites()
+                case .failure(let error):
+                    print("Failed to update favorite status: \(error.localizedDescription)")
+                }
+            }
+        }
+    
+    func loadFavorites() {
+        guard let userID = FirebaseService.shared.userId else { return }
+        
+        productRepositoryUser.loadFavoriteProducts(userID: userID) { result in
             switch result {
-            case .success:
-                print("Updated favorite status")
-                self.updateFavoriteList()
-            case .failure:
-                print("Error updating favorite status")
+            case .success(let favorites):
+                    self.favoriteProducts = favorites  
+            case .failure(let error):
+                print("Error loading favorite products: \(error.localizedDescription)")
             }
         }
     }
     
-    func updateFavoriteList() {
-        favoriteProducts = products.filter{ $0.isFavorite }
-    }
+    
 
 }

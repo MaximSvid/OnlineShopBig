@@ -69,7 +69,7 @@ struct FavoriteListView: View {
                 }) {
                     Image(systemName: product.isFavorite ? "heart.fill" : "heart")
                         .resizable()
-                        .frame(width: 25, height: 25)
+                        .frame(width: 20, height: 20)
 
                         .foregroundStyle(product.isFavorite ? .red : .gray)
                         .scaleEffect(product.isFavorite ? 1.3 : 1.0)
@@ -86,11 +86,12 @@ struct FavoriteListView: View {
                         .font(.caption)
                         .foregroundStyle(.yellow)
                     
-                    Text("3.5")
+                    Text(String(format: "%.1f", product.rating))
                         .font(.caption)
                 }
                 .padding(.bottom, 10)
             }
+            
         }
         .frame(width: .infinity, height: 100)
         .background(.white)
