@@ -16,8 +16,10 @@ struct FavoriteListView: View {
                 .resizable()
                 .frame(width: 70, height: 90)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
+                .padding(.leading, 5)
             
-            VStack {
+            VStack (alignment: .leading) {
+                
                 Text(product.title)
                     .font(.headline)
                     .padding(.top, 10)
@@ -61,15 +63,16 @@ struct FavoriteListView: View {
             VStack {
                 Button(action: {
                     withAnimation(.spring()) {
-                        userProductViewModel.isLiked.toggle()
+                        userProductViewModel.toggleFavorite(for: product)
+//                        userProductViewModel.isLiked.toggle()
                     }
                 }) {
-                    Image(systemName: userProductViewModel.isLiked ? "heart.fill" : "heart")
+                    Image(systemName: product.isFavorite ? "heart.fill" : "heart")
                         .resizable()
                         .frame(width: 25, height: 25)
 
-                        .foregroundStyle(userProductViewModel.isLiked ? .red : .gray)
-                        .scaleEffect(userProductViewModel.isLiked ? 1.3 : 1.0)
+                        .foregroundStyle(product.isFavorite ? .red : .gray)
+                        .scaleEffect(product.isFavorite ? 1.3 : 1.0)
                         .padding(8)
                 }
                 .background(Color.white.opacity(0.7))

@@ -86,15 +86,16 @@ struct UserProductCard: View {
                 
                 Button(action: {
                     withAnimation(.spring()) {
-                        userProductViewModel.isLiked.toggle()
+                        userProductViewModel.toggleFavorite(for: product)
+//                        userProductViewModel.isLiked.toggle()
                     }
                 }) {
-                    Image(systemName: userProductViewModel.isLiked ? "heart.fill" : "heart")
+                    Image(systemName: product.isFavorite ? "heart.fill" : "heart")
                         .resizable()
                         .frame(width: 25, height: 25)
 //                        .foregroundStyle(product.isVisible ? .red : .gray)
-                        .foregroundStyle(userProductViewModel.isLiked ? .red : .gray)
-                        .scaleEffect(userProductViewModel.isLiked ? 1.3 : 1.0)
+                        .foregroundStyle(product.isFavorite ? .red : .gray)
+                        .scaleEffect(product.isFavorite ? 1.3 : 1.0)
                         .padding(8)
                 }
                 .background(Color.white.opacity(0.7))

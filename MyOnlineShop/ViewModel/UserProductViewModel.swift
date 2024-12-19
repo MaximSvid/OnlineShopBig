@@ -13,14 +13,14 @@ class UserProductViewModel: ObservableObject {
     
     @Published var products: [Product] = []
     @Published var filteredProducts: [Product] = []
-    @Published var isLiked: Bool = false
+    @Published var favoriteProducts: [Product] = []
+//    @Published var isLiked: Bool = false
     
     private let productRepositoryUser: ProductRepositoryUser
     
     init(productRepositoryUser: ProductRepositoryUser = ProductRepositoryUserImplementation()) {
         self.productRepositoryUser = productRepositoryUser
         
-//        observeUserProducts()
     }
     
     func observeUserProducts() {
@@ -54,6 +54,27 @@ class UserProductViewModel: ObservableObject {
             filteredProducts = products.filter { $0.category == category.rawValue }
             print("Filtered products by category: \(category.rawValue)")
         }
+    }
+    
+    func toggleFavorite(for product: Product) {
+        guard let index = products.firstIndex(where: { $0.id == product.id }) else { return }
+            
+            let newFavoriteStatus = !products[index].isFavorite
+            products[index].isFavorite = newFavoriteStatus
+        
+        productRepositoryUser.updatefavoriteStatus(product: product, isFavorite: newFavoriteStatus) { result in
+            switch result {
+            case .success:
+                print("Updated favorite status")
+                self.updateFavoriteList()
+            case .failure:
+                print("Error updating favorite status")
+            }
+        }
+    }
+    
+    func updateFavoriteList() {
+        favoriteProducts = products.filter{ $0.isFavorite }
     }
 
 }
