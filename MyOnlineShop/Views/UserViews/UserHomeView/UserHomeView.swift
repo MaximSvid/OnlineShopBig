@@ -8,16 +8,23 @@
 import SwiftUI
 
 struct UserHomeView: View {
+    @EnvironmentObject var userProductViewModel: UserProductViewModel
+    let columns = [GridItem(.flexible()), GridItem(.flexible())]
+    
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack {
-                    Category(categories: Categories.allCases)
+                    CategoryUser(categories: Categories.allCases)
+                    ProductGridUser(columns: columns)
                     
                     
                     Spacer()
                 }
                 .padding([.leading, .trailing])
+            }
+            .onAppear {
+                userProductViewModel.observeUserProducts()
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -39,11 +46,14 @@ struct UserHomeView: View {
                         .padding(8)
                         .background(Circle().fill(Color.gray.opacity(0.2)))
                 }
+                
             }
+            
         }
     }
 }
 
 #Preview {
     UserHomeView()
+        .environmentObject(UserProductViewModel())
 }

@@ -11,6 +11,7 @@ struct AuthWrapper: View {
     @StateObject private var userViewModel = UserViewModel()
     @StateObject private var authViewModel = AuthViewModel(userViewModel: UserViewModel())
     @StateObject private var productViewModel = ProductViewModel()
+    @StateObject private var userProductViewModel = UserProductViewModel()
     
     
     var body: some View {
@@ -34,6 +35,7 @@ struct AuthWrapper: View {
         .environmentObject(authViewModel)
         .environmentObject(userViewModel)
         .environmentObject(productViewModel)
+        .environmentObject(userProductViewModel)
         .onAppear {
             authViewModel.checkIfUserIsLoggenIn()
             }
@@ -45,5 +47,6 @@ struct AuthWrapper: View {
     AuthWrapper()
         .environmentObject(AuthViewModel(userViewModel: UserViewModel()))
         .environmentObject(ProductViewModel())
+        .environmentObject(UserProductViewModel())
         
 }

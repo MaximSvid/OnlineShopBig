@@ -14,6 +14,9 @@ struct AppNavigationUser: View {
             Tab("Home", systemImage: "house") {
                 UserHomeView()
             }
+            Tab("Favorite", systemImage: "star"){
+                Favorite()
+            }
             Tab("Settings", systemImage: "gearshape") {
                 UserSettingsView()
             }

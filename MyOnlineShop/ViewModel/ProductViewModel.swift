@@ -40,7 +40,7 @@ class ProductViewModel: ObservableObject {
     init(productRepository: ProductRepositoryAdmin = ProductRepositoryImplementation()) {
         
         self.productRepository = productRepository //dependensy injection
-        observeProducts()
+//        observeProducts()
     }
     
     func addNewProduct() {
