@@ -58,8 +58,15 @@ class UserProductViewModel: ObservableObject {
             guard let userID = FirebaseService.shared.userId,
                   let productID = product.id,
                   let index = products.firstIndex(where: { $0.id == productID }) else { return }
-        
+        // Локальное обновление статуса
         products[index].isFavorite.toggle()
+        
+        // Сразу обновляем UI для избранного
+            if products[index].isFavorite {
+                favoriteProducts.append(products[index])
+            } else {
+                favoriteProducts.removeAll { $0.id == productID }
+            }
 
             productRepositoryUser.updateFavoriteStatus(
                 userID: userID,
@@ -74,7 +81,7 @@ class UserProductViewModel: ObservableObject {
                 case .failure(let error):
                     print("Failed to update favorite status: \(error.localizedDescription)")
                     // В случае ошибки возвращаем статус на исходный
-                    self.products[index].isFavorite.toggle()
+//                    self.products[index].isFavorite.toggle()
                 }
             }
         }

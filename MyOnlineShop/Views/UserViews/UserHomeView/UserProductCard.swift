@@ -102,6 +102,7 @@ struct UserProductCard: View {
                 .background(Color.white.opacity(0.7))
                 .clipShape(RoundedRectangle(cornerRadius: 8))
                 .padding(2)
+                .buttonStyle(BorderedButtonStyle())
             }
         }
         .frame(width: 170, height: 240)

@@ -23,11 +23,11 @@ struct FavoriteListView: View {
                 Text(product.title)
                     .font(.headline)
                     .padding(.top, 10)
-                    
+                
                 Spacer()
                 Text(product.brand)
                     .font(.caption)
-                    
+                
                 Spacer()
                 HStack {
                     if product.action && product.actionPrice > 0.0 {
@@ -54,7 +54,7 @@ struct FavoriteListView: View {
                 .padding(.trailing, 4)
                 .padding(.leading, 4)
                 .padding(.bottom, 4)
-                    
+                
                 
             }
             
@@ -62,25 +62,23 @@ struct FavoriteListView: View {
             
             VStack {
                 Button(action: {
-                    withAnimation(.spring()) {
-                        userProductViewModel.toggleFavorite(for: product)
-                    }
+                    userProductViewModel.toggleFavorite(for: product)
                 }) {
                     Image(systemName: userProductViewModel.favoriteProducts.map { product in
                         product.id ?? ""
                     }
                         .contains(product.id) ? "heart.fill" : "heart")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                        .foregroundStyle(product.isFavorite ? .red : .red)
-                        .scaleEffect(product.isFavorite ? 1.3 : 1.0)
-                        .padding(8)
+                    .resizable()
+                    .frame(width: 20, height: 20)
+                    .foregroundStyle(product.isFavorite ? .red : .red)
+                    .padding()
                 }
-                .background(Color.white.opacity(0.7))
-                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .buttonStyle(.plain)
+//                .background(Color.white.opacity(0.7))
                 .padding(2)
-
-                    
+                .contentShape(Rectangle())
+                
+                
                 Spacer()
                 
                 HStack {
@@ -92,6 +90,7 @@ struct FavoriteListView: View {
                         .font(.caption)
                 }
                 .padding(.bottom, 10)
+                .padding(.trailing)
             }
             
         }
@@ -104,6 +103,6 @@ struct FavoriteListView: View {
 }
 
 #Preview {
-//    FavoriteListView()
-//        .environmentObject(UserProductViewModel())
+    //    FavoriteListView()
+    //        .environmentObject(UserProductViewModel())
 }
