@@ -64,20 +64,22 @@ struct FavoriteListView: View {
                 Button(action: {
                     withAnimation(.spring()) {
                         userProductViewModel.toggleFavorite(for: product)
-//                        userProductViewModel.isLiked.toggle()
                     }
                 }) {
-                    Image(systemName: product.isFavorite ? "heart.fill" : "heart")
+                    Image(systemName: userProductViewModel.favoriteProducts.map { product in
+                        product.id ?? ""
+                    }
+                        .contains(product.id) ? "heart.fill" : "heart")
                         .resizable()
                         .frame(width: 20, height: 20)
-
-                        .foregroundStyle(product.isFavorite ? .red : .gray)
+                        .foregroundStyle(product.isFavorite ? .red : .red)
                         .scaleEffect(product.isFavorite ? 1.3 : 1.0)
                         .padding(8)
                 }
                 .background(Color.white.opacity(0.7))
                 .clipShape(RoundedRectangle(cornerRadius: 8))
-                .padding()
+                .padding(2)
+
                     
                 Spacer()
                 

@@ -26,6 +26,7 @@ class UserProductViewModel: ObservableObject {
             case .success(let products):
                 self.products = products
                 self.showAllProducts()
+                self.loadFavorites()
             case .failure(let error):
                 print(error)
             }
@@ -90,7 +91,4 @@ class UserProductViewModel: ObservableObject {
             }
         }
     }
-    
-    
-
 }

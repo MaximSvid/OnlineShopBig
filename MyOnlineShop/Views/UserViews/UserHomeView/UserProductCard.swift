@@ -91,12 +91,11 @@ struct UserProductCard: View {
                 }) {
                     Image(systemName: userProductViewModel.favoriteProducts.map { product in
                         product.id ?? ""
-                            
                     }
                         .contains(product.id) ? "heart.fill" : "heart")
                         .resizable()
                         .frame(width: 20, height: 20)
-                        .foregroundStyle(product.isFavorite ? .red : .gray)
+                        .foregroundStyle(product.isFavorite ? .red : .red)
                         .scaleEffect(product.isFavorite ? 1.3 : 1.0)
                         .padding(8)
                 }
