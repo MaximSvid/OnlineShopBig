@@ -23,7 +23,7 @@ struct ProductGridUser: View {
             
             LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(userProductViewModel.filteredProducts.sorted { $0.isVisible && !$1.isVisible }) { product in
-                    NavigationLink (destination: DetailHomeUser()) {
+                    NavigationLink (destination: DetailHomeUser(product: product)) {
                         UserProductCard(product: product)                 
                     }
                     

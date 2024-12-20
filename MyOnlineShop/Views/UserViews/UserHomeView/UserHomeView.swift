@@ -38,7 +38,7 @@ struct UserHomeView: View {
                         .foregroundStyle(.gray)
                         .padding(8)
                         .background(Circle().fill(Color.gray.opacity(0.2)))
-                }
+                } 
                 ToolbarItem(placement: .topBarTrailing) {
                     Image(systemName: "magnifyingglass")
                         .font(.headline)
