@@ -41,7 +41,7 @@ class ProductViewModel: ObservableObject {
     init(productRepository: ProductRepositoryAdmin = ProductRepositoryImplementation()) {
         
         self.productRepository = productRepository //dependensy injection
-//        observeProducts()
+        //        observeProducts()
     }
     
     func addNewProduct() {
@@ -72,16 +72,16 @@ class ProductViewModel: ObservableObject {
     //ich möchte im realTime producte becommen aus Firebase
     
     func observeProducts() {
-            productRepository.observeProducts { result in
-                switch result {
-                case .success(let products):
-                        self.products = products
-                        self.showAllProducts()
-                case .failure(let error):
-                    print("Error observing products: \(error.localizedDescription)")
-                }
+        productRepository.observeProducts { result in
+            switch result {
+            case .success(let products):
+                self.products = products
+                self.showAllProducts()
+            case .failure(let error):
+                print("Error observing products: \(error.localizedDescription)")
             }
         }
+    }
     
     func showAllProducts() {
         filteredProducts = products
@@ -113,23 +113,23 @@ class ProductViewModel: ObservableObject {
     
     //visibility bei admin
     func toggleVisibility(for product: Product) {
-            guard let productId = product.id else {
-                return
-            }
-            
-            let newVisibility = !product.isVisible
-            productRepository.toggleVisibility(for: productId, isVisible: newVisibility) { result in
-                switch result {
-                case .success:
-                        if let index = self.products.firstIndex(where: { $0.id == productId }) {
-                            self.products[index].isVisible = newVisibility
-                        }
-                    print("Visibility updated successfully")
-                case .failure(let error):
-                    print("Error updating visibility: \(error.localizedDescription)")
+        guard let productId = product.id else {
+            return
+        }
+        
+        let newVisibility = !product.isVisible
+        productRepository.toggleVisibility(for: productId, isVisible: newVisibility) { result in
+            switch result {
+            case .success:
+                if let index = self.products.firstIndex(where: { $0.id == productId }) {
+                    self.products[index].isVisible = newVisibility
                 }
+                print("Visibility updated successfully")
+            case .failure(let error):
+                print("Error updating visibility: \(error.localizedDescription)")
             }
         }
+    }
     
     
     
@@ -160,6 +160,7 @@ class ProductViewModel: ObservableObject {
             print("Error updating product: \(error)")
         }
     }
-}
     
+}
+
 

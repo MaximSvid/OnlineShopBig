@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DetailHomeAdmin: View {
     @EnvironmentObject var productViewModel: ProductViewModel
-//    @Binding var selectedColor: ColorEnum
+    //    @Binding var selectedColor: ColorEnum
     var product: Product
     
     var body: some View {
@@ -71,6 +71,27 @@ struct DetailHomeAdmin: View {
                         Text(String(format: "%.1f", product.rating))                            .font(.callout)
                     }
                 }
+                
+                HStack {
+                    Text("Quantity of goods:")
+                        .font(.callout)
+                    
+                    Spacer()
+                    if product.countProduct > 0 {
+                        Text("\(product.countProduct)")
+                            .font(.callout)
+                            .foregroundStyle(product.countProduct <= 10 ? .red : .primary)
+                    } else {
+                        Text("Out of stock")
+                            .font(.callout)
+                            .foregroundStyle(.red)
+                            .onAppear {
+                                productViewModel.toggleVisibility(for: product)
+                            }
+                    }
+                }
+                .padding(.top, 3)
+                .padding(.bottom, 3)
                 
                 HStack {
                     Text("Select a  Color")
