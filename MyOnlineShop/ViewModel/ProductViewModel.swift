@@ -11,6 +11,7 @@ import FirebaseFirestore
 @MainActor
 class ProductViewModel: ObservableObject {
     @Published var isAddSheetOpen: Bool = false
+    @Published var isEditSheetOpen: Bool = false
     
     @Published var products: [Product] = []
     
@@ -145,6 +146,18 @@ class ProductViewModel: ObservableObject {
             // Фильтрация по категории
             filteredProducts = products.filter { $0.category == category.rawValue }
             print("Filtered products by category: \(category.rawValue)")
+        }
+    }
+    
+    func updateProduct(product: Product) {
+        do {
+            try productRepository.updateProduct(product: product)
+            if let index = products.firstIndex(where: { $0.id == product.id }) {
+                products[index] = product // Обновляем локальную копию
+            }
+            print("Product updated successfully.")
+        } catch {
+            print("Error updating product: \(error)")
         }
     }
 }

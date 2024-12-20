@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct DetailHomeAdmin: View {
-    
+    @EnvironmentObject var productViewModel: ProductViewModel
+//    @Binding var selectedColor: ColorEnum
     var product: Product
     
     var body: some View {
-        //        Text("Admin Detatil Home View!")
-        //            .font(.title)
+        
         NavigationStack {
             VStack (alignment: .leading) {
                 
@@ -39,7 +39,7 @@ struct DetailHomeAdmin: View {
                                 .foregroundStyle(product.isVisible ? .gray : .gray.opacity(0.5))
                                 .strikethrough(true, color: .gray) // linie
                             
-                            Spacer()
+                            
                             
                             // ActionPrice
                             Text(String(format: "€%.2f", product.actionPrice))
@@ -51,101 +51,89 @@ struct DetailHomeAdmin: View {
                                 .font(.headline)
                                 .foregroundStyle(product.isVisible ? .black : .gray)
                         }
-                        Spacer()
+                        
                     }
-                    .padding(.trailing, 4)
-                    .padding(.leading, 4)
-                    .padding(.bottom, 4)
                 }
                 .padding([.top, .bottom])
                 
                 HStack {
                     Text(product.brand)
                         .font(.callout)
-                        .foregroundStyle(.yellow)
+                        .foregroundStyle(.gray)
                     
                     Spacer()
                     
                     HStack {
-                        Image(systemName: "star")
+                        Image(systemName: "star.fill")
                             .font(.callout)
+                            .foregroundStyle(.yellow)
                         
                         Text(String(format: "%.1f", product.rating))                            .font(.callout)
                     }
                 }
                 
                 HStack {
+                    Text("Select a  Color")
+                        .font(.headline)
+                        .foregroundStyle(.gray)
+                    
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 16) {
                             ForEach(ColorEnum.allCases, id: \.self) { color in
                                 Circle()
                                     .fill(color.color)
                                     .frame(width: 30, height: 30)
-                                //                                        .overlay(
-                                //                                            Circle()
-                                //                                                .stroke(productViewModel.selectedColor == color ? Color.black : Color.clear, lineWidth: 0.3)
-                                //                                        )
-                                //                                        .onTapGesture {
-                                //                                            productViewModel.selectedColor = color
-                                //                                        }
+                                    .overlay(
+                                        Circle()
+                                            .stroke(productViewModel.selectedColor == color ? Color.gray : Color.clear, lineWidth: 2)
+                                    )
+                                    .onTapGesture {
+                                        productViewModel.selectedColor = color
+                                    }
                             }
                         }
                         .padding(.horizontal, 8)
+                        .padding(.top, 3)
+                        .padding(.bottom, 3)
                     }
                 }
                 .padding([.top, .bottom])
                 
-                Text("Desctipton.... asdf;lkjasdf ;klasdf jkl;asdf kjl asdfkljasdf kjl asdfkljasasdfasdf asdf sadf asdf asdf asdf jhksadf lkjas dfkl;jsadf;lk jasdf ;lkjasd f;lkjsadf l;kjas dfklj sadfkjlasdf kl;jdfkl; jasdf;lk asdfljasdf klj lk;adj k;ljasdf jkl kl jasdfkjl;asdfkjlasdf kjl; kjlsadf kjlasdfkljasdf kjl asdk;ljasdfl;jasdf l;asdf kjl;asdf kjl")
+                Text(product.description)
                     .font(.footnote)
                     .padding([.top, .bottom])
                 
                 Spacer()
-                
-                HStack {
-                    Button(action: {
-                        
-                    }) {
-                        Text ("Edit")
-                            .font(.headline.bold())
-                            .frame(width: .infinity, height: 50)
-                            .frame(maxWidth: .infinity)
-                            .foregroundStyle(.white)
-                            .background(.blue.opacity(0.8))
-                            .clipShape(.buttonBorder)
-                    }
-                    .shadow(radius: 3)
-                    
-//                    Spacer()
-                    
-//                    Image(systemName: "cart")
-//                        .font(.title)
-//                        .frame(width: 40, height: 40)
-//                        .foregroundStyle(.gray)
-//                        .padding(8)
-//                        .background(Circle().fill(Color.gray.opacity(0.2)))
-                    
-                    
-                }
-                
-                
-                
             }
-            .padding([.leading, .trailing])
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Text("HomeDetail Admin")
-                        .font(.title.bold())
-                }
-                
-                ToolbarItem(placement: .topBarTrailing) {
-                    Image(systemName: "edit")
-                        .font(.title)
+        }
+        .sheet(isPresented: $productViewModel.isEditSheetOpen) {
+            EditProductSheet(product: product)
+                .presentationDragIndicator(.visible)
+            
+        }
+        .padding([.leading, .trailing])
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Text("HomeDetail Admin")
+                    .font(.title)
+            }
+            
+            ToolbarItem(placement: .topBarTrailing) {
+                Button(action: {
+                    productViewModel.isEditSheetOpen = true
+                }) {
+                    Image(systemName: "pencil.circle")
+                        .font(.headline)
+                        .foregroundStyle(.gray)
+                        .padding(8)
+                        .background(Circle().fill(Color.gray.opacity(0.2)))
                 }
             }
         }
     }
 }
 
+
 #Preview {
-//    DetailHomeAdmin()
+    //    DetailHomeAdmin()
 }

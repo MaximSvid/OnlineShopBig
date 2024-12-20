@@ -62,4 +62,17 @@ class ProductRepositoryImplementation: ProductRepositoryAdmin {
                 }
             }
         }
+    
+    //edit waren bei Andim (adminDetail View)
+    func updateProduct(product: Product) throws {
+            guard let productId = product.id else {
+                throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid product ID"])
+            }
+
+            do {
+                try db.collection("products").document(productId).setData(from: product, merge: true)
+            } catch {
+                throw error
+            }
+        }
 }
