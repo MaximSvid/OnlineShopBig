@@ -39,8 +39,6 @@ struct DetailHomeAdmin: View {
                                 .foregroundStyle(product.isVisible ? .gray : .gray.opacity(0.5))
                                 .strikethrough(true, color: .gray) // linie
                             
-                            
-                            
                             // ActionPrice
                             Text(String(format: "€%.2f", product.actionPrice))
                                 .font(.caption)

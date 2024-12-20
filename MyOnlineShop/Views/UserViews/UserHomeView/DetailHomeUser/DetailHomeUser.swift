@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct DetailHomeUser: View {
-    
+    @EnvironmentObject var productViewModel: ProductViewModel
+    @EnvironmentObject var userProductViewModel: UserProductViewModel
     var product: Product
     
     var body: some View {
@@ -25,8 +26,6 @@ struct DetailHomeUser: View {
                             .font(.headline.bold())
                         
                     }
-                    
-                    
                     Spacer()
                     
                     HStack {
@@ -36,8 +35,6 @@ struct DetailHomeUser: View {
                                 .font(.headline)
                                 .foregroundStyle(product.isVisible ? .gray : .gray.opacity(0.5))
                                 .strikethrough(true, color: .gray) // linie
-                            
-                            Spacer()
                             
                             // ActionPrice
                             Text(String(format: "€%.2f", product.actionPrice))
@@ -49,13 +46,10 @@ struct DetailHomeUser: View {
                                 .font(.headline)
                                 .foregroundStyle(product.isVisible ? .black : .gray)
                         }
-                        Spacer()
+                        
                     }
-                    .padding(.trailing, 4)
-                    .padding(.leading, 4)
-                    .padding(.bottom, 4)
+                    .padding([.top, .bottom])
                 }
-                .padding([.top, .bottom])
                 
                 HStack {
                     Text(product.brand)
@@ -65,8 +59,9 @@ struct DetailHomeUser: View {
                     Spacer()
                     
                     HStack {
-                        Image(systemName: "star")
+                        Image(systemName: "star.fill")
                             .font(.callout)
+                            .foregroundStyle(.yellow)
                         
                         Text(String(format: "%.1f", product.rating))                            .font(.callout)
                     }
@@ -79,21 +74,23 @@ struct DetailHomeUser: View {
                                 Circle()
                                     .fill(color.color)
                                     .frame(width: 30, height: 30)
-                                //                                        .overlay(
-                                //                                            Circle()
-                                //                                                .stroke(productViewModel.selectedColor == color ? Color.black : Color.clear, lineWidth: 0.3)
-                                //                                        )
-                                //                                        .onTapGesture {
-                                //                                            productViewModel.selectedColor = color
-                                //                                        }
+                                    .overlay(
+                                        Circle()
+                                            .stroke(productViewModel.selectedColor == color ? Color.gray : Color.clear, lineWidth: 2)
+                                    )
+                                    .onTapGesture {
+                                        productViewModel.selectedColor = color
+                                    }
                             }
                         }
                         .padding(.horizontal, 8)
+                        .padding(.top, 3)
+                        .padding(.bottom, 3)
                     }
                 }
                 .padding([.top, .bottom])
                 
-                Text("Desctipton.... asdf;lkjasdf ;klasdf jkl;asdf kjl asdfkljasdf kjl asdfkljasasdfasdf asdf sadf asdf asdf asdf jhksadf lkjas dfkl;jsadf;lk jasdf ;lkjasd f;lkjsadf l;kjas dfklj sadfkjlasdf kl;jdfkl; jasdf;lk asdfljasdf klj lk;adj k;ljasdf jkl kl jasdfkjl;asdfkjlasdf kjl; kjlsadf kjlasdfkljasdf kjl asdk;ljasdfl;jasdf l;asdf kjl;asdf kjl")
+                Text(product.description)
                     .font(.footnote)
                     .padding([.top, .bottom])
                 
@@ -115,23 +112,31 @@ struct DetailHomeUser: View {
                     
                     Spacer()
                     
-                    Image(systemName: "heart")
-                        .font(.title)
-                        .frame(width: 40, height: 40)
-                        .foregroundStyle(.gray)
-                        .padding(8)
-                        .background(Circle().fill(Color.gray.opacity(0.2)))
-                    
-                    
+                    Button(action: {
+                        withAnimation(.spring()) {
+                            userProductViewModel.toggleFavorite(for: product)
+                        }
+                    }) {
+                        Image(systemName: userProductViewModel.favoriteProducts.map { product in
+                            product.id ?? ""
+                        }
+                            .contains(product.id) ? "heart.fill" : "heart")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .foregroundStyle(product.isFavorite ? .red : .red)
+                            .scaleEffect(product.isFavorite ? 1.3 : 1.0)
+                            .padding(8)
+                    }
+                    .background(Color.white.opacity(0.7))
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .padding(2)
+                    .buttonStyle(BorderedButtonStyle())
                 }
-                
-                
-                
             }
             .padding([.leading, .trailing])
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Text("HomeDetail Admin")
+                    Text("Detail View")
                         .font(.title.bold())
                 }
                 
@@ -148,5 +153,5 @@ struct DetailHomeUser: View {
 }
 
 #Preview {
-//    DetailHomeUser()
+    //    DetailHomeUser()
 }
