@@ -72,6 +72,8 @@ class UserProductViewModel: ObservableObject {
                     self.loadFavorites()
                 case .failure(let error):
                     print("Failed to update favorite status: \(error.localizedDescription)")
+                    // В случае ошибки возвращаем статус на исходный
+                    self.products[index].isFavorite.toggle()
                 }
             }
         }

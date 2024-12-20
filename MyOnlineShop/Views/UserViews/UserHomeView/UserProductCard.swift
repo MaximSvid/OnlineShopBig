@@ -89,7 +89,11 @@ struct UserProductCard: View {
                         userProductViewModel.toggleFavorite(for: product)
                     }
                 }) {
-                    Image(systemName: product.isFavorite ? "heart.fill" : "heart")
+                    Image(systemName: userProductViewModel.favoriteProducts.map { product in
+                        product.id ?? ""
+                            
+                    }
+                        .contains(product.id) ? "heart.fill" : "heart")
                         .resizable()
                         .frame(width: 20, height: 20)
                         .foregroundStyle(product.isFavorite ? .red : .gray)

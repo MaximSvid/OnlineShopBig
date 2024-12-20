@@ -41,7 +41,11 @@ class ProductRepositoryUserImplementation: ProductRepositoryUser {
         
         if isFavorite {
             do {
-                try userFavoritesRef.setData(from: product) { error in
+                // Устанавливаем данные с обновленным статусом
+                var updatedProduct = product
+                updatedProduct.isFavorite = true
+                
+                try userFavoritesRef.setData(from: updatedProduct) { error in
                     if let error = error {
                         completion(.failure(error))
                     } else {
@@ -52,6 +56,8 @@ class ProductRepositoryUserImplementation: ProductRepositoryUser {
                 completion(.failure(error))
             }
         } else {
+            // Удаляем документ из избранного
+            
             userFavoritesRef.delete { error in
                 if let error = error {
                     completion(.failure(error))
@@ -61,7 +67,6 @@ class ProductRepositoryUserImplementation: ProductRepositoryUser {
             }
         }
     }
-    
     func loadFavoriteProducts(userID: String, completion: @escaping (Result<[Product], Error>) -> Void) {
         let favoritesRef = db.collection("users").document(userID).collection("favorites")
         
