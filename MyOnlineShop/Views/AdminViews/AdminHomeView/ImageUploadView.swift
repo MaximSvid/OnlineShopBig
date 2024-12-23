@@ -11,11 +11,12 @@ import PhotosUI
 struct ImageUploadView: View {
 
     @EnvironmentObject var imgurViewModel: ImgurViewModel
+    @EnvironmentObject var productViewModel: ProductViewModel
 
     var body: some View {
         VStack(spacing: 20) {
             // Предпросмотр выбранного изображения
-            if let selectedImage = imgurViewModel.selectedImage {
+            if let selectedImage = productViewModel.imgurViewModel.selectedImage {
                 selectedImage
                     .resizable()
                     .scaledToFill()
@@ -38,7 +39,7 @@ struct ImageUploadView: View {
             }
             
             // PhotosPicker для выбора изображения
-            PhotosPicker(selection: $imgurViewModel.newImage, matching: .images) {
+            PhotosPicker(selection: $productViewModel.imgurViewModel.newImage, matching: .images) {
                 Text("Select an Image")
                     .foregroundColor(.white)
                     .font(.headline)
@@ -49,8 +50,8 @@ struct ImageUploadView: View {
             }
             
             // Кнопка для загрузки изображения
-            if imgurViewModel.selectedImage != nil {
-                Button(action: imgurViewModel.uploadImage) {
+            if productViewModel.imgurViewModel.selectedImage != nil {
+                Button(action: productViewModel.imgurViewModel.uploadImage) {
                     if imgurViewModel.isUploading {
                         ProgressView()
                             .tint(.white)
@@ -69,13 +70,13 @@ struct ImageUploadView: View {
                             .background(RoundedRectangle(cornerRadius: 10).fill(Color.green))
                     }
                 }
-                .disabled(imgurViewModel.isUploading)
+                .disabled(productViewModel.imgurViewModel.isUploading)
             }
 
         }
         .padding()
-        .onChange(of: imgurViewModel.newImage) { _ in
-            imgurViewModel.loadImage()
+        .onChange(of: productViewModel.imgurViewModel.newImage) { _ in
+            productViewModel.imgurViewModel.loadImage()
         }
     }
 }

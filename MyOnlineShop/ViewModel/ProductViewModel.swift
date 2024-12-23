@@ -38,12 +38,21 @@ class ProductViewModel: ObservableObject {
     
     private let productRepository: ProductRepositoryAdmin
     
-    private let imgurViewModel = ImgurViewModel()
+//    private let imgurViewModel = ImgurViewModel()
+    
+    @Published var imgurViewModel: ImgurViewModel
     
     init(productRepository: ProductRepositoryAdmin = ProductRepositoryImplementation()) {
         
         self.productRepository = productRepository //dependensy injection
         //        observeProducts()
+        
+        self.imgurViewModel = ImgurViewModel()
+                
+                // Установим callback для обновления image URL
+                self.imgurViewModel.onImageUploaded = { [weak self] url in
+                    self?.image = url
+                }
     }
 //    
 //    func updateImageUrl(newImageUrl: String) {

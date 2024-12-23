@@ -17,6 +17,29 @@ class ImgurViewModel: ObservableObject {
     @Published var uploadError: String? = nil
     private let imageRepository = ImageRepositoryImplementation()
     
+    var onImageUploaded: ((String) -> Void)?
+        
+        func uploadImage() {
+            guard let newImage else { return }
+            Task {
+                do {
+                    isUploading = true
+                    if let imageData = try await newImage.loadTransferable(type: Data.self) {
+                        let url = try await imageRepository.uploadImage(imageData: imageData)
+                        await MainActor.run {
+                            uploadedImageURL = url
+                            onImageUploaded?(url) // Вызываем callback с полученным URL
+                            print("Image uploaded successfully: \(url)")
+                        }
+                    }
+                    isUploading = false
+                } catch {
+                    isUploading = false
+                    print("Error uploading image: \(error)")
+                }
+            }
+        }
+    
     func loadImage() {
         Task {
             guard let newImage else { return }
@@ -33,23 +56,23 @@ class ImgurViewModel: ObservableObject {
     }
     
     
-    func uploadImage() {
-        guard let newImage else { return }
-        Task {
-            do {
-                isUploading = true
-                if let imageData = try await newImage.loadTransferable(type: Data.self) {
-                    let url = try await imageRepository.uploadImage(imageData: imageData)
-                    uploadedImageURL = url
-                    print("Image uploaded successfully: \(url)")
-                }
-                isUploading = false
-            } catch {
-                isUploading = false
-                print("Error uploading image: \(error)")
-            }
-        }
-    }
+//    func uploadImage() {
+//        guard let newImage else { return }
+//        Task {
+//            do {
+//                isUploading = true
+//                if let imageData = try await newImage.loadTransferable(type: Data.self) {
+//                    let url = try await imageRepository.uploadImage(imageData: imageData)
+//                    uploadedImageURL = url
+//                    print("Image uploaded successfully: \(url)")
+//                }
+//                isUploading = false
+//            } catch {
+//                isUploading = false
+//                print("Error uploading image: \(error)")
+//            }
+//        }
+//    }
 }
 
 
