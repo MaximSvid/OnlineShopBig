@@ -35,6 +35,11 @@ struct EditProductSheet: View {
                     .font(.title)
                     .padding([.top, .bottom])
                 
+                ImageUploadView()
+                
+                Divider()
+
+                
                 HStack {
                     Text("Product Name")
                         .font(.body)

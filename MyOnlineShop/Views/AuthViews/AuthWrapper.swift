@@ -12,6 +12,7 @@ struct AuthWrapper: View {
     @StateObject private var authViewModel = AuthViewModel(userViewModel: UserViewModel())
     @StateObject private var productViewModel = ProductViewModel()
     @StateObject private var userProductViewModel = UserProductViewModel()
+    @StateObject private var imgurProductViewModel = ImgurViewModel()
     
     
     var body: some View {
@@ -35,6 +36,7 @@ struct AuthWrapper: View {
         .environmentObject(userViewModel)
         .environmentObject(productViewModel)
         .environmentObject(userProductViewModel)
+        .environmentObject(imgurProductViewModel)
         .onAppear {
             authViewModel.checkIfUserIsLoggenIn()
             }
@@ -47,5 +49,6 @@ struct AuthWrapper: View {
         .environmentObject(AuthViewModel(userViewModel: UserViewModel()))
         .environmentObject(ProductViewModel())
         .environmentObject(UserProductViewModel())
+        .environmentObject(ImgurViewModel())
         
 }

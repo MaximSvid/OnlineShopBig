@@ -38,11 +38,22 @@ class ProductViewModel: ObservableObject {
     
     private let productRepository: ProductRepositoryAdmin
     
+    private let imgurViewModel = ImgurViewModel()
+    
     init(productRepository: ProductRepositoryAdmin = ProductRepositoryImplementation()) {
         
         self.productRepository = productRepository //dependensy injection
         //        observeProducts()
     }
+    
+    func updateImageUrl(newImageUrl: String) {
+            Task {
+                await MainActor.run {
+                    image = newImageUrl
+                }
+            }
+        }
+
     
     func addNewProduct() {
         let newProduct = Product(
@@ -54,6 +65,7 @@ class ProductViewModel: ObservableObject {
             countProduct: countProduct,
             category: category.rawValue,
             image: image,
+//            image: imgurViewModel.uploadedImageURL ?? "",
             rating: rating,
             isVisible: isVisible,
             selectedColor: selectedColor.rawValue,

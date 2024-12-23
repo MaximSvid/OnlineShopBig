@@ -12,8 +12,8 @@ import SwiftUI
 
 
 struct AddProductSheet: View {
-    //    @ObservedObject var productViewModel: ProductViewModel
     @EnvironmentObject var productViewModel: ProductViewModel
+    @EnvironmentObject var imgurViewModel: ImgurViewModel
     @State private var priceString: String = ""
     @State private var actionPriceString: String = ""
     @State private var countString: String = ""
@@ -27,6 +27,10 @@ struct AddProductSheet: View {
                 Text("Add Product")
                     .font(.title)
                     .padding([.top, .bottom])
+                
+                ImageUploadView()
+                
+                Divider()
                 
                 HStack {
                     Text("Product Name")
@@ -188,7 +192,10 @@ struct AddProductSheet: View {
                         toast = Toast(style: .error, message: "Please fill all fields")
                         return
                     }
+                    imgurViewModel.uploadImage()
+                    
                     productViewModel.addNewProduct()
+                    
                     productViewModel.isAddSheetOpen.toggle()
                     
                     productViewModel.title = ""
@@ -224,5 +231,6 @@ struct AddProductSheet: View {
 #Preview {
     AddProductSheet()
         .environmentObject(ProductViewModel())
+        .environmentObject(ImgurViewModel())
 }
 
