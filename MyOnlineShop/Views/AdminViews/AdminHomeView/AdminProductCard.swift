@@ -14,24 +14,45 @@ struct AdminProductCard: View {
     var body: some View {
         ZStack(alignment: .topTrailing) {
             VStack(spacing: 0) {
-                Image("image")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 170, height: 180)
-                    .clipped()
+                if !product.image.isEmpty {
+                    AsyncImage(url: URL(string: product.image)) { image in
+                        image.resizable()
+//                            .scaledToFit()
+                            .scaledToFill()
+//                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 170, height: 190)
+                            .cornerRadius(12)
+                            .clipped()
+                            .padding(.horizontal)
+                    } placeholder: {
+                        Color.gray
+                            .frame(width: 170, height: 190)
+                    }
+                } else {
+                    Image("image")
+                        .resizable()
+//                        .scaledToFit()
+//                        .aspectRatio(contentMode: .fit)
+                        .scaledToFill()
+                        .frame(width: 170, height: 190)
+                        .cornerRadius(12)
+                        .clipped()
+                }
                 
-                VStack(alignment: .leading) {
+                
+                VStack(alignment: .leading, spacing: 4) {
                     HStack {
                         Text(product.title)
                             .font(.caption)
                             .foregroundStyle(product.isVisible ? .black : .gray) // isVisible color
+                            .fixedSize(horizontal: false, vertical: true)
                         
                         Spacer()
                         
                         Image(systemName: "star.fill")
                             .foregroundStyle(product.isVisible ? .yellow : .gray)
                             .font(.caption2)
-
+                        
                         
                         Text(String(format: "%.1f", product.rating))
                             .font(.caption2)
@@ -44,6 +65,7 @@ struct AdminProductCard: View {
                         Text(product.brand)
                             .font(.caption)
                             .foregroundStyle(product.isVisible ? .black : .gray)
+                            .fixedSize(horizontal: false, vertical: true)
                         
                         Spacer()
                     }
@@ -113,6 +135,6 @@ struct AdminProductCard: View {
 }
 
 #Preview {
-//    AdminProductCard()
-//        .environmentObject(ProductViewModel())
+    //    AdminProductCard()
+    //        .environmentObject(ProductViewModel())
 }

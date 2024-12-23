@@ -9,7 +9,8 @@ import SwiftUI
 import PhotosUI
 
 struct ImageUploadView: View {
-    @StateObject private var imgurViewModel = ImgurViewModel()
+
+    @EnvironmentObject var imgurViewModel: ImgurViewModel
 
     var body: some View {
         VStack(spacing: 20) {
@@ -70,29 +71,12 @@ struct ImageUploadView: View {
                 }
                 .disabled(imgurViewModel.isUploading)
             }
-            
-            // Отображение URL загруженного изображения
-//            if let uploadedImageURL = imgurViewModel.uploadedImageURL {
-//                Text("Uploaded Image URL:")
-//                Text(uploadedImageURL)
-//                    .foregroundColor(.blue)
-//                    .underline()
-//                    .onTapGesture {
-//                        if let url = URL(string: uploadedImageURL) {
-//                            UIApplication.shared.open(url)
-//                        }
-//                    }
-//            }
+
         }
         .padding()
         .onChange(of: imgurViewModel.newImage) { _ in
             imgurViewModel.loadImage()
         }
-//        .alert(isPresented: $imgurViewModel.showUploadSuccess) {
-//            Alert(title: Text("Upload Successful"),
-//                  message: Text("Image has been uploaded to Imgur!"),
-//                  dismissButton: .default(Text("OK")))
-//        }
     }
 }
 

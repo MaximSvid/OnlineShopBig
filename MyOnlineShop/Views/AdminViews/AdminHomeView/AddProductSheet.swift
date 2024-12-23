@@ -20,7 +20,6 @@ struct AddProductSheet: View {
     @State private var ratingString: String = ""
     @State private var toast: Toast? = nil
     
-    
     var body: some View {
         ScrollView {
             VStack {
@@ -185,31 +184,32 @@ struct AddProductSheet: View {
                 
                 Button(action: {
                     
-                    guard !productViewModel.title.isEmpty,
-                          !productViewModel.description.isEmpty,
-                          !productViewModel.description.isEmpty
+                    guard !productViewModel.title.isEmpty
                     else {
                         toast = Toast(style: .error, message: "Please fill all fields")
                         return
                     }
-                    imgurViewModel.uploadImage()
+                    
+                    
                     
                     productViewModel.addNewProduct()
                     
                     productViewModel.isAddSheetOpen.toggle()
                     
-                    productViewModel.title = ""
-                    productViewModel.price = 0.0
-                    productViewModel.description = ""
-                    productViewModel.brand = ""
-                    productViewModel.countProduct = 0
-                    productViewModel.rating = 0.0
-                    productViewModel.isVisible = true
-                    productViewModel.action = false
-                    priceString = ""
-                    actionPriceString = ""
-                    countString = ""
-                    ratingString = ""
+                    
+                    
+                    //                    productViewModel.title = ""
+                    //                    productViewModel.price = 0.0
+                    //                    productViewModel.description = ""
+                    //                    productViewModel.brand = ""
+                    //                    productViewModel.countProduct = 0
+                    //                    productViewModel.rating = 0.0
+                    //                    productViewModel.isVisible = true
+                    //                    productViewModel.action = false
+                    //                    priceString = ""
+                    //                    actionPriceString = ""
+                    //                    countString = ""
+                    //                    ratingString = ""
                 }) {
                     Text ("Add+")
                         .font(.headline.bold())
@@ -219,6 +219,7 @@ struct AddProductSheet: View {
                         .background(.blue.opacity(0.8))
                         .clipShape(.buttonBorder)
                 }
+                
                 .shadow(radius: 3)
             }
             .padding([.trailing, .leading])

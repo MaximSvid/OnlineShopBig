@@ -45,17 +45,23 @@ class ProductViewModel: ObservableObject {
         self.productRepository = productRepository //dependensy injection
         //        observeProducts()
     }
+//    
+//    func updateImageUrl(newImageUrl: String) {
+//            Task {
+//                await MainActor.run {
+//                    image = newImageUrl
+//                }
+//            }
+//        }
     
-    func updateImageUrl(newImageUrl: String) {
-            Task {
-                await MainActor.run {
-                    image = newImageUrl
-                }
-            }
-        }
+    
 
     
     func addNewProduct() {
+//        guard let imageURL = imgurViewModel.uploadedImageURL, !imageURL.isEmpty else {
+//            print("Image URL is empty or nil")
+//            return
+//        }
         let newProduct = Product(
             title: title,
             price: price,
@@ -64,8 +70,8 @@ class ProductViewModel: ObservableObject {
             brand: brand,
             countProduct: countProduct,
             category: category.rawValue,
-//            image: image,
-            image: imgurViewModel.uploadedImageURL ?? "",
+//            image: imageURL,
+            image: image,
             rating: rating,
             isVisible: isVisible,
             selectedColor: selectedColor.rawValue,
@@ -76,9 +82,25 @@ class ProductViewModel: ObservableObject {
         do {
             try productRepository.addNewProduct(product: newProduct)
             print("Product added successfully: \(newProduct)")
+            resetFields()
         } catch {
             print("Error adding new product: \(error)")
         }
+    }
+    
+    private func resetFields() {
+        title = ""
+        price = 0.0
+        actionPrice = 0.0
+        description = ""
+        brand = ""
+        countProduct = 0
+        category = .livingRoom
+        rating = 0
+        isVisible = true
+        selectedColor = .blue
+        isFavorite = false
+        action = false
     }
     
     //ich möchte im realTime producte becommen aus Firebase

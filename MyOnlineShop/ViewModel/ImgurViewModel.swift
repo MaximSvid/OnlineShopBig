@@ -9,66 +9,44 @@ import SwiftUI
 import PhotosUI
 
 class ImgurViewModel: ObservableObject {
-    //    @Published var images: [ImgurImage] = []
-    //    @Published var selectedImage: UIImage?
-    
-    
     @Published var newImage: PhotosPickerItem?
     @Published var selectedImage: Image?
     @Published var uploadedImageURL: String?
     @Published var isUploading = false
     @Published var showUploadSuccess = false
     @Published var uploadError: String? = nil
-    
-    
-    private let repository: ImageRepository
-    
-    init(repository: ImageRepository = ImageRepositoryImplementation()) {
-        self.repository = repository
-    }
+    private let imageRepository = ImageRepositoryImplementation()
     
     func loadImage() {
         Task {
-            print("Loading image...")
-            
-            guard let imageData = try? await newImage?.loadTransferable(type: Data.self) else {
-                print("Failed to load image data")
-                return
-            }
-            
-            if let uiImage = UIImage(data: imageData) {
-                selectedImage = Image(uiImage: uiImage)
-                print("Image loaded successfully")
-            } else {
-                print("Failed to convert image data to UIImage")
+            guard let newImage else { return }
+            do {
+                if let data = try await newImage.loadTransferable(type: Data.self) {
+                    if let uiImage = UIImage(data: data) {
+                        selectedImage = Image(uiImage: uiImage)
+                    }
+                }
+            } catch {
+                print("Error loading image: \(error)")
             }
         }
     }
     
+    
     func uploadImage() {
+        guard let newImage else { return }
         Task {
-            isUploading = true
-            uploadError = nil
-            defer { isUploading = false }
-            
-            guard let imageData = try? await newImage?.loadTransferable(type: Data.self) else {
-                uploadError = "Failed to load image data."
-                print("Failed to load image data")
-                return
-            }
-            
             do {
-                let imageUrl = try await repository.uploadImage(imageData: imageData)
-                
-                self.uploadedImageURL = imageUrl
-                self.showUploadSuccess = true
-                print("Image uploaded successfully: \(imageUrl)")
-                
+                isUploading = true
+                if let imageData = try await newImage.loadTransferable(type: Data.self) {
+                    let url = try await imageRepository.uploadImage(imageData: imageData)
+                    uploadedImageURL = url
+                    print("Image uploaded successfully: \(url)")
+                }
+                isUploading = false
             } catch {
-                
-                self.uploadError = "Failed to upload image: \(error.localizedDescription)"
-                print("Error uploading image: \(error.localizedDescription)")
-                
+                isUploading = false
+                print("Error uploading image: \(error)")
             }
         }
     }
