@@ -72,14 +72,6 @@ class ImgurViewModel: ObservableObject {
             }
         }
     }
-    
-    func updateImageUrl(newImageUrl: String) {
-            Task {
-                await MainActor.run {
-                    uploadedImageURL = newImageUrl
-                }
-            }
-        }
 }
 
 
