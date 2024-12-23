@@ -15,6 +15,9 @@ struct AppNavigationAdmin: View {
             Tab("Admin Home", systemImage: "house") {
                 AdminHome()
             }
+            Tab("Test Imgur", systemImage: "i.circle") {
+                ImageUploadView()
+            }
             Tab("Admin Settings", systemImage: "gear") {
                 AdminSettingsView()
             }
