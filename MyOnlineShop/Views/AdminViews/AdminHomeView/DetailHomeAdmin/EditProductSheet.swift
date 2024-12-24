@@ -182,7 +182,7 @@ struct EditProductSheet: View {
                         brand: brand,
                         countProduct: Int(countString) ?? 0,
                         category: category.rawValue,
-                        image: product.image, // оставляем текущий image
+                        images: product.images, // оставляем текущий image
                         rating: Double(ratingString) ?? 0.0,
                         isVisible: isVisible,
                         selectedColor: selectedColor.rawValue,

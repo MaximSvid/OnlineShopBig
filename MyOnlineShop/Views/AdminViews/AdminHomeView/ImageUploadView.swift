@@ -9,77 +9,80 @@ import SwiftUI
 import PhotosUI
 
 struct ImageUploadView: View {
-
+    
     @EnvironmentObject var imgurViewModel: ImgurViewModel
     @EnvironmentObject var productViewModel: ProductViewModel
-
+    
     var body: some View {
         VStack(spacing: 20) {
-            // Предпросмотр выбранного изображения
-            if let selectedImage = productViewModel.imgurViewModel.selectedImage {
-                selectedImage
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 100, height: 100)
-                    .clipShape(Circle())
-                    .overlay(Circle().stroke(.gray.opacity(0.5), lineWidth: 2))
-            } else {
-                Image("image")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 150, height: 150)
-                    .clipShape(Circle())
-                    .overlay(Circle().stroke(.gray.opacity(0.5), lineWidth: 2))
+            // Image preview grid
+            LazyVGrid(columns: [
+                GridItem(.adaptive(minimum: 100))
+            ], spacing: 10) {
+                ForEach(productViewModel.imgurViewModel.selectedImages.indices, id: \.self) { index in
+                    productViewModel.imgurViewModel.selectedImages[index]
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 100, height: 100)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .overlay(RoundedRectangle(cornerRadius: 10)
+                            .stroke(.gray.opacity(0.5), lineWidth: 2))
+                }
+                
+                if productViewModel.imgurViewModel.selectedImages.isEmpty {
+                    Image("image")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 100, height: 100)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .overlay(RoundedRectangle(cornerRadius: 10)
+                            .stroke(.gray.opacity(0.5), lineWidth: 2))
+                }
             }
             
-            if imgurViewModel.uploadedImageURL != nil {
-                Text("Image successfully uploaded!")
+            if !imgurViewModel.uploadedImageURLs.isEmpty {
+                Text("Images successfully uploaded!")
                     .foregroundColor(.green)
                     .fontWeight(.bold)
             }
             
-            // PhotosPicker для выбора изображения
-            PhotosPicker(selection: $productViewModel.imgurViewModel.newImage, matching: .images) {
-                Text("Select an Image")
+            // PhotosPicker for multiple images
+            PhotosPicker(selection: $productViewModel.imgurViewModel.selectedItems,
+                         matching: .images,
+                         photoLibrary: .shared()) {
+                Text("Select Images")
                     .foregroundColor(.white)
                     .font(.headline)
-                    .frame(width: .infinity, height: 20)
-                    .frame(maxWidth: .infinity, maxHeight: 20)
+                    .frame(maxWidth: .infinity)
                     .padding()
                     .background(RoundedRectangle(cornerRadius: 10).fill(Color.blue))
             }
             
-            // Кнопка для загрузки изображения
-            if productViewModel.imgurViewModel.selectedImage != nil {
-                Button(action: productViewModel.imgurViewModel.uploadImage) {
+            // Upload button
+            if !productViewModel.imgurViewModel.selectedImages.isEmpty {
+                Button(action: productViewModel.imgurViewModel.uploadImages) {
                     if imgurViewModel.isUploading {
                         ProgressView()
                             .tint(.white)
-                            .font(.headline)
-                            .frame(width: .infinity, height: 20)
-                            .frame(maxWidth: .infinity, maxHeight: 20)
-                            .padding()
-                            .background(RoundedRectangle(cornerRadius: 10).fill(Color.blue))
                     } else {
-                        Text("Upload Image")
-                            .font(.headline)
+                        Text("Upload Images")
                             .foregroundColor(.white)
-                            .frame(width: .infinity, height: 20)
-                            .frame(maxWidth: .infinity, maxHeight: 20)
-                            .padding()
-                            .background(RoundedRectangle(cornerRadius: 10).fill(Color.green))
                     }
                 }
-                .disabled(productViewModel.imgurViewModel.isUploading)
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(RoundedRectangle(cornerRadius: 10)
+                    .fill(imgurViewModel.isUploading ? Color.gray : Color.green))
+                .disabled(imgurViewModel.isUploading)
             }
-
         }
         .padding()
-        .onChange(of: productViewModel.imgurViewModel.newImage) { _ in
-            productViewModel.imgurViewModel.loadImage()
+        .onChange(of: productViewModel.imgurViewModel.selectedItems) { _ in
+            productViewModel.imgurViewModel.loadImages()
         }
     }
 }
+
 
 #Preview {
     ImageUploadView()

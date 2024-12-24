@@ -22,7 +22,8 @@ class ProductViewModel: ObservableObject {
     @Published var brand: String = ""
     @Published var countProduct: Int = 0
     @Published var category: Categories = .livingRoom
-    @Published var image: String = ""
+//    @Published var image: String = ""
+    @Published var images: [String] = []
     @Published var rating: Double = 0.0
     @Published var isVisible: Bool = true
     @Published var selectedColor: ColorEnum = .blue
@@ -42,18 +43,13 @@ class ProductViewModel: ObservableObject {
     @Published var imgurViewModel: ImgurViewModel
     
     init(productRepository: ProductRepositoryAdmin = ProductRepositoryImplementation()) {
-        
-        self.productRepository = productRepository //dependensy injection
-        //        observeProducts()
-        
-        self.imgurViewModel = ImgurViewModel()
-                
-                // Установим callback для обновления image URL
-                self.imgurViewModel.onImageUploaded = { [weak self] url in
-                    self?.image = url
-                }
-    }
-    
+            self.productRepository = productRepository
+            self.imgurViewModel = ImgurViewModel()
+            
+            self.imgurViewModel.onImagesUploaded = { [weak self] urls in
+                self?.images = urls
+            }
+        }
     func addNewProduct() {
         let newProduct = Product(
             title: title,
@@ -63,7 +59,7 @@ class ProductViewModel: ObservableObject {
             brand: brand,
             countProduct: countProduct,
             category: category.rawValue,
-            image: image,
+            images: images,
             rating: rating,
             isVisible: isVisible,
             selectedColor: selectedColor.rawValue,
@@ -88,11 +84,14 @@ class ProductViewModel: ObservableObject {
         brand = ""
         countProduct = 0
         category = .livingRoom
+        images = []
         rating = 0
         isVisible = true
         selectedColor = .blue
         isFavorite = false
         action = false
+        
+        imgurViewModel.resetState()
     }
     
     //ich möchte im realTime producte becommen aus Firebase

@@ -18,7 +18,7 @@ struct Product: Codable, Identifiable, Equatable {
     var brand: String = ""
     var countProduct: Int = 0
     var category: String = ""
-    var image: String = ""
+    var images: [String] = []
     var rating: Double = 0.0
     var isVisible: Bool = true
     var selectedColor: String = ""

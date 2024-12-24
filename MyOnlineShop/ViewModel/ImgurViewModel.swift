@@ -9,70 +9,62 @@ import SwiftUI
 import PhotosUI
 
 class ImgurViewModel: ObservableObject {
-    @Published var newImage: PhotosPickerItem?
-    @Published var selectedImage: Image?
-    @Published var uploadedImageURL: String?
+    @Published var selectedItems: [PhotosPickerItem] = []
+    @Published var selectedImages: [Image] = []
+    @Published var uploadedImageURLs: [String] = []
     @Published var isUploading = false
     @Published var showUploadSuccess = false
     @Published var uploadError: String? = nil
     private let imageRepository = ImageRepositoryImplementation()
     
-    var onImageUploaded: ((String) -> Void)?
-        
-        func uploadImage() {
-            guard let newImage else { return }
-            Task {
-                do {
-                    isUploading = true
-                    if let imageData = try await newImage.loadTransferable(type: Data.self) {
-                        let url = try await imageRepository.uploadImage(imageData: imageData)
-                        await MainActor.run {
-                            uploadedImageURL = url
-                            onImageUploaded?(url) // Вызываем callback с полученным URL
-                            print("Image uploaded successfully: \(url)")
-                        }
-                    }
-                    isUploading = false
-                } catch {
-                    isUploading = false
-                    print("Error uploading image: \(error)")
-                }
-            }
-        }
+    var onImagesUploaded: (([String]) -> Void)?
     
-    func loadImage() {
+    func uploadImages() {
+        guard !selectedItems.isEmpty else { return }
         Task {
-            guard let newImage else { return }
             do {
-                if let data = try await newImage.loadTransferable(type: Data.self) {
-                    if let uiImage = UIImage(data: data) {
-                        selectedImage = Image(uiImage: uiImage)
+                isUploading = true
+                var urls: [String] = []
+                
+                for item in selectedItems {
+                    if let imageData = try await item.loadTransferable(type: Data.self) {
+                        let url = try await imageRepository.uploadImage(imageData: imageData)
+                        urls.append(url)
                     }
                 }
+                
+                uploadedImageURLs = urls
+                onImagesUploaded?(urls)
+                print("Images uploaded successfully: \(urls)")
+                
+                isUploading = false
             } catch {
-                print("Error loading image: \(error)")
+                isUploading = false
+                print("Error uploading images: \(error)")
             }
         }
     }
     
+    func loadImages() {
+        Task {
+            var loadedImages: [Image] = []
+            
+            for item in selectedItems {
+                if let data = try? await item.loadTransferable(type: Data.self),
+                   let uiImage = UIImage(data: data) {
+                    loadedImages.append(Image(uiImage: uiImage))
+                }
+            }
+            selectedImages = loadedImages
+        }
+    }
     
-//    func uploadImage() {
-//        guard let newImage else { return }
-//        Task {
-//            do {
-//                isUploading = true
-//                if let imageData = try await newImage.loadTransferable(type: Data.self) {
-//                    let url = try await imageRepository.uploadImage(imageData: imageData)
-//                    uploadedImageURL = url
-//                    print("Image uploaded successfully: \(url)")
-//                }
-//                isUploading = false
-//            } catch {
-//                isUploading = false
-//                print("Error uploading image: \(error)")
-//            }
-//        }
-//    }
+    //Обнулить состояние изображений, чтобы при выборе новых состояние сбрасывалось, так как будто выбора небыло
+    func resetState() {
+        selectedImages = []
+        selectedItems = []
+        uploadedImageURLs = []
+    }
 }
 
 
