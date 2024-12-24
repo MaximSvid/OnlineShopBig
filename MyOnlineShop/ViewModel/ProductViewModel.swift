@@ -38,7 +38,6 @@ class ProductViewModel: ObservableObject {
     
     private let productRepository: ProductRepositoryAdmin
     
-//    private let imgurViewModel = ImgurViewModel()
     
     @Published var imgurViewModel: ImgurViewModel
     
@@ -54,23 +53,8 @@ class ProductViewModel: ObservableObject {
                     self?.image = url
                 }
     }
-//    
-//    func updateImageUrl(newImageUrl: String) {
-//            Task {
-//                await MainActor.run {
-//                    image = newImageUrl
-//                }
-//            }
-//        }
-    
-    
-
     
     func addNewProduct() {
-//        guard let imageURL = imgurViewModel.uploadedImageURL, !imageURL.isEmpty else {
-//            print("Image URL is empty or nil")
-//            return
-//        }
         let newProduct = Product(
             title: title,
             price: price,
@@ -79,7 +63,6 @@ class ProductViewModel: ObservableObject {
             brand: brand,
             countProduct: countProduct,
             category: category.rawValue,
-//            image: imageURL,
             image: image,
             rating: rating,
             isVisible: isVisible,

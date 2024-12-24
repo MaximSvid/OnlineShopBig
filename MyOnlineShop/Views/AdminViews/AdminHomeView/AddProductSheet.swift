@@ -189,27 +189,8 @@ struct AddProductSheet: View {
                         toast = Toast(style: .error, message: "Please fill all fields")
                         return
                     }
-                    
-                    
-                    
                     productViewModel.addNewProduct()
-                    
                     productViewModel.isAddSheetOpen.toggle()
-                    
-                    
-                    
-                    //                    productViewModel.title = ""
-                    //                    productViewModel.price = 0.0
-                    //                    productViewModel.description = ""
-                    //                    productViewModel.brand = ""
-                    //                    productViewModel.countProduct = 0
-                    //                    productViewModel.rating = 0.0
-                    //                    productViewModel.isVisible = true
-                    //                    productViewModel.action = false
-                    //                    priceString = ""
-                    //                    actionPriceString = ""
-                    //                    countString = ""
-                    //                    ratingString = ""
                 }) {
                     Text ("Add+")
                         .font(.headline.bold())
