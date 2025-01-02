@@ -19,6 +19,7 @@ class ImgurViewModel: ObservableObject {
     
     var onImagesUploaded: (([String]) -> Void)?
     
+    @MainActor
     func uploadImages() {
         guard !selectedItems.isEmpty else { return }
         Task {

@@ -15,6 +15,11 @@ struct ImageUploadView: View {
     
     var body: some View {
         VStack(spacing: 20) {
+            
+            Text("Selected Images Count: \(productViewModel.imgurViewModel.selectedImages.count)")
+                            .font(.caption)
+                            .foregroundColor(.gray)
+            
             // Image preview grid
             LazyVGrid(columns: [
                 GridItem(.adaptive(minimum: 100))
@@ -42,8 +47,8 @@ struct ImageUploadView: View {
             
             if !imgurViewModel.uploadedImageURLs.isEmpty {
                 Text("Images successfully uploaded!")
-                    .foregroundColor(.green)
-                    .fontWeight(.bold)
+                    .foregroundStyle(.green)
+                    .font(.headline)
             }
             
             // PhotosPicker for multiple images
@@ -85,5 +90,5 @@ struct ImageUploadView: View {
 
 
 #Preview {
-    ImageUploadView()
+    //    ImageUploadView()
 }

@@ -22,7 +22,6 @@ class ProductViewModel: ObservableObject {
     @Published var brand: String = ""
     @Published var countProduct: Int = 0
     @Published var category: Categories = .livingRoom
-//    @Published var image: String = ""
     @Published var images: [String] = []
     @Published var rating: Double = 0.0
     @Published var isVisible: Bool = true

@@ -22,7 +22,7 @@ struct ProductGridAdmin: View {
                 Button(action: {
                     productViewModel.isAddSheetOpen.toggle()
                 }) {
-                    Text("Add+")
+                    Text("Add New Product+")
                         .font(.headline)
                         .foregroundStyle(.white)
                         .background(.blue.opacity(0.8))
