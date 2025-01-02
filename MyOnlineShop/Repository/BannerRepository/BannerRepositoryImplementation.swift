@@ -20,17 +20,21 @@ class BannerRepositoryImplementation: BannerRepository {
         }
     }
     
-    func observeBanner(completion: @escaping (Result<Banner, any Error>) -> Void) {
+    func observeBanner(completion: @escaping (Result<[Banner], any Error>) -> Void) {
         db.collection( "banners").addSnapshotListener { snapshot, error in
             
             if let error = error {
                 print(error)
+                completion(.failure(error))
                 return
             }
             
-            guard let document = snapshot?.documents else { return }
+            guard let document = snapshot?.documents else {
+                completion(.failure(NSError(domain: "No documents", code: -1)))
+                return
+            }
             
-            let banner = document.compactMap { document -> Banner? in
+            let banners = document.compactMap { document -> Banner? in
                 do {
                     return try document.data(as: Banner.self)
                 } catch {
@@ -38,6 +42,7 @@ class BannerRepositoryImplementation: BannerRepository {
                     return nil
                 }
             }
+            completion(.success(banners))
         }
     }
     

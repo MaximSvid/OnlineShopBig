@@ -16,9 +16,9 @@ struct ImageUploadView: View {
     var body: some View {
         VStack(spacing: 20) {
             
-            Text("Selected Images Count: \(productViewModel.imgurViewModel.selectedImages.count)")
-                            .font(.caption)
-                            .foregroundColor(.gray)
+//            Text("Selected Images Count: \(productViewModel.imgurViewModel.selectedImages.count)")
+//                            .font(.caption)
+//                            .foregroundColor(.gray)
             
             // Image preview grid
             LazyVGrid(columns: [
@@ -64,7 +64,7 @@ struct ImageUploadView: View {
             }
             
             // Upload button
-            if !productViewModel.imgurViewModel.selectedImages.isEmpty {
+//            if !productViewModel.imgurViewModel.selectedImages.isEmpty {
                 Button(action: productViewModel.imgurViewModel.uploadImages) {
                     if imgurViewModel.isUploading {
                         ProgressView()
@@ -79,7 +79,7 @@ struct ImageUploadView: View {
                 .background(RoundedRectangle(cornerRadius: 10)
                     .fill(imgurViewModel.isUploading ? Color.gray : Color.green))
                 .disabled(imgurViewModel.isUploading)
-            }
+//            }
         }
         .padding()
         .onChange(of: productViewModel.imgurViewModel.selectedItems) { _ in

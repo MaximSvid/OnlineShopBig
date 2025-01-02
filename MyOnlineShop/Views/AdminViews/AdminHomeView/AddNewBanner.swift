@@ -20,10 +20,7 @@ struct AddNewBanner: View {
             Text("Add Banner")
                 .font(.title)
                 .padding([.top, .bottom])
-            
-            Text("Selected Images Count: \(bannerViewModel.imgurViewModel.selectedImages.count)")
-                            .font(.caption)
-                            .foregroundColor(.gray)
+
             
             LazyVGrid (columns: columns) {
                 ForEach(bannerViewModel.imgurViewModel.selectedImages.indices, id: \.self) { index in
@@ -44,12 +41,7 @@ struct AddNewBanner: View {
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
             }
-            
-            //            if !imgurViewModel.uploadedImageURLs.isEmpty {
-            //                Text("Image successfully uploaded")
-            //                    .foregroundStyle(.green)
-            //                    .font(.headline)
-            //            }
+
             
             // PhotosPicker for multiple images
             PhotosPicker(selection: $bannerViewModel.imgurViewModel.selectedItems,
@@ -64,7 +56,7 @@ struct AddNewBanner: View {
             }
             
             // Upload button
-            if !bannerViewModel.imgurViewModel.selectedImages.isEmpty {
+
                 Button(action: bannerViewModel.imgurViewModel.uploadImages) {
                     if bannerViewModel.imgurViewModel.isUploading {
                         ProgressView()
@@ -79,8 +71,6 @@ struct AddNewBanner: View {
                 .background(RoundedRectangle(cornerRadius: 10)
                     .fill(bannerViewModel.imgurViewModel.isUploading ? Color.gray : Color.green))
                 .disabled(bannerViewModel.imgurViewModel.isUploading)
-            }
-            
             
             HStack {
                 Text("Banner Name")

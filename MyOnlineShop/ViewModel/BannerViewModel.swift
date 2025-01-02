@@ -49,10 +49,20 @@ class BannerViewModel: ObservableObject {
         bannerRepository.observeBanner { [weak self] result in
             switch result {
             case .success(let banner):
-                self?.banners.append(banner)
+                self?.banners.append(contentsOf: banner)
             case .failure(let error):
                 print("Error observing banner: \(error)")
             }
         }
     }
+//    func showAllBanners() {
+//        bannerRepository.observeBanner { [weak self] result in
+//            switch result {
+//            case .success(let banners):
+//                self?.banners = banners
+//            case .failure(let error):
+//                print("Error observing banner: \(error)")
+//            }
+//        }
+//    }
 }

@@ -7,6 +7,6 @@
 
 protocol BannerRepository {
     func addNewBanner(banner: Banner) throws
-    func observeBanner(completion: @escaping (Result<Banner, Error>) -> Void)
+    func observeBanner(completion: @escaping (Result<[Banner], Error>) -> Void)
     func updateBanner(banner: Banner) throws
 }

@@ -10,10 +10,10 @@ import SwiftUI
 struct BannerView: View {
     @EnvironmentObject var bannerViewModel: BannerViewModel
     @EnvironmentObject var imgurViewModel: ImgurViewModel
-//    var banner: Banner
+    //    var banner: Banner
     
-    @State private var currentIndex = 0
-    private let timer = Timer.publish(every: 4, on: .main, in: .common).autoconnect()
+    //    @State private var currentIndex = 0
+    //    private let timer = Timer.publish(every: 4, on: .main, in: .common).autoconnect()
     
     
     var body: some View {
@@ -34,31 +34,31 @@ struct BannerView: View {
             }
             
             
-            if !bannerViewModel.banners.isEmpty {
-                TabView(selection: $currentIndex) {
-                    ForEach(bannerViewModel.banners.indices, id: \.self) { bannerIndex in
-                        let banner = bannerViewModel.banners[bannerIndex]
-                        ForEach(banner.bannerImage.indices, id: \.self) { imageIndex in
-                            AsyncImage(url: URL(string: banner.bannerImage[imageIndex])) { image in
+            if let lastBanner = bannerViewModel.banners.last {
+                TabView {
+                    // Проходим по всем изображениям из последнего баннера
+                    ForEach(lastBanner.bannerImage, id: \.self) { imageUrl in
+                        if let url = URL(string: imageUrl) {
+                            AsyncImage(url: url) { image in
                                 image
                                     .resizable()
                                     .scaledToFill()
                                     .frame(maxHeight: 200)
                                     .clipped()
+                                    .clipShape(RoundedRectangle(cornerRadius: 8))
                             } placeholder: {
                                 ProgressView()
                             }
-                            .tag(bannerIndex)
                         }
                     }
                 }
-                .frame(height: 200)
-                .tabViewStyle(PageTabViewStyle())
-                .onReceive(timer) { _ in
-                    withAnimation {
-                        currentIndex = (currentIndex + 1) % bannerViewModel.banners.count
-                    }
-                }
+                    .frame(height: 200)
+                    .tabViewStyle(.page)
+                //                .onReceive(timer) { _ in
+                //                    withAnimation {
+                //                        currentIndex = (currentIndex + 1) % bannerViewModel.banners.count
+                //                    }
+                //                }
             } else {
                 Text("No banners available")
                     .frame(height: 200)
@@ -66,8 +66,12 @@ struct BannerView: View {
                     .background(Color.gray.opacity(0.1))
             }
         }
+        .onAppear {
+            bannerViewModel.observeBanner()
+        }
     }
 }
+
 
 #Preview {
     //    BannerView()
