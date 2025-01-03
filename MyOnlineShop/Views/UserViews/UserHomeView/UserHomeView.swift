@@ -43,11 +43,16 @@ struct UserHomeView: View {
                         .background(Circle().fill(Color.gray.opacity(0.2)))
                 } 
                 ToolbarItem(placement: .topBarTrailing) {
-                    Image(systemName: "magnifyingglass")
-                        .font(.headline)
-                        .foregroundStyle(.gray)
-                        .padding(8)
-                        .background(Circle().fill(Color.gray.opacity(0.2)))
+                    Button(action: {
+                        userProductViewModel.isSearchVisible = true
+                    }) {
+                        Image(systemName: "magnifyingglass")
+                            .font(.headline)
+                            .foregroundStyle(.gray)
+                            .padding(8)
+                            .background(Circle().fill(Color.gray.opacity(0.2)))
+                    }
+                    
                 }
             }
             .searchable(
