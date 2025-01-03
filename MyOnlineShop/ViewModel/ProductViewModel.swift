@@ -217,6 +217,7 @@ class ProductViewModel: ObservableObject {
             if let index = products.firstIndex(where: { $0.id == updateProduct.id }) {
                 products[index] = updateProduct
             }
+            resetFields()
         } catch {
             print("Error updating product: \(error)")
         }

@@ -156,22 +156,19 @@ struct EditProductSheet: View {
                                 Circle()
                                     .fill(color.color)
                                     .frame(width: 30, height: 30)
-                                //                                    .overlay(
-                                //                                        Circle()
-                                //                                            .stroke(product.selectedColor == color ? Color.black : Color.clear, lineWidth: 2)
-                                //                                    )
-                                //                                    .onTapGesture {
-                                //                                        product.selectedColor = color
-                                //                                    }
+                                    .overlay(
+                                        Circle()
+                                            .stroke(productViewModel.selectedColor == color ? Color.black : Color.clear, lineWidth: 0.3)
+                                    )
+                                    .onTapGesture {
+                                        productViewModel.selectedColor = color
+                                    }
                             }
                         }
                         .padding(.horizontal, 8)
-                        .padding(.top, 3)
-                        .padding(.bottom, 3)
                     }
                 }
                 .padding([.top, .bottom])
-                
                 Button(action: {
                     
                     productViewModel.title = title

@@ -49,9 +49,13 @@ struct UserHomeView: View {
                         .padding(8)
                         .background(Circle().fill(Color.gray.opacity(0.2)))
                 }
-                
             }
-            
+            .searchable(
+                text: $userProductViewModel.searchText,
+                isPresented: $userProductViewModel.isSearchVisible,
+                placement: .automatic,
+                prompt: "Search products..."
+            )
         }
     }
 }

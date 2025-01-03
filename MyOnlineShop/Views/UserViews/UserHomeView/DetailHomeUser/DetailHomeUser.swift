@@ -11,14 +11,53 @@ struct DetailHomeUser: View {
     @EnvironmentObject var productViewModel: ProductViewModel
     @EnvironmentObject var userProductViewModel: UserProductViewModel
     var product: Product
+    @State private var currentImageIndex = 0
+
     
     var body: some View {
         NavigationStack {
             VStack (alignment: .leading) {
                 
-                Image("image")
-                    .resizable()
-                    .frame(width: .infinity, height: 250)
+                ZStack(alignment: .bottom) {
+                    if !product.images.isEmpty {
+                        TabView(selection: $currentImageIndex) {
+                            ForEach(product.images.indices, id: \.self) { index in
+                                AsyncImage(url: URL(string: product.images[index])) { image in
+                                    image.resizable()
+                                        .scaledToFill()
+                                        .frame(width: .infinity, height: 250)
+                                        .cornerRadius(12)
+                                        .clipped()
+                                } placeholder: {
+                                    Color.gray
+                                        .frame(width: .infinity, height: 250)
+                                }
+                                .tag(index)
+                            }
+                        }
+                        .frame(width: .infinity, height: 250)
+                        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                        
+                        // Индикаторы страниц
+                        if product.images.count > 1 {
+                            HStack(spacing: 6) {
+                                ForEach(0..<product.images.count, id: \.self) { index in
+                                    Circle()
+                                        .fill(currentImageIndex == index ? Color.white : Color.white.opacity(0.5))
+                                        .frame(width: 6, height: 6)
+                                }
+                            }
+                            .padding(.bottom, 8)
+                        }
+                    } else {
+                        Image("image")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: .infinity, height: 250)
+                            .cornerRadius(12)
+                            .clipped()
+                    }
+                }
                 
                 HStack {
                     VStack(alignment: .leading) {
@@ -26,6 +65,8 @@ struct DetailHomeUser: View {
                             .font(.headline.bold())
                         
                     }
+                    
+                    
                     Spacer()
                     
                     HStack {
@@ -48,13 +89,14 @@ struct DetailHomeUser: View {
                         }
                         
                     }
-                    .padding([.top, .bottom])
                 }
+                .padding([.top, .bottom])
+
                 
                 HStack {
                     Text(product.brand)
                         .font(.callout)
-                        .foregroundStyle(.yellow)
+                        
                     
                     Spacer()
                     
@@ -68,6 +110,31 @@ struct DetailHomeUser: View {
                 }
                 
                 HStack {
+                    Text("Quantity of goods:")
+                        .font(.callout)
+                    
+                    Spacer()
+                    if product.countProduct > 0 {
+                        Text("\(product.countProduct)")
+                            .font(.callout)
+                            .foregroundStyle(product.countProduct <= 10 ? .red : .primary)
+                    } else {
+                        Text("Out of stock")
+                            .font(.callout)
+                            .foregroundStyle(.red)
+                            .onAppear {
+                                productViewModel.toggleVisibility(for: product)
+                            }
+                    }
+                }
+                .padding(.top, 3)
+                .padding(.bottom, 3)
+                
+                HStack {
+                    Text("Select a  Color")
+                        .font(.headline)
+                        .foregroundStyle(.gray)
+                    
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 16) {
                             ForEach(ColorEnum.allCases, id: \.self) { color in

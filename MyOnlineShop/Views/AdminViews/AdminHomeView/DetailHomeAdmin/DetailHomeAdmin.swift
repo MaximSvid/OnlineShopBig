@@ -131,29 +131,29 @@ struct DetailHomeAdmin: View {
                 .padding(.bottom, 3)
                 
                 HStack {
-                    Text("Select a  Color")
+                    Text("Color: \(productViewModel.selectedColor )")
                         .font(.headline)
                         .foregroundStyle(.gray)
                     
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 16) {
-                            ForEach(ColorEnum.allCases, id: \.self) { color in
-                                Circle()
-                                    .fill(color.color)
-                                    .frame(width: 30, height: 30)
-                                    .overlay(
-                                        Circle()
-                                            .stroke(productViewModel.selectedColor == color ? Color.gray : Color.clear, lineWidth: 2)
-                                    )
-                                    .onTapGesture {
-                                        productViewModel.selectedColor = color
-                                    }
-                            }
-                        }
-                        .padding(.horizontal, 8)
-                        .padding(.top, 3)
-                        .padding(.bottom, 3)
-                    }
+//                    ScrollView(.horizontal, showsIndicators: false) {
+//                        HStack(spacing: 16) {
+//                            ForEach(ColorEnum.allCases, id: \.self) { color in
+//                                Circle()
+//                                    .fill(color.color)
+//                                    .frame(width: 30, height: 30)
+//                                    .overlay(
+//                                        Circle()
+//                                            .stroke(productViewModel.selectedColor == color ? Color.gray : Color.clear, lineWidth: 2)
+//                                    )
+//                                    .onTapGesture {
+//                                        productViewModel.selectedColor = color
+//                                    }
+//                            }
+//                        }
+//                        .padding(.horizontal, 8)
+//                        .padding(.top, 3)
+//                        .padding(.bottom, 3)
+//                    }
                 }
                 .padding([.top, .bottom])
                 

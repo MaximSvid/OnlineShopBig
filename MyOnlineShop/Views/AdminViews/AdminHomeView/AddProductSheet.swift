@@ -174,7 +174,8 @@ struct AddProductSheet: View {
                                             .stroke(productViewModel.selectedColor == color ? Color.black : Color.clear, lineWidth: 0.3)
                                     )
                                     .onTapGesture {
-                                        productViewModel.selectedColor = color                                    }
+                                        productViewModel.selectedColor = color
+                                    }
                             }
                         }
                         .padding(.horizontal, 8)
