@@ -21,11 +21,9 @@ class ProductViewModel: ObservableObject {
     @Published var description: String = ""
     @Published var brand: String = ""
     @Published var countProduct: Int = 0
-    @Published var category: Categories = .livingRoom
     @Published var images: [String] = []
     @Published var rating: Double = 0.0
     @Published var isVisible: Bool = true
-    @Published var selectedColor: ColorEnum = .blue
     @Published var isFavorite: Bool = false
     @Published var action: Bool = false
     
@@ -38,7 +36,6 @@ class ProductViewModel: ObservableObject {
     
     private let productRepository: ProductRepositoryAdmin
     
-    
     @Published var imgurViewModel: ImgurViewModel
     
     init(productRepository: ProductRepositoryAdmin = ProductRepositoryImplementation()) {
@@ -47,6 +44,7 @@ class ProductViewModel: ObservableObject {
             
             self.imgurViewModel.onImagesUploaded = { [weak self] urls in
                 self?.images = urls
+//                self?.updatedIm
             }
         }
     func addNewProduct() {
@@ -75,6 +73,8 @@ class ProductViewModel: ObservableObject {
         }
     }
     
+    @Published var category: Categories = .livingRoom
+    @Published var selectedColor: ColorEnum = .blue
     private func resetFields() {
         title = ""
         price = 0.0

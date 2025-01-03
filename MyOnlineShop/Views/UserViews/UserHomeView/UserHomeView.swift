@@ -15,6 +15,9 @@ struct UserHomeView: View {
         NavigationStack {
             ScrollView {
                 VStack {
+                    
+                    BannerUserView()
+                    
                     CategoryUser(categories: Categories.allCases)
                     ProductGridUser(columns: columns)
                     

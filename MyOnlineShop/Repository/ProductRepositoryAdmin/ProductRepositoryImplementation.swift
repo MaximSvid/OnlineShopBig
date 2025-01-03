@@ -8,6 +8,7 @@ import SwiftUI
 import Firebase
 
 class ProductRepositoryImplementation: ProductRepositoryAdmin {
+    
     private let db = Firestore.firestore()
     func addNewProduct(product: Product)  throws {
         do {

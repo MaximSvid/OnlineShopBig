@@ -10,13 +10,50 @@ import SwiftUI
 struct FavoriteListView: View {
     @EnvironmentObject var userProductViewModel: UserProductViewModel
     var product: Product
+    @State private var currentImageIndex = 0
     var body: some View {
         HStack {
-            Image("image")
-                .resizable()
-                .frame(width: 70, height: 90)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-                .padding(.leading, 5)
+            ZStack(alignment: .bottom) {
+                if !product.images.isEmpty {
+                    TabView(selection: $currentImageIndex) {
+                        ForEach(product.images.indices, id: \.self) { index in
+                            AsyncImage(url: URL(string: product.images[index])) { image in
+                                image.resizable()
+                                    .scaledToFill()
+                                    .frame(width: 70, height: 100)
+                                    .cornerRadius(10)
+                                    .clipped()
+                            } placeholder: {
+                                Color.gray
+                                    .frame(width: 70, height: 100)
+                            }
+                            .tag(index)
+                        }
+                    }
+                    .frame(width: 70, height: 100)
+                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                    
+                    // Индикаторы страниц
+                    if product.images.count > 1 {
+                        HStack(spacing: 6) {
+                            ForEach(0..<product.images.count, id: \.self) { index in
+                                Circle()
+                                    .fill(currentImageIndex == index ? Color.white : Color.white.opacity(0.5))
+                                    .frame(width: 6, height: 6)
+                            }
+                        }
+                        .padding(.bottom, 8)
+                    }
+                } else {
+                    Image("image")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 70, height: 100)
+                        .cornerRadius(10)
+                        .clipped()
+                }
+            }
+//            .padding(.leading)
             
             VStack (alignment: .leading) {
                 

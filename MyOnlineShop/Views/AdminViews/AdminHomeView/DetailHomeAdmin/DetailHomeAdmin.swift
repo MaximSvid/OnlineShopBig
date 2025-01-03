@@ -9,17 +9,56 @@ import SwiftUI
 
 struct DetailHomeAdmin: View {
     @EnvironmentObject var productViewModel: ProductViewModel
-    //    @Binding var selectedColor: ColorEnum
     var product: Product
+    
+    @State private var currentImageIndex = 0
+
     
     var body: some View {
         
         NavigationStack {
             VStack (alignment: .leading) {
                 
-                Image("image")
-                    .resizable()
-                    .frame(width: .infinity, height: 250)
+                ZStack(alignment: .bottom) {
+                    if !product.images.isEmpty {
+                        TabView(selection: $currentImageIndex) {
+                            ForEach(product.images.indices, id: \.self) { index in
+                                AsyncImage(url: URL(string: product.images[index])) { image in
+                                    image.resizable()
+                                        .scaledToFill()
+                                        .frame(width: .infinity, height: 250)
+                                        .cornerRadius(12)
+                                        .clipped()
+                                } placeholder: {
+                                    Color.gray
+                                        .frame(width: .infinity, height: 250)
+                                }
+                                .tag(index)
+                            }
+                        }
+                        .frame(width: .infinity, height: 250)
+                        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                        
+                        // Индикаторы страниц
+                        if product.images.count > 1 {
+                            HStack(spacing: 6) {
+                                ForEach(0..<product.images.count, id: \.self) { index in
+                                    Circle()
+                                        .fill(currentImageIndex == index ? Color.white : Color.white.opacity(0.5))
+                                        .frame(width: 6, height: 6)
+                                }
+                            }
+                            .padding(.bottom, 8)
+                        }
+                    } else {
+                        Image("image")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: .infinity, height: 250)
+                            .cornerRadius(12)
+                            .clipped()
+                    }
+                }
                 
                 HStack {
                     VStack(alignment: .leading) {

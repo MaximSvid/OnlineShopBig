@@ -10,7 +10,5 @@ protocol ProductRepositoryAdmin {
     func observeProducts(completion: @escaping (Result<[Product], Error>) -> Void)
     func deleteProduct(productId: String, completion: @escaping (Result<Void, Error>) -> Void)
     func toggleVisibility(for productId: String, isVisible: Bool, completion: @escaping (Result<Void, Error>) -> Void)
-    
     func updateProduct(product: Product) throws
-    
 }

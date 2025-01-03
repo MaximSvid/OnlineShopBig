@@ -102,6 +102,8 @@ struct AddNewBanner: View {
         .onChange(of: bannerViewModel.imgurViewModel.selectedImages) { _ in
             print("Selected items updated: \(bannerViewModel.imgurViewModel.selectedItems)")
             bannerViewModel.imgurViewModel.loadImages()
+            
+
         }
     }
 }

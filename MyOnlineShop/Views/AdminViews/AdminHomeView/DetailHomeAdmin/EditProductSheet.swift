@@ -173,6 +173,8 @@ struct EditProductSheet: View {
                 
                 Button(action: {
                     // Формирование обновленного продукта
+//                    let  updatedImages = self.updatedImages.isEmpty ? product.images : self.updatedImages
+                    
                     let updatedProduct = Product(
                         id: product.id,
                         title: title,
