@@ -11,6 +11,7 @@ struct EditProductSheet: View {
     
     var product: Product
     @EnvironmentObject var productViewModel: ProductViewModel
+    @EnvironmentObject var imgurViewModel: ImgurViewModel
     
     @State private var title: String = ""
     @State private var priceString: String = ""
@@ -38,7 +39,7 @@ struct EditProductSheet: View {
                 ImageUploadView()
                 
                 Divider()
-
+                
                 
                 HStack {
                     Text("Product Name")
@@ -155,13 +156,13 @@ struct EditProductSheet: View {
                                 Circle()
                                     .fill(color.color)
                                     .frame(width: 30, height: 30)
-//                                    .overlay(
-//                                        Circle()
-//                                            .stroke(product.selectedColor == color ? Color.black : Color.clear, lineWidth: 2)
-//                                    )
-//                                    .onTapGesture {
-//                                        product.selectedColor = color
-//                                    }
+                                //                                    .overlay(
+                                //                                        Circle()
+                                //                                            .stroke(product.selectedColor == color ? Color.black : Color.clear, lineWidth: 2)
+                                //                                    )
+                                //                                    .onTapGesture {
+                                //                                        product.selectedColor = color
+                                //                                    }
                             }
                         }
                         .padding(.horizontal, 8)
@@ -172,29 +173,20 @@ struct EditProductSheet: View {
                 .padding([.top, .bottom])
                 
                 Button(action: {
-                    // Формирование обновленного продукта
-//                    let  updatedImages = self.updatedImages.isEmpty ? product.images : self.updatedImages
                     
-                    let updatedProduct = Product(
-                        id: product.id,
-                        title: title,
-                        price: Double(priceString) ?? 0.0,
-                        actionPrice: Double(actionPriceString) ?? 0.0,
-                        description: description,
-                        brand: brand,
-                        countProduct: Int(countString) ?? 0,
-                        category: category.rawValue,
-                        images: product.images, // оставляем текущий image
-                        rating: Double(ratingString) ?? 0.0,
-                        isVisible: isVisible,
-                        selectedColor: selectedColor.rawValue,
-                        isFavorite: product.isFavorite,
-                        action: action,
-                        dateCreated: product.dateCreated
-                    )
+                    productViewModel.title = title
+                    productViewModel.price = Double(priceString) ?? 0.0
+                    productViewModel.actionPrice = Double(actionPriceString) ?? 0.0
+                    productViewModel.description = description
+                    productViewModel.brand = brand
+                    productViewModel.countProduct = Int(countString) ?? 0
+                    productViewModel.category = category
+                    productViewModel.rating = Double(ratingString) ?? 0.0
+                    productViewModel.isVisible = isVisible
+                    productViewModel.selectedColor = selectedColor
+                    productViewModel.action = action
                     
-                    // Обновление товара
-                    productViewModel.updateProduct(product: updatedProduct)
+                    productViewModel.updateProduct()
                     productViewModel.isEditSheetOpen = false
                     
                 }) {
@@ -210,6 +202,7 @@ struct EditProductSheet: View {
             }
             .padding([.trailing, .leading])
             .onAppear {
+                productViewModel.setSelectedProduct(product)
                 title = product.title
                 priceString = String(format: "%.2f", product.price)
                 actionPriceString = String(format: "%.2f", product.actionPrice)

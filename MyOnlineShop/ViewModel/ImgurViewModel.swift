@@ -66,6 +66,16 @@ class ImgurViewModel: ObservableObject {
         selectedItems = []
         uploadedImageURLs = []
     }
+    
+    func updateImages(existingImages: [String]) -> [String] {
+        // Сохраняем старые изображения, если новых нет
+        if uploadedImageURLs.isEmpty {
+            return existingImages
+        }
+        
+        // Добавляем новые изображения к существующим
+        return existingImages + uploadedImageURLs
+    }
 }
 
 

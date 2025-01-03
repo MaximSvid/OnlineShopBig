@@ -14,6 +14,7 @@ class ProductViewModel: ObservableObject {
     @Published var isEditSheetOpen: Bool = false
     
     @Published var products: [Product] = []
+    @Published var selectedProduct: Product? // Редактируемый продукт
     
     @Published var title: String = ""
     @Published var price: Double = 0.0
@@ -39,14 +40,13 @@ class ProductViewModel: ObservableObject {
     @Published var imgurViewModel: ImgurViewModel
     
     init(productRepository: ProductRepositoryAdmin = ProductRepositoryImplementation()) {
-            self.productRepository = productRepository
-            self.imgurViewModel = ImgurViewModel()
-            
-            self.imgurViewModel.onImagesUploaded = { [weak self] urls in
-                self?.images = urls
-//                self?.updatedIm
-            }
+        self.productRepository = productRepository
+        self.imgurViewModel = ImgurViewModel()
+        
+        self.imgurViewModel.onImagesUploaded = { [weak self] urls in
+            self?.images = urls
         }
+    }
     func addNewProduct() {
         let newProduct = Product(
             title: title,
@@ -173,13 +173,50 @@ class ProductViewModel: ObservableObject {
         }
     }
     
-    func updateProduct(product: Product) {
+        // функции для редактирования продукта
+    func setSelectedProduct(_ product: Product) {
+        self.selectedProduct = product
+        self.title = product.title
+        self.price = product.price
+        self.actionPrice = product.actionPrice
+        self.description = product.description
+        self.brand = product.brand
+        self.countProduct = product.countProduct
+        self.category = Categories(rawValue: product.category) ?? .livingRoom
+        self.images = product.images
+        self.rating = product.rating
+        self.isVisible = product.isVisible
+        self.selectedColor = ColorEnum(rawValue: product.selectedColor) ?? .blue
+        self.action = product.action
+    }
+    
+    func updateProduct( ) {
+        guard let existingProduct = selectedProduct else {
+            print("No product selected for update.")
+            return
+        }
+        let updateProduct = Product(
+            id: existingProduct.id,
+            title: title,
+            price: price,
+            actionPrice: actionPrice,
+            description: description,
+            brand: brand,
+            countProduct: countProduct,
+            category: category.rawValue,
+            images: images,
+            rating: rating,
+            isVisible: isVisible,
+            selectedColor: selectedColor.rawValue,
+            isFavorite: isFavorite,
+            action: action
+        )
         do {
-            try productRepository.updateProduct(product: product)
-            if let index = products.firstIndex(where: { $0.id == product.id }) {
-                products[index] = product // Обновляем локальную копию
-            }
+            try productRepository.updateProduct(product: updateProduct)
             print("Product updated successfully.")
+            if let index = products.firstIndex(where: { $0.id == updateProduct.id }) {
+                products[index] = updateProduct
+            }
         } catch {
             print("Error updating product: \(error)")
         }
