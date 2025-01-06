@@ -201,6 +201,9 @@ struct DetailHomeUser: View {
                     .buttonStyle(BorderedButtonStyle())
                 }
             }
+            .onAppear {
+                userCartViewModel.loadCart()
+            }
             .padding([.leading, .trailing])
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -208,12 +211,29 @@ struct DetailHomeUser: View {
                         .font(.title.bold())
                 }
                 
+                
                 ToolbarItem(placement: .topBarTrailing) {
-                    Image(systemName: "cart")
-                        .font(.headline)
-                        .foregroundStyle(.gray)
-                        .padding(8)
-                        .background(Circle().fill(Color.gray.opacity(0.2)))
+                    NavigationLink{
+                        CartUser()
+                    } label: {
+                        ZStack (alignment: .topTrailing) {
+                            Image(systemName: "cart")
+                                .font(.headline)
+                                .foregroundStyle(.gray)
+                                .padding(8)
+                                .background(Circle().fill(Color.gray.opacity(0.2)))
+                            
+                            if userCartViewModel.cartItemsCount > 0 {
+                                Text("\(userCartViewModel.cartItemsCount)")
+                                    .font(.caption2)
+                                    .padding(5)
+                                    .foregroundStyle(.white)
+                                    .background(Color.red)
+                                    .clipShape(Circle())
+                                    .offset(x: 10, y: -4)
+                            }
+                        }
+                    }
                 }
             }
         }

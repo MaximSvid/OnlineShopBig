@@ -10,7 +10,7 @@ import Firebase
 
 @MainActor
 class UserCartViewModel: ObservableObject {
-
+    
     @Published var products: [Product] = []
     
     private let cartRepositoryUser: CartRepositoryUser
@@ -18,7 +18,7 @@ class UserCartViewModel: ObservableObject {
     init(cartRepositoryUser: CartRepositoryUser = CartRepositoryUserImplementation()) {
         self.cartRepositoryUser = cartRepositoryUser
     }
-
+    
     func addToCart(for product: Product) {
         guard let userId = FirebaseService.shared.userId,
               let productId = product.id else {
@@ -54,4 +54,18 @@ class UserCartViewModel: ObservableObject {
             }
         }
     }
+    
+    var totalSum: Double {
+        products.reduce(0) {sum, product in
+            if product.action && product.actionPrice > 0 {
+                return sum + product.actionPrice
+            } else {
+                return sum + product.price
+            }
+        }
+    }
+    var cartItemsCount: Int {
+        products.count
+    }
+    
 }
