@@ -10,39 +10,23 @@ import SwiftUI
 struct FavoriteListView: View {
     @EnvironmentObject var userProductViewModel: UserProductViewModel
     var product: Product
-    @State private var currentImageIndex = 0
+    //    @State private var currentImageIndex = 0
     var body: some View {
         HStack {
             ZStack(alignment: .bottom) {
                 if !product.images.isEmpty {
-                    TabView(selection: $currentImageIndex) {
-                        ForEach(product.images.indices, id: \.self) { index in
-                            AsyncImage(url: URL(string: product.images[index])) { image in
-                                image.resizable()
-                                    .scaledToFill()
-                                    .frame(width: 70, height: 100)
-                                    .cornerRadius(10)
-                                    .clipped()
-                            } placeholder: {
-                                Color.gray
-                                    .frame(width: 70, height: 100)
-                            }
-                            .tag(index)
+                    ForEach(product.images.indices, id: \.self) { index in
+                        AsyncImage(url: URL(string: product.images[index])) { image in
+                            image.resizable()
+                                .scaledToFill()
+                                .frame(width: 70, height: 100)
+                                .cornerRadius(10)
+                                .clipped()
+                        } placeholder: {
+                            Color.gray
+                                .frame(width: 70, height: 100)
                         }
-                    }
-                    .frame(width: 70, height: 100)
-                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                    
-                    // Индикаторы страниц
-                    if product.images.count > 1 {
-                        HStack(spacing: 6) {
-                            ForEach(0..<product.images.count, id: \.self) { index in
-                                Circle()
-                                    .fill(currentImageIndex == index ? Color.white : Color.white.opacity(0.5))
-                                    .frame(width: 6, height: 6)
-                            }
-                        }
-                        .padding(.bottom, 8)
+                        .tag(index)
                     }
                 } else {
                     Image("image")
@@ -53,7 +37,6 @@ struct FavoriteListView: View {
                         .clipped()
                 }
             }
-//            .padding(.leading)
             
             VStack (alignment: .leading) {
                 
@@ -111,7 +94,7 @@ struct FavoriteListView: View {
                     .padding()
                 }
                 .buttonStyle(.plain)
-//                .background(Color.white.opacity(0.7))
+                //                .background(Color.white.opacity(0.7))
                 .padding(2)
                 .contentShape(Rectangle())
                 
@@ -138,6 +121,7 @@ struct FavoriteListView: View {
         
     }
 }
+
 
 #Preview {
     //    FavoriteListView()
