@@ -10,6 +10,7 @@ import SwiftUI
 struct DetailHomeUser: View {
     @EnvironmentObject var productViewModel: ProductViewModel
     @EnvironmentObject var userProductViewModel: UserProductViewModel
+    @EnvironmentObject var userCartViewModel: UserCartViewModel
     var product: Product
     @State private var currentImageIndex = 0
 
@@ -165,7 +166,7 @@ struct DetailHomeUser: View {
                 
                 HStack {
                     Button(action: {
-                        
+                        userCartViewModel.addToCart(for: product)
                     }) {
                         Text ("Buy Now")
                             .font(.headline.bold())

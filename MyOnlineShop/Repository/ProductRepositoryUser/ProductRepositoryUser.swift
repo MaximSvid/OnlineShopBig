@@ -9,9 +9,6 @@ protocol ProductRepositoryUser {
     func observeProductsUser(completion: @escaping (Result<[Product], Error>) -> Void)
     func updateFavoriteStatus(userID: String, productID: String, product: Product, isFavorite: Bool, completion: @escaping (Result<Void, Error>) -> Void)
     func loadFavoriteProducts(userID: String, completion: @escaping (Result<[Product], Error>) -> Void)
-    
-    
-    
 }
 
     
