@@ -12,6 +12,7 @@ import Firebase
 class UserCartViewModel: ObservableObject {
     
     @Published var products: [Product] = []
+    @Published var itemCount: [Product: Int] = [:]
     
     private let cartRepositoryUser: CartRepositoryUser
     
@@ -71,39 +72,44 @@ class UserCartViewModel: ObservableObject {
     func updateCountProducts(for product: Product, increment: Bool) {
         //increment Increment — это термин, который обычно используется для обозначения увеличения значения на определённое число, чаще всего на единицу. В программировании это очень часто встречающаяся операция, которая используется для работы с числовыми переменными, счётчиками или для изменения значения в циклах, интерфейсах и других сценариях.
         guard let userId = FirebaseService.shared.userId,
-              let productId = product.id,
-              let index = products.firstIndex(where: { $0.id == productId }) else {
+              let productId = product.id else {
             return
         }
+        // Получаем текущее количество товара
+        let currentCount = itemCount[product] ?? 0
         
-        var updateProduct = product
-        if increment {
-            updateProduct.countProduct += 1
-        } else {
-            updateProduct.countProduct -= 1
-        }
+        // Увеличиваем или уменьшаем количество в зависимости от параметра `increment`
+        let newCount = increment ? currentCount + 1 : currentCount - 1
         
-        if updateProduct.countProduct <= 0 {
+        if newCount <= 0 {
             removeFromCart(product: product)
+            itemCount[product] = nil
             return
         }
-        cartRepositoryUser.updateCountProduct(
-            userId: userId,
-            productId: productId,
-            productCount: updateProduct.countProduct) { [weak self] result in
-                switch result {
-                case .success:
-                    self?.loadCart()
-                    
-                case .failure(let error):
-                    print("Error update count product: \(error.localizedDescription)")
-                }
-            }
+        
+        // Обновляем количество в словаре
+        itemCount[product] = newCount
+        
+        // Обновляем количество на сервере
+//        cartRepositoryUser.updateCountProduct(
+//            userId: userId,
+//            productId: productId,
+//            productCount: newCount) { [weak self] result in
+//                switch result {
+//                case .success:
+//                    self?.loadCart()
+//                    
+//                case .failure(let error):
+//                    print("Error update count product: \(error.localizedDescription)")
+//                }
+//            }
     }
     
     func removeFromCart(product: Product) {
         guard let userId = FirebaseService.shared.userId,
               let productId = product.id else { return }
+        
+        itemCount[product] = nil
         
         cartRepositoryUser.removeFromCart(
             userId: userId,

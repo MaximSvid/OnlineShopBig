@@ -48,14 +48,16 @@ struct CartListUser: View {
                 Spacer()
                 
                 HStack {
+                    
+                    
                     if product.action && product.actionPrice > 0.0 {
                         // main price mit linie
                         Text(String(format: "€%.2f", product.price))
-                            .font(.headline)
+                            .font(.subheadline)
                             .foregroundStyle(product.isVisible ? .gray : .gray.opacity(0.5))
                             .strikethrough(true, color: .gray) // linie
                         
-                        Spacer()
+//                        Spacer()
                         
                         // ActionPrice
                         Text(String(format: "€%.2f", product.actionPrice))
@@ -64,14 +66,30 @@ struct CartListUser: View {
                     } else {
                         // Nur main price
                         Text(String(format: "€%.2f", product.price))
-                            .font(.headline)
+                            .font(.subheadline)
                             .foregroundStyle(product.isVisible ? .black : .gray)
                     }
                     Spacer()
+                    
+                    
                 }
                 .padding(.trailing, 4)
                 .padding(.leading, 4)
                 .padding(.bottom, 4)
+                
+                // Отображение итоговой цены
+                Text(
+                    String(
+                        format: "€%.2f",
+                        product.action && product.actionPrice > 0
+                        ? product.actionPrice * Double(userCartViewModel.itemCount[product] ?? 1)
+                        : product.price * Double(userCartViewModel.itemCount[product] ?? 1)
+                    )
+                )
+                .font(.subheadline)
+                Spacer()
+                
+                
             }
             
             Spacer()
@@ -93,10 +111,11 @@ struct CartListUser: View {
                     .buttonStyle(.plain)// этот атрибут необходим, чтобы экранировать list и нажимались только кнопки
                     
                     
-                    Text("\(product.countProduct)")
+                    Text("\(userCartViewModel.itemCount[product] ?? 1)")
                         .font(.headline)
                     
                     Button(action: {
+                        
                         userCartViewModel.updateCountProducts(for: product, increment: true)
                         //increment true - Это значит увеличивается
                     }) {
