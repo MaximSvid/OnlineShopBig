@@ -76,6 +76,7 @@ struct CartUser: View {
                             .clipShape(.buttonBorder)
                     }
                 }
+                .padding([.leading, .trailing])
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {

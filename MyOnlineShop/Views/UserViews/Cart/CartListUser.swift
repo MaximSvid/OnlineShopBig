@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CartListUser: View {
     @EnvironmentObject var userProductViewModel: UserProductViewModel
+    @EnvironmentObject var userCartViewModel: UserCartViewModel
     var product: Product
     var body: some View {
         HStack {
@@ -80,21 +81,24 @@ struct CartListUser: View {
                 
                 HStack {
                     Button(action: {
-                        
+                        userCartViewModel.updateCountProducts(for: product, increment: false)
+                        //increment false - Это значит уменьшается
                     }) {
                         Image(systemName: "minus")
                             .frame(width: 20, height: 20)
                             .foregroundStyle(.white)
                             .background(.blue)
                             .clipShape(RoundedRectangle(cornerRadius: 3))
-                        
                     }
+                    .buttonStyle(.plain)// этот атрибут необходим, чтобы экранировать list и нажимались только кнопки
                     
                     
-                    Text("1")
+                    Text("\(product.countProduct)")
                         .font(.headline)
+                    
                     Button(action: {
-                        
+                        userCartViewModel.updateCountProducts(for: product, increment: true)
+                        //increment true - Это значит увеличивается
                     }) {
                         Image(systemName: "plus")
                             .frame(width: 20, height: 20)
@@ -102,6 +106,7 @@ struct CartListUser: View {
                             .background(.blue)
                             .clipShape(RoundedRectangle(cornerRadius: 3))
                     }
+                    .buttonStyle(.plain)
                     
                     
                 }
@@ -122,4 +127,5 @@ struct CartListUser: View {
 #Preview {
     CartListUser( product: Product(title: "Test", price: 123.0))
         .environmentObject(UserViewModel())
+        .environmentObject(UserCartViewModel())
 }

@@ -9,6 +9,7 @@ import SwiftUI
 import Firebase
 
 class CartRepositoryUserImplementation: CartRepositoryUser {
+        
     private let db = Firestore.firestore()
 
     
@@ -48,6 +49,31 @@ class CartRepositoryUserImplementation: CartRepositoryUser {
             }
             completion(.success(products))
         }
+    }
+    
+    func updateCountProduct (userId: String, productId: String, productCount: Int, completion: @escaping (Result<Void, any Error>) -> Void) {
+        
+        let userCartRef = db.collection("users").document(userId).collection("cart").document(productId)
+        
+        userCartRef.updateData(["countProduct": productCount]) { error in
+            if let error {
+                completion(.failure(error))
+                return
+            }
+            completion(.success(()))
+        }
+    }
+    
+    func removeFromCart(userId: String, productId: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+        let userCartRef = db.collection("users").document(userId).collection("cart").document(productId)
+        userCartRef.delete() { error in
+            if let error {
+                completion(.failure(error))
+                return
+            }
+            completion(.success(()))
+        }
+        
     }
     
 }
