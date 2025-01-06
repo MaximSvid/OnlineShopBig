@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct CartUser: View {
+    @EnvironmentObject var userCartViewModel: UserCartViewModel
     var body: some View {
         VStack {
             
-            List() {
-                
+            List(userCartViewModel.products) { product in
+                CartListUser(product: product)
             }
             
             Spacer()
@@ -67,6 +68,9 @@ struct CartUser: View {
                         .clipShape(.buttonBorder)
                 }
             }
+        }
+        .onAppear {
+            userCartViewModel.loadCart()
         }
         .padding([.leading, .trailing])
     }

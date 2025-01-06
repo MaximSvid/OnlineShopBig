@@ -16,14 +16,18 @@ class CartRepositoryUserImplementation: CartRepositoryUser {
     func getToCart(userId: String, productId: String, product: Product, completion: @escaping (Result<Void, any Error>) -> Void) {
         let userCartRef = db.collection("users").document(userId).collection("cart").document(productId)
         
-        userCartRef.setData([
-            "product": product
-        ]) { error in
-            if let error {
-                completion(.failure(error))
-            } else {
-                completion(.success(()))
+        do {
+            let data = try Firestore.Encoder().encode(product)
+            userCartRef.setData(data) { error in
+                if let error {
+                    completion(.failure(error))
+                    return
+                } else {
+                    completion(.success(()))
+                }
             }
+        } catch {
+            completion(.failure(error))
         }
     }
     

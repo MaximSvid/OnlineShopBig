@@ -21,8 +21,8 @@ class UserCartViewModel: ObservableObject {
 
     func addToCart(for product: Product) {
         guard let userId = FirebaseService.shared.userId,
-              let productId = product.id,
-              let index = products.firstIndex(where: { $0.id == productId }) else {
+              let productId = product.id else {
+            print("Error add to cart")
             return
         }
         
@@ -44,10 +44,11 @@ class UserCartViewModel: ObservableObject {
         guard let userId = FirebaseService.shared.userId else {
             return
         }
-        cartRepositoryUser.loadCartProducts(userId: userId) { result in
+        cartRepositoryUser.loadCartProducts(userId: userId) { [weak self] result in
+            //weak self - против утечек памяти
             switch result {
             case .success(let products):
-                self.products = products
+                self?.products = products
             case .failure(let error):
                 print("Error load cart \(error)")
             }
