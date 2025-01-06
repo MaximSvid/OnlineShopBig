@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CartUser: View {
     @EnvironmentObject var userCartViewModel: UserCartViewModel
-//    var product: Product
+    //    var product: Product
     var body: some View {
         NavigationStack {
             VStack {
@@ -45,8 +45,11 @@ struct CartUser: View {
                         
                         Text("€ 35")
                             .font(.headline)
-
+                        
                     }
+                    Text ("Enter your coupon here to get a discount! Don't miss the chance to save on your purchase.")
+                        .font(.subheadline)
+                        .foregroundStyle(.gray)
                 }
                 .padding(.top, 20)
                 .padding(.bottom, 20)
@@ -87,12 +90,12 @@ struct CartUser: View {
             .onAppear {
                 userCartViewModel.loadCart()
             }
-//            .padding([.leading, .trailing])
+            //            .padding([.leading, .trailing])
         }
         
     }
 }
 
 #Preview {
-//    CartUser()
+    //    CartUser()
 }

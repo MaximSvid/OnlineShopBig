@@ -16,7 +16,6 @@ struct AuthWrapper: View {
     @StateObject private var bannerViewModel = BannerViewModel()
     @StateObject private var userCartViewModel = UserCartViewModel()
     
-    
     var body: some View {
         VStack {
             if authViewModel.userIsLoggedIn {

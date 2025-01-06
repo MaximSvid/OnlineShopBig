@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct UserHomeView: View {
+    @Binding var selectedTab: Int
     @EnvironmentObject var userProductViewModel: UserProductViewModel
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
     
@@ -19,7 +20,7 @@ struct UserHomeView: View {
                     BannerUserView()
                     
                     CategoryUser(categories: Categories.allCases)
-                    ProductGridUser(columns: columns)
+                    ProductGridUser(selectedTab: $selectedTab, columns: columns)
                     
                     
                     Spacer()
@@ -66,6 +67,6 @@ struct UserHomeView: View {
 }
 
 #Preview {
-    UserHomeView()
-        .environmentObject(UserProductViewModel())
+//    UserHomeView()
+//        .environmentObject(UserProductViewModel())
 }

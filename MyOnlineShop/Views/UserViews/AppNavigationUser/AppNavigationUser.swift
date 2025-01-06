@@ -9,25 +9,38 @@ import SwiftUI
 
 struct AppNavigationUser: View {
     @EnvironmentObject var authViewModel: AuthViewModel
+    @State private var selectedTab = 0
     var body: some View {
-        TabView {
-            Tab("Home", systemImage: "house") {
-                UserHomeView()
-            }
-            Tab("My Cart", systemImage: "cart") {
-                CartUser()
-            }
-            Tab("Favorite", systemImage: "star"){
-                Favorite()
-            }
-            Tab("Settings", systemImage: "gearshape") {
-                UserSettingsView()
-            }
+        TabView(selection: $selectedTab) {
+            UserHomeView(selectedTab: $selectedTab)
+                .tabItem {
+                    Label("Home", systemImage: "house")
+                }
+                .tag(0)
+            
+            CartUser()
+                .tabItem {
+                    Label("My Cart", systemImage: "cart")
+                }
+                .tag(1)
+            
+            Favorite()
+                .tabItem {
+                    Label("Favorite", systemImage: "star")
+                }
+                .tag(2)
+            
+            UserSettingsView()
+                .tabItem {
+                    Label("Settings", systemImage: "gearshape")
+                }
+                .tag(3)
         }
     }
 }
 
+
 #Preview {
     AppNavigationUser()
-         .environmentObject(AuthViewModel(userViewModel: UserViewModel()))
+        .environmentObject(AuthViewModel(userViewModel: UserViewModel()))
 }

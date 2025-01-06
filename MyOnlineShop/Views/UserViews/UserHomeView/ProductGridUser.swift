@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ProductGridUser: View {
     @EnvironmentObject var userProductViewModel: UserProductViewModel
+    @Binding var selectedTab: Int
     
     let columns: [GridItem]
     var body: some View {
@@ -23,8 +24,8 @@ struct ProductGridUser: View {
             
             LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(userProductViewModel.filteredProducts.filter { $0.isVisible }) { product in
-                    NavigationLink (destination: DetailHomeUser(product: product)) {
-                        UserProductCard(product: product)                 
+                    NavigationLink (destination: DetailHomeUser(selectedTab: $selectedTab, product: product)) {
+                        UserProductCard(product: product)
                     }
                 }
             }

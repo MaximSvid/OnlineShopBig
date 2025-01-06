@@ -11,9 +11,10 @@ struct DetailHomeUser: View {
     @EnvironmentObject var productViewModel: ProductViewModel
     @EnvironmentObject var userProductViewModel: UserProductViewModel
     @EnvironmentObject var userCartViewModel: UserCartViewModel
+    @Binding var selectedTab: Int
     var product: Product
     @State private var currentImageIndex = 0
-
+    
     
     var body: some View {
         NavigationStack {
@@ -92,12 +93,12 @@ struct DetailHomeUser: View {
                     }
                 }
                 .padding([.top, .bottom])
-
+                
                 
                 HStack {
                     Text(product.brand)
                         .font(.callout)
-                        
+                    
                     
                     Spacer()
                     
@@ -189,11 +190,11 @@ struct DetailHomeUser: View {
                             product.id ?? ""
                         }
                             .contains(product.id) ? "heart.fill" : "heart")
-                            .resizable()
-                            .frame(width: 20, height: 20)
-                            .foregroundStyle(product.isFavorite ? .red : .red)
-                            .scaleEffect(product.isFavorite ? 1.3 : 1.0)
-                            .padding(8)
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .foregroundStyle(product.isFavorite ? .red : .red)
+                        .scaleEffect(product.isFavorite ? 1.3 : 1.0)
+                        .padding(8)
                     }
                     .background(Color.white.opacity(0.7))
                     .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -211,12 +212,11 @@ struct DetailHomeUser: View {
                         .font(.title.bold())
                 }
                 
-                
                 ToolbarItem(placement: .topBarTrailing) {
-                    NavigationLink{
-                        CartUser()
+                    Button {
+                        selectedTab = 1 // Переключаемся на вкладку корзины
                     } label: {
-                        ZStack (alignment: .topTrailing) {
+                        ZStack(alignment: .topTrailing) {
                             Image(systemName: "cart")
                                 .font(.headline)
                                 .foregroundStyle(.gray)
@@ -235,6 +235,30 @@ struct DetailHomeUser: View {
                         }
                     }
                 }
+                
+                //                ToolbarItem(placement: .topBarTrailing) {
+                //                    NavigationLink{
+                //                        CartUser()
+                //                    } label: {
+                //                        ZStack (alignment: .topTrailing) {
+                //                            Image(systemName: "cart")
+                //                                .font(.headline)
+                //                                .foregroundStyle(.gray)
+                //                                .padding(8)
+                //                                .background(Circle().fill(Color.gray.opacity(0.2)))
+                //
+                //                            if userCartViewModel.cartItemsCount > 0 {
+                //                                Text("\(userCartViewModel.cartItemsCount)")
+                //                                    .font(.caption2)
+                //                                    .padding(5)
+                //                                    .foregroundStyle(.white)
+                //                                    .background(Color.red)
+                //                                    .clipShape(Circle())
+                //                                    .offset(x: 10, y: -4)
+                //                            }
+                //                        }
+                //                    }
+                //                }
             }
         }
     }
