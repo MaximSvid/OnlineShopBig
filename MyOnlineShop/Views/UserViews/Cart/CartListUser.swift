@@ -86,7 +86,7 @@ struct CartListUser: View {
                         : product.price * Double(userCartViewModel.itemCount[product] ?? 1)
                     )
                 )
-                .font(.subheadline)
+                .font(.headline)
                 Spacer()
                 
                 
@@ -115,7 +115,6 @@ struct CartListUser: View {
                         .font(.headline)
                     
                     Button(action: {
-                        
                         userCartViewModel.updateCountProducts(for: product, increment: true)
                         //increment true - Это значит увеличивается
                     }) {
@@ -126,14 +125,9 @@ struct CartListUser: View {
                             .clipShape(RoundedRectangle(cornerRadius: 3))
                     }
                     .buttonStyle(.plain)
-                    
-                    
                 }
-                
                 Spacer()
             }
-            
-            
         }
         //        .padding()
         .frame(width: .infinity, height: 100)

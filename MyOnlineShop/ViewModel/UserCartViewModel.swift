@@ -57,14 +57,15 @@ class UserCartViewModel: ObservableObject {
     }
     
     var totalSum: Double {
-        products.reduce(0) {sum, product in
-            if product.action && product.actionPrice > 0 {
-                return sum + product.actionPrice
-            } else {
-                return sum + product.price
-            }
-        }
-    }
+        products.reduce(0) { sum, product in
+                let count = itemCount[product] ?? 1 // Получаем количество товара, если его нет в словаре, берём 1
+                if product.action && product.actionPrice > 0 {
+                    return sum + (product.actionPrice * Double(count))
+                } else {
+                    return sum + (product.price * Double(count))
+                }
+            }    }
+    
     var cartItemsCount: Int {
         products.count
     }
