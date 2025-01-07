@@ -50,7 +50,7 @@ struct CouponListAdmin: View {
             Divider()
             
             Button(action: {
-                couponViewModel.couponSheet.toggle()
+                couponViewModel.updateCouponSheet.toggle()
             }) {
                 Image(systemName: "pencil")
                     .font(.headline)

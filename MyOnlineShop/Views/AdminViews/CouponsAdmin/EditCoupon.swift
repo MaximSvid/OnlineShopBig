@@ -10,6 +10,14 @@ import SwiftUI
 struct EditCoupon: View {
     @EnvironmentObject var couponViewModel: CouponViewModel
     @State private var toast: Toast? = nil
+//    var coupon: Coupon
+    
+//    @State private var couponCode: String = ""
+//    @State private var discountType: String = ""
+//    @State private var discountValue: Double = 0.0
+//    @State private var expirationDate: Date = Date()
+//    @State private var isActive: Bool = false
+    
     var body: some View {
         VStack {
             Text("Add New Coupon")
@@ -50,10 +58,17 @@ struct EditCoupon: View {
                 .padding(.bottom)
             
             Button(action: {
+                
+//                couponViewModel.couponeCode = couponCode
+//                couponViewModel.discountType = discountType
+//                couponViewModel.discountValue = discountValue
+//                couponViewModel.expirationDate = expirationDate
+//                couponViewModel.isActive = isActive
+                
                 if !couponViewModel.couponeCode.isEmpty && !couponViewModel.discountValue.isZero {
-                    couponViewModel.addNewCoupon()
-                    toast = Toast(style: .success, message: "Coupon code added successfully")
-                    couponViewModel.couponSheet.toggle()
+                    toast = Toast(style: .success, message: "Coupon updated successfully")
+                    couponViewModel.updateCoupon()
+                    couponViewModel.updateCouponSheet.toggle()
                 } else {
                     toast = Toast(style: .error, message: "Please enter all fields")
                 }
@@ -71,9 +86,17 @@ struct EditCoupon: View {
         }
         .padding([.leading, .trailing])
         .toastView(toast: $toast)
+//        .onAppear {
+//            couponViewModel.setSelectedCoupon(couponViewModel.coupons)
+//            couponCode = couponViewModel.couponeCode
+//            discountType = couponViewModel.discountType
+//            discountValue = couponViewModel.discountValue
+//            expirationDate = couponViewModel.expirationDate
+//            isActive = couponViewModel.isActive
+//        }
     }
 }
 
 #Preview {
-    EditCoupon()
+//    EditCoupon()
 }

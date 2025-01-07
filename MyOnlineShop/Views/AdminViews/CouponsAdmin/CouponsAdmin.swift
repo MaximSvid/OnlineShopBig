@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CouponsAdmin: View {
+//    var coupon: Coupon
     @EnvironmentObject var couponViewModel: CouponViewModel
     var body: some View {
         NavigationStack {
@@ -16,6 +17,10 @@ struct CouponsAdmin: View {
                 List (couponViewModel.coupons) { coupon in
                     CouponListAdmin(coupon: coupon)
                         .listRowSeparator(.hidden)
+                        .onTapGesture {
+                            couponViewModel.prepareForEdit(coupon)
+                            couponViewModel.updateCouponSheet.toggle()
+                        }
                 }
                 .listStyle(.plain)                
             }
@@ -43,11 +48,16 @@ struct CouponsAdmin: View {
                     .presentationDragIndicator(.visible)
                     .presentationDetents([.fraction(0.8)])
             }
+            .sheet(isPresented: $couponViewModel.updateCouponSheet) {
+                EditCoupon()
+                    .presentationDragIndicator(.visible)
+                    .presentationDetents([.fraction(0.8)])
+            }
         }
     }
 }
 
 #Preview {
-    CouponsAdmin()
-        .environmentObject(CouponViewModel())
+//    CouponsAdmin()
+//        .environmentObject(CouponViewModel())
 }

@@ -89,7 +89,7 @@ class CouponViewModel: ObservableObject {
         }
     }
     
-    func setSelectedCoupon(coupon: Coupon) {
+    func prepareForEdit(_ coupon: Coupon) { 
         self.selectedCoupon = coupon
         self.couponeCode = coupon.code
         self.discountType = coupon.discountType
@@ -99,20 +99,27 @@ class CouponViewModel: ObservableObject {
     }
     
     func updateCoupon() {
-        guard let existingCoupon = selectedCoupon else {
+        guard let existingCoupon = selectedCoupon,
+            let couponId = existingCoupon.id else {
             print("No coupon selected for update")
             return
         }
         
         let updateCoupon = Coupon(
+            id: couponId,
             code: couponeCode,
             discountType: discountType,
             discountValue: discountValue,
-            expirationDate: expirationDate
+            expirationDate: expirationDate,
+            isActive: isActive
         )
         do {
             try couponRepository.updateCoupon(coupone: updateCoupon)
             print("Coupone updated successfully")
+            // Обновляем купон в локальном массиве
+            if let index = coupons.firstIndex(where: { $0.id == existingCoupon.id }) {
+                coupons[index] = updateCoupon
+            }
             
             //Смотри productViewModel там еще обновляется индекс
             resetFields()

@@ -12,7 +12,6 @@ class CouponRepositoryImplementation: CouponRepository {
     
     private let db = Firestore.firestore()
     
-    
     func addNewCoupon(coupon: Coupon) throws {
         do {
             try db.collection("coupons").addDocument(from: coupon)
