@@ -15,6 +15,7 @@ struct AuthWrapper: View {
     @StateObject private var imgurProductViewModel = ImgurViewModel()
     @StateObject private var bannerViewModel = BannerViewModel()
     @StateObject private var userCartViewModel = UserCartViewModel()
+    @StateObject private var couponViewModel = CouponViewModel()
     
     var body: some View {
         VStack {
@@ -40,6 +41,7 @@ struct AuthWrapper: View {
         .environmentObject(imgurProductViewModel)
         .environmentObject(bannerViewModel)
         .environmentObject(userCartViewModel)
+        .environmentObject(couponViewModel)
         .onAppear {
             authViewModel.checkIfUserIsLoggenIn()
             }
@@ -55,6 +57,7 @@ struct AuthWrapper: View {
         .environmentObject(ImgurViewModel())
         .environmentObject(BannerViewModel())
         .environmentObject(UserCartViewModel())
+        .environmentObject(CouponViewModel())
         
 }
 

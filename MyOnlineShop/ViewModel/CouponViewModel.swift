@@ -14,10 +14,12 @@ class CouponViewModel: ObservableObject {
     @Published var coupons: [Coupon] = []
     
     @Published var couponeCode: String = ""
-    @Published var discountType: String = ""
+    @Published var discountType: String = "percentage"
     @Published var discountValue: Double = 0.0
     @Published var expirationDate: Date = Date()
     @Published var isActive: Bool = false
+    
+    @Published var couponSheet: Bool = false
     
     private let fb = FirebaseService.shared
     
@@ -83,8 +85,5 @@ class CouponViewModel: ObservableObject {
                 print("Error deleting coupon: \(error.localizedDescription)")
             }
         }
-        
-        
     }
-    
 }
