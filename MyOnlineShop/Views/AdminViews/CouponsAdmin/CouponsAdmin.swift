@@ -17,9 +17,7 @@ struct CouponsAdmin: View {
                     CouponListAdmin(coupon: coupon)
                         .listRowSeparator(.hidden)
                 }
-                .listStyle(.plain)
-                .padding([.trailing, .leading])
-                
+                .listStyle(.plain)                
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
