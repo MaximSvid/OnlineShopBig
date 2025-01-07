@@ -17,10 +17,10 @@ struct CouponsAdmin: View {
                 List (couponViewModel.coupons) { coupon in
                     CouponListAdmin(coupon: coupon)
                         .listRowSeparator(.hidden)
-                        .onTapGesture {
-                            couponViewModel.prepareForEdit(coupon)
-                            couponViewModel.updateCouponSheet.toggle()
-                        }
+//                        .onTapGesture {
+//                            couponViewModel.prepareForEdit(coupon)
+//                            couponViewModel.updateCouponSheet.toggle()
+//                        }
                 }
                 .listStyle(.plain)                
             }
