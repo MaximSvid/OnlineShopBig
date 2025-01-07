@@ -9,4 +9,5 @@ protocol CouponRepository {
     func addNewCoupon(coupon: Coupon) throws
     func observeCoupons(completion: @escaping (Result<[Coupon], Error>) -> Void)
     func deleteCoupon(couponId: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func updateCoupon(coupone: Coupon) throws
 }

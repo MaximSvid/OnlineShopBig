@@ -55,5 +55,14 @@ class CouponRepositoryImplementation: CouponRepository {
         }
     }
     
-    
+    func updateCoupon(coupone: Coupon) throws {
+        guard let couponeId = coupone.id else {
+            throw NSError(domain: "No coupon id", code: -1)
+        }
+        do {
+            try db.collection( "coupons").document(couponeId).setData(from: coupone, merge: true)
+        } catch {
+            throw error
+        }
+    }
 }

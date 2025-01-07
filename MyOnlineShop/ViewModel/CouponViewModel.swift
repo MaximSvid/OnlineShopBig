@@ -12,6 +12,7 @@ import FirebaseFirestore
 class CouponViewModel: ObservableObject {
     
     @Published var coupons: [Coupon] = []
+    @Published var selectedCoupon: Coupon?
     
     @Published var couponeCode: String = ""
     @Published var discountType: String = "percentage"
@@ -20,6 +21,7 @@ class CouponViewModel: ObservableObject {
     @Published var isActive: Bool = false
     
     @Published var couponSheet: Bool = false
+    @Published var updateCouponSheet: Bool = false 
     
     private let fb = FirebaseService.shared
     
@@ -84,6 +86,38 @@ class CouponViewModel: ObservableObject {
             case .failure(let error):
                 print("Error deleting coupon: \(error.localizedDescription)")
             }
+        }
+    }
+    
+    func setSelectedCoupon(coupon: Coupon) {
+        self.selectedCoupon = coupon
+        self.couponeCode = coupon.code
+        self.discountType = coupon.discountType
+        self.discountValue = coupon.discountValue
+        self.expirationDate = coupon.expirationDate
+        self.isActive = coupon.isActive
+    }
+    
+    func updateCoupon() {
+        guard let existingCoupon = selectedCoupon else {
+            print("No coupon selected for update")
+            return
+        }
+        
+        let updateCoupon = Coupon(
+            code: couponeCode,
+            discountType: discountType,
+            discountValue: discountValue,
+            expirationDate: expirationDate
+        )
+        do {
+            try couponRepository.updateCoupon(coupone: updateCoupon)
+            print("Coupone updated successfully")
+            
+            //Смотри productViewModel там еще обновляется индекс
+            resetFields()
+        } catch {
+            print("Error updating coupon: \(error)")
         }
     }
 }
