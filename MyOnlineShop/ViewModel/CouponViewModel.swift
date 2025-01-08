@@ -122,7 +122,7 @@ class CouponViewModel: ObservableObject {
             }
             
             //Смотри productViewModel там еще обновляется индекс
-            resetFields()
+//            resetFields()
         } catch {
             print("Error updating coupon: \(error)")
         }

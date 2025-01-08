@@ -39,7 +39,7 @@ struct CouponSheet: View {
                 Button(action: {
                     Task {
                         await couponUserViewModel.applyCouponCode(couponUserViewModel.couponCode, to: userCartViewModel.totalSum)
-                        couponUserViewModel.couponSheet.toggle()
+//                        couponUserViewModel.couponSheet.toggle()
 //                        dismiss()
                     }
                 }) {
@@ -57,7 +57,7 @@ struct CouponSheet: View {
                 }
                 .disabled(couponUserViewModel.couponCode.isEmpty || couponUserViewModel.isLoading) // кнопка неактивна если купон не введен и IsLoading == true
                 
-//                Spacer()
+                Spacer()
             }
             .padding([.leading, .trailing])
         

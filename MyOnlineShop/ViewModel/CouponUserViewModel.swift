@@ -39,6 +39,7 @@ class CouponUserViewModel: ObservableObject {
             appliedCoupon = coupon
             discountedAmount = calculatedAmount
             finalAmount = calculatedAmount
+            couponSheet.toggle()
             couponCode = ""
             print("Coupon applied")
             
