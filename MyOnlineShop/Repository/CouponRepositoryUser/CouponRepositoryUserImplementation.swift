@@ -31,17 +31,20 @@ class CouponRepositoryUserImplementation: CouponRepositoryUser {
     func applyCoupon(coupon: Coupon, to amount: Double) -> Double {
         switch coupon.discountType {
         case "percentage":
-            let discount = amount * (coupon.discountValue / 100) // проценты
-            return amount - discount
+            let discount = amount * (coupon.discountValue / 100.0)
+            let finalPrice = amount - discount
+            print("Calculating percentage discount:")
+            print("Original amount: \(amount)")
+            print("Discount percentage: \(coupon.discountValue)%")
+            print("Discount amount: \(discount)")
+            print("Final price: \(finalPrice)")
+            return finalPrice
             
-            case "fixed":
+        case "fixed":
             return max(0, amount - coupon.discountValue)
             
-            default :
+        default:
             return amount
         }
     }
-    
-        
-    
 }

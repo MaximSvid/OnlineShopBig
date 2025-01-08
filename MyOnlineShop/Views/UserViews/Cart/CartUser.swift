@@ -9,7 +9,8 @@ import SwiftUI
 
 struct CartUser: View {
     @EnvironmentObject var userCartViewModel: UserCartViewModel
-    //    var product: Product
+    @EnvironmentObject var couponUserViewModel: CouponUserViewModel
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -33,23 +34,48 @@ struct CartUser: View {
                         
                         Text(String(format: "€ %.2f", userCartViewModel.totalSum))
                             .font(.headline)
+                            .strikethrough(couponUserViewModel.appliedCoupon != nil) //модификатор используется для добавления зачёркивания текста.
+                            .foregroundStyle(couponUserViewModel.appliedCoupon != nil ? .gray : .primary)
+                        
+                    }
+                    
+                    if let coupon = couponUserViewModel.appliedCoupon {
+                        HStack {
+                            Text("Discount (\(coupon.discountType == "percentage" ? "\(Int(coupon.discountValue))%" : "€\(coupon.discountValue)"))")
+                                .font(.subheadline)
+                                .foregroundStyle(.gray)
+                            
+                            Spacer()
+                            
+                            Text(String(format: "- € %.2f", userCartViewModel.totalSum - couponUserViewModel.finalAmount))
+                                .font(.subheadline)
+                                .foregroundStyle(.green)
+                        }
                     }
                     
                     Divider()
                     
                     HStack {
                         Text("Total")
-                            .font(.subheadline)
+                            .font(.footnote)
                             .foregroundStyle(.gray)
                         Spacer()
                         
-                        Text("€ 35")
+                        Text(String(format: "€ %.2f", couponUserViewModel.finalAmount))
                             .font(.headline)
+                            .foregroundStyle(couponUserViewModel.appliedCoupon != nil ? .green : .primary)
                         
                     }
-                    Text ("Enter your coupon here to get a discount! Don't miss the chance to save on your purchase.")
-                        .font(.subheadline)
-                        .foregroundStyle(.gray)
+                    if couponUserViewModel.appliedCoupon == nil {
+                        Text ("Enter your coupon here to get a discount! Don't miss the chance to save on your purchase.")
+                            .font(.caption2)
+                            .foregroundStyle(.gray)
+                    } else {
+                        Text("Coupon \(couponUserViewModel.appliedCoupon!.code) applied successfully!")
+                            .font(.subheadline)
+                            .foregroundStyle(.green)
+                    }
+                    
                 }
                 .padding(.top, 20)
                 .padding(.bottom, 20)
@@ -69,7 +95,7 @@ struct CartUser: View {
                     }
                     
                     Button(action: {
-                        
+                        couponUserViewModel.couponSheet.toggle()
                     }) {
                         Image(systemName: "tag")
                             .font(.headline.bold())
@@ -81,6 +107,9 @@ struct CartUser: View {
                 }
                 .padding([.leading, .trailing])
             }
+            .onChange(of: userCartViewModel.totalSum) { oldValue, newValue in
+                couponUserViewModel.updateFinalAmount(totalSum: newValue)
+            }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Text("My Cart")
@@ -89,8 +118,13 @@ struct CartUser: View {
             }
             .onAppear {
                 userCartViewModel.loadCart()
+                couponUserViewModel.updateFinalAmount(totalSum: userCartViewModel.totalSum)
             }
-            //            .padding([.leading, .trailing])
+            .sheet(isPresented: $couponUserViewModel.couponSheet) {
+                CouponSheet()
+                    .presentationDragIndicator(.visible).presentationDetents([.fraction(0.7)])
+                
+            }
         }
         
     }

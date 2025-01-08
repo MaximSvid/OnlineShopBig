@@ -10,13 +10,6 @@ import SwiftUI
 struct EditCoupon: View {
     @EnvironmentObject var couponViewModel: CouponViewModel
     @State private var toast: Toast? = nil
-//    var coupon: Coupon
-    
-//    @State private var couponCode: String = ""
-//    @State private var discountType: String = ""
-//    @State private var discountValue: Double = 0.0
-//    @State private var expirationDate: Date = Date()
-//    @State private var isActive: Bool = false
     
     var body: some View {
         VStack {
@@ -35,7 +28,7 @@ struct EditCoupon: View {
                 .padding(.bottom)
             
             Picker("Discount Type", selection: $couponViewModel.discountType) {
-                Text ("Precentage").tag("precentage")
+                Text ("Precentage").tag("percentage")
                 Text("Fixed Amount").tag("fixed")
             }
             .pickerStyle(SegmentedPickerStyle())

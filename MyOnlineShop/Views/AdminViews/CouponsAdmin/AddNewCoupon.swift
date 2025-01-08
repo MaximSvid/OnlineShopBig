@@ -27,7 +27,7 @@ struct AddNewCoupon: View {
                 .padding(.bottom)
             
             Picker("Discount Type", selection: $couponViewModel.discountType) {
-                Text ("Precentage").tag("precentage")
+                Text ("Precentage").tag("percentage")
                 Text("Fixed Amount").tag("fixed")
             }
             .pickerStyle(SegmentedPickerStyle())
