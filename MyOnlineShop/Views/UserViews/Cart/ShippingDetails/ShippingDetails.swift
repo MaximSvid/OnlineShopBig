@@ -34,7 +34,7 @@ struct ShippingDetails: View {
                         VStack(spacing: 20) {
                             HStack {
                                 Text("Personal Details")
-                                    .foregroundStyle(.gray.opacity(0.7))
+                                    .foregroundStyle(.black.opacity(0.7))
                                 Spacer()
                             }
                             CustomTextField(placeholder: "First Name*", text: $firstName)
@@ -55,7 +55,7 @@ struct ShippingDetails: View {
                         VStack(spacing: 20) {
                             HStack {
                                 Text("Adress")
-                                    .foregroundStyle(.gray.opacity(0.7))
+                                    .foregroundStyle(.black.opacity(0.7))
                                 Spacer()
                             }
                             CustomTextField(placeholder: "Country*", text: $country)
@@ -66,19 +66,30 @@ struct ShippingDetails: View {
                                 index: $index,
                                 city: $city
                             )
-                        
-                        }
+                            
+                            CustomTextFieldStreetHouseCity(
+                                streetPlaceholder: "Street*",
+                                housePlaceholder: "House*",
+                                apartmentPlaceholder: "Apartment",
+                                street: $street,
+                                house: $houseNumber,
+                                apartment: $apartmentNumber
+                            )                        }
                         .padding([.leading, .trailing])
                     }
                     
                     ContaiterRechtangle {
-                        HStack {
-                            Text("Personal Details")
-                                .foregroundStyle(.gray.opacity(0.7))
-                            Spacer()
+                        VStack(spacing: 20) {
+                            HStack {
+                                Text("Personal Details")
+                                    .foregroundStyle(.gray.opacity(0.7))
+                                Spacer()
+                            }
+
                         }
+                        .padding([.leading, .trailing])
                     }
-                    .padding([.leading, .trailing])
+                    
                 }
                 .padding([.leading, .trailing, .top])
                 .toolbar {
