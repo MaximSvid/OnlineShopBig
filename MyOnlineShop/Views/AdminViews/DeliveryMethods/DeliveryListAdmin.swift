@@ -17,19 +17,37 @@ struct DeliveryListAdmin: View {
                 Text("Delivery Firm: \(delivery.deliveryName)")
                     .font(.headline)
                 
-                Text("Delivery Price: \(delivery.deliveryPrice)")
-                    .font(.subheadline)
-                    .foregroundStyle(.gray)
+                HStack {
+                    Text("Delivery Price: ")
+                        .font(.subheadline)
+                        .foregroundStyle(.gray)
+                    
+                    Text(String(format: "%.2f", delivery.deliveryPrice))
+                        .font(.subheadline)
+                        .foregroundStyle(.black)
+                    
+                    Spacer()
+                }
                 
-                Text("Delivery Time: \(delivery.deliveryTime)")
-                    .font(.subheadline)
-                    .foregroundStyle(.gray)
+                HStack {
+                    Text("Delivery Time: ")
+                        .font(.subheadline)
+                        .foregroundStyle(.gray)
+                    
+                    Text(delivery.deliveryTime)
+                        .font(.subheadline)
+                        .foregroundStyle(.black)
+                    Spacer()
+                }
+                
+                
 
             }
             Spacer()
             Divider()
             Button(action: {
                 deliveryAdminViewModel.prepareForEdit(delivery)
+                deliveryAdminViewModel.sheetEditDelivery.toggle()
                 
             }) {
                 Image(systemName: "pencil")

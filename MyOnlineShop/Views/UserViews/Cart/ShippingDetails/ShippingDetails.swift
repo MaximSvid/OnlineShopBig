@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ShippingDetails: View {
+    @EnvironmentObject var deliveryAdminviewModel: DeliveryAdminViewModel
     @State var firstName: String = ""
     @State var lastName: String = ""
     @State var email: String = ""
@@ -22,7 +23,6 @@ struct ShippingDetails: View {
     @State var houseNumber: String = ""
     @State var apartmentNumber: String = ""
     
-    @State var selectedDeliveryMethod: DeliveryMethod?
 
     
     @State var focus: Int = 0
@@ -87,7 +87,7 @@ struct ShippingDetails: View {
                                 Spacer()
                             }
                             
-                            DeliveryMethodSelector(selectedMethod: $selectedDeliveryMethod)
+                            DeliveryMethodSelector()
                             
                             Button(action: {
                                 
@@ -112,4 +112,5 @@ struct ShippingDetails: View {
 
 #Preview {
     ShippingDetails()
+        .environmentObject(DeliveryAdminViewModel())
 }

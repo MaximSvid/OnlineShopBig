@@ -8,46 +8,51 @@
 import SwiftUI
 
 struct DeliveryMethodSelector: View {
-    @Binding var selectedMethod: DeliveryMethod?
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-//            Text("Delivery Method")
-//                .foregroundStyle(.black.opacity(0.7))
-            
-            ForEach(DeliveryMethod.allCases, id: \.self) { method in
-                HStack {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(method.name)
+    @EnvironmentObject var deliveryAdminViewModel: DeliveryAdminViewModel
+        @State private var selectedDeliveryId: String?
+        @FocusState private var isFocused: Bool
+        
+        var body: some View {
+            VStack(alignment: .leading, spacing: 12) {
+                ForEach(deliveryAdminViewModel.deliveries) { delivery in
+                    HStack {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(delivery.deliveryName)
+                                .foregroundColor(.black)
+                            
+                            Text(delivery.deliveryTime)
+                                .font(.caption)
+                                .foregroundColor(.gray)
+                        }
+                        
+                        Spacer()
+                        
+                        Text("€\(String(format: "%.2f", delivery.deliveryPrice))")
                             .foregroundColor(.black)
                         
-                        Text(method.estimatedDeliveryTime)
-                            .font(.caption)
-                            .foregroundColor(.gray)
+                        if selectedDeliveryId == delivery.id {
+                            Image(systemName: "checkmark")
+                                .foregroundColor(.green)
+                                .padding(.leading, 8)
+                        }
                     }
-                    
-                    Spacer()
-                    
-                    Text("€\(String(format: "%.2f", method.price))")
-                        .foregroundColor(.black)
-                    
-                    if selectedMethod == method {
-                        Image(systemName: "checkmark")
-                            .foregroundColor(.green)
-                            .padding(.leading, 8)
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 3)
+                            .stroke(selectedDeliveryId == delivery.id ? .black : .gray.opacity(0.8), lineWidth: 1)
+                    )
+                    .onTapGesture {
+                        selectedDeliveryId = delivery.id
+                        isFocused = true
                     }
                 }
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 3)
-                        .stroke(selectedMethod == method ? .black : .gray.opacity(0.8), lineWidth: 1)
-                )
-                .onTapGesture {
-                    selectedMethod = method
-                }
+                .listStyle(PlainListStyle())
+            }
+            .onAppear {
+                print("DeliveryMethodSelector appeared")
+                deliveryAdminViewModel.observeDeliveries()
             }
         }
-    }
 }
     
     #Preview {
