@@ -120,8 +120,6 @@ class CouponViewModel: ObservableObject {
             if let index = coupons.firstIndex(where: { $0.id == existingCoupon.id }) {
                 coupons[index] = updateCoupon
             }
-            
-            //Смотри productViewModel там еще обновляется индекс
 //            resetFields()
         } catch {
             print("Error updating coupon: \(error)")

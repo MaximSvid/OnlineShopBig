@@ -18,6 +18,10 @@ struct AppNavigationAdmin: View {
             Tab("Coupons", systemImage: "tag") {
                 CouponsAdmin()
             }
+            
+            Tab("Delivery", systemImage: "truck.box.badge.clock") {
+                DeliveryMethodsAdmin()
+            }
             Tab("Admin Settings", systemImage: "gear") {
                 AdminSettingsView()
             }

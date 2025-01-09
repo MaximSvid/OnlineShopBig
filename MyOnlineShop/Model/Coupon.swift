@@ -15,5 +15,4 @@ struct Coupon: Identifiable, Codable {
     var discountValue: Double
     var expirationDate: Date
     var isActive: Bool = false
-    
 }

@@ -22,7 +22,7 @@ struct ShippingDetails: View {
     @State var houseNumber: String = ""
     @State var apartmentNumber: String = ""
     
-    @State var deliveryMethod: String = ""
+    @State var selectedDeliveryMethod: DeliveryMethod?
 
     
     @State var focus: Int = 0
@@ -74,22 +74,29 @@ struct ShippingDetails: View {
                                 street: $street,
                                 house: $houseNumber,
                                 apartment: $apartmentNumber
-                            )                        }
+                            )
+                        }
                         .padding([.leading, .trailing])
                     }
                     
                     ContaiterRechtangle {
                         VStack(spacing: 20) {
                             HStack {
-                                Text("Personal Details")
+                                Text("Delivery Method")
                                     .foregroundStyle(.gray.opacity(0.7))
                                 Spacer()
                             }
-
+                            
+                            DeliveryMethodSelector(selectedMethod: $selectedDeliveryMethod)
+                            
+                            Button(action: {
+                                
+                            }) {
+                                Text("Next")
+                            }
                         }
                         .padding([.leading, .trailing])
                     }
-                    
                 }
                 .padding([.leading, .trailing, .top])
                 .toolbar {

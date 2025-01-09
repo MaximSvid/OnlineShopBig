@@ -63,7 +63,7 @@ struct CouponListAdmin: View {
         .frame(width: .infinity, height: 80)
         .frame(maxWidth: .infinity)
         .padding()
-        .background(RoundedRectangle(cornerRadius: 10)
+        .background(RoundedRectangle(cornerRadius: 3)
             .fill(.white)
             .shadow(radius: 3)
         )
