@@ -15,7 +15,7 @@ class DeliveryAdminViewModel: ObservableObject {
     @Published var selectedDelivery: Delivery?
     
     @Published var deliveryName: String = ""
-    @Published var deliveryPrice: Double = 0.0
+    @Published var deliveryPrice: Double = 0
     @Published var deliveryTime: String = ""
     
     @Published var sheetEditDelivery: Bool = false
