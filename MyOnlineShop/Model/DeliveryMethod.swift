@@ -7,7 +7,7 @@
 import SwiftUI
 import FirebaseFirestore
 
-struct Delivery: Identifiable, Codable {
+struct DeliveryMethod: Identifiable, Codable {
     @DocumentID var id: String? // soll immer optionla sein. am anfang id = nil
     
     var deliveryName: String

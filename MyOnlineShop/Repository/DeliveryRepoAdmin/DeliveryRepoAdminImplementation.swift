@@ -12,7 +12,7 @@ class DeliveryRepoAdminImplementation: DeliveryRepoAdmin {
     
     private let db = Firestore.firestore()
     
-    func addNewDelivery(delivery: Delivery) throws {
+    func addNewDelivery(delivery: DeliveryMethod) throws {
         do {
             try db.collection("delivery").addDocument(from: delivery)
         } catch {
@@ -20,7 +20,7 @@ class DeliveryRepoAdminImplementation: DeliveryRepoAdmin {
         }
     }
     
-    func observeDelivery(completion: @escaping (Result<[Delivery], any Error>) -> Void) {
+    func observeDelivery(completion: @escaping (Result<[DeliveryMethod], any Error>) -> Void) {
         db.collection("delivery").addSnapshotListener { snapshot, error in
             if let error = error {
                 completion(.failure(error))
@@ -31,7 +31,7 @@ class DeliveryRepoAdminImplementation: DeliveryRepoAdmin {
                 return
             }
             
-            let deliveries = documents.compactMap { document -> Delivery? in
+            let deliveries = documents.compactMap { document -> DeliveryMethod? in
                 //compactMap: Преобразует каждый элемент коллекции, но убирает все nil из результата.
                 /*
                  1.    documents — массив документов, полученных из Firebase.
@@ -42,7 +42,7 @@ class DeliveryRepoAdminImplementation: DeliveryRepoAdmin {
                      3.    Результат: массив объектов Delivery, где нет nil.
                  */
                 do {
-                    return try document.data(as: Delivery.self)
+                    return try document.data(as: DeliveryMethod.self)
                 } catch {
                     print("Error: \(error.localizedDescription)")
                     return nil
@@ -65,7 +65,7 @@ class DeliveryRepoAdminImplementation: DeliveryRepoAdmin {
 /*
  completion — это замыкание, которое принимает один параметр типа Result<Void, any Error> и не возвращает значения (Void). Result — это перечисление, которое может представлять либо успешное завершение операции (success), либо ошибку (failure).
  */
-    func updateDelivery(delivery: Delivery) throws {
+    func updateDelivery(delivery: DeliveryMethod) throws {
         guard let deliveryId = delivery.id else {
             throw NSError(domain: "DeliveryRepoAdminImplementation", code: -1)
         }

@@ -6,8 +6,8 @@
 //
 
 protocol DeliveryRepoAdmin {
-    func addNewDelivery(delivery: Delivery) throws
-    func observeDelivery(completion: @escaping (Result<[Delivery], Error>) -> Void)
+    func addNewDelivery(delivery: DeliveryMethod) throws
+    func observeDelivery(completion: @escaping (Result<[DeliveryMethod], Error>) -> Void)
     func deleteDelivery(deliveryId: String, completion: @escaping (Result<Void, Error>) -> Void)
-    func updateDelivery(delivery: Delivery) throws
+    func updateDelivery(delivery: DeliveryMethod) throws
 }

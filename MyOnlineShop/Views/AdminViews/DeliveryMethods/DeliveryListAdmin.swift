@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DeliveryListAdmin: View {
     @EnvironmentObject var deliveryAdminViewModel: DeliveryAdminViewModel
-    var delivery: Delivery
+    var delivery: DeliveryMethod
     
     var body: some View {
         HStack {

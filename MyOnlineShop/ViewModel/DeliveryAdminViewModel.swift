@@ -11,8 +11,8 @@ import FirebaseFirestore
 @MainActor
 class DeliveryAdminViewModel: ObservableObject {
     
-    @Published var deliveries: [Delivery] = []
-    @Published var selectedDelivery: Delivery?
+    @Published var deliveries: [DeliveryMethod] = []
+    @Published var selectedDelivery: DeliveryMethod?
     
     @Published var deliveryName: String = ""
     @Published var deliveryPrice: Double = 0
@@ -31,7 +31,7 @@ class DeliveryAdminViewModel: ObservableObject {
     }
     
     func addNewDelivery() {
-        let newDelivery = Delivery(
+        let newDelivery = DeliveryMethod(
             deliveryName: deliveryName,
             deliveryPrice: deliveryPrice,
             deliveryTime: deliveryTime
@@ -67,7 +67,7 @@ class DeliveryAdminViewModel: ObservableObject {
         }
     }
     
-    func deleteDelivery(delivery: Delivery) {
+    func deleteDelivery(delivery: DeliveryMethod) {
         guard let deliveryId = delivery.id else {
             print("Error deleting delivery: deliveryId is nil")
             return
@@ -85,7 +85,7 @@ class DeliveryAdminViewModel: ObservableObject {
         }
     }
     
-    func prepareForEdit(_ delivery: Delivery) {
+    func prepareForEdit(_ delivery: DeliveryMethod) {
         self.selectedDelivery = delivery
         self.deliveryName = delivery.deliveryName
         self.deliveryPrice = delivery.deliveryPrice
@@ -98,7 +98,7 @@ class DeliveryAdminViewModel: ObservableObject {
             print("Error updating delivery: deliveryId is nil")
             return
         }
-        let updateDelivery = Delivery(
+        let updateDelivery = DeliveryMethod(
             id: deliveryId,
             deliveryName: deliveryName,
             deliveryPrice: deliveryPrice,
