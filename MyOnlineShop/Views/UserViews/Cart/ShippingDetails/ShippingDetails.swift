@@ -9,22 +9,8 @@ import SwiftUI
 
 struct ShippingDetails: View {
     @EnvironmentObject var deliveryAdminviewModel: DeliveryAdminViewModel
-    @State var firstName: String = ""
-    @State var lastName: String = ""
-    @State var email: String = ""
-    
-    @State private var countryCode: String = ""
-    @State private var phoneNumber: String = ""
-    
-    @State var country: String = ""
-    @State var index: String = ""
-    @State var city: String = ""
-    @State var street: String = ""
-    @State var houseNumber: String = ""
-    @State var apartmentNumber: String = ""
-    
+    @EnvironmentObject var deliveryUserInfoViewModel: DeliveryUserInfoViewModel
 
-    
     @State var focus: Int = 0
     var body: some View {
         NavigationStack {
@@ -37,15 +23,15 @@ struct ShippingDetails: View {
                                     .foregroundStyle(.black.opacity(0.7))
                                 Spacer()
                             }
-                            CustomTextField(placeholder: "First Name*", text: $firstName)
-                            CustomTextField(placeholder: "Last Name*", text: $lastName)
-                            CustomTextField(placeholder: "Email*", text: $email)
+                            CustomTextField(placeholder: "First Name*", text: $deliveryUserInfoViewModel.firstName)
+                            CustomTextField(placeholder: "Last Name*", text: $deliveryUserInfoViewModel.lastName)
+                            CustomTextField(placeholder: "Email*", text: $deliveryUserInfoViewModel.email)
                             
                             CustomTextFieldPhone(
                                 countryCodePlaceholder: "+1",
                                 phonePlaceholder: "Phone Number*",
-                                countryCode: $countryCode,
-                                phoneNumber: $phoneNumber
+                                countryCode: $deliveryUserInfoViewModel.countryCode,
+                                phoneNumber: $deliveryUserInfoViewModel.phoneNumber
                             )
                         }
                         .padding([.leading, .trailing])
@@ -58,22 +44,22 @@ struct ShippingDetails: View {
                                     .foregroundStyle(.black.opacity(0.7))
                                 Spacer()
                             }
-                            CustomTextField(placeholder: "Country*", text: $country)
+                            CustomTextField(placeholder: "Country*", text: $deliveryUserInfoViewModel.country)
                             
                             CustomTextFieldIndexCity(
                                 indexPlaceholder: "Index",
                                 cityPlaceholder: "City*",
-                                index: $index,
-                                city: $city
+                                index: $deliveryUserInfoViewModel.index,
+                                city: $deliveryUserInfoViewModel.city
                             )
                             
                             CustomTextFieldStreetHouseCity(
                                 streetPlaceholder: "Street*",
                                 housePlaceholder: "House*",
                                 apartmentPlaceholder: "Apartment",
-                                street: $street,
-                                house: $houseNumber,
-                                apartment: $apartmentNumber
+                                street: $deliveryUserInfoViewModel.street,
+                                house: $deliveryUserInfoViewModel.houseNumber,
+                                apartment: $deliveryUserInfoViewModel.apartmentNumber
                             )
                         }
                         .padding([.leading, .trailing])
@@ -93,6 +79,12 @@ struct ShippingDetails: View {
                                 
                             }) {
                                 Text("Next")
+                                    .font(.headline.bold())
+                                    .frame(width: .infinity, height: 50)
+                                    .frame(maxWidth: .infinity)
+                                    .foregroundStyle(.white)
+                                    .background(.blue.opacity(0.8))
+                                    .clipShape(RoundedRectangle(cornerRadius: 3))
                             }
                         }
                         .padding([.leading, .trailing])
@@ -111,6 +103,6 @@ struct ShippingDetails: View {
 }
 
 #Preview {
-    ShippingDetails()
-        .environmentObject(DeliveryAdminViewModel())
+//    ShippingDetails()
+//        .environmentObject(DeliveryAdminViewModel())
 }
