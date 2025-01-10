@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ShippingDetails: View {
-    @EnvironmentObject var deliveryAdminviewModel: DeliveryAdminViewModel
+//    @EnvironmentObject var deliveryAdminviewModel: DeliveryAdminViewModel
     @EnvironmentObject var deliveryUserInfoViewModel: DeliveryUserInfoViewModel
 
     @State var focus: Int = 0
@@ -69,15 +69,13 @@ struct ShippingDetails: View {
                         VStack(spacing: 20) {
                             HStack {
                                 Text("Delivery Method")
-                                    .foregroundStyle(.gray.opacity(0.7))
+                                    .foregroundStyle(.black.opacity(0.7))
                                 Spacer()
                             }
                             
                             DeliveryMethodSelector()
                             
-                            Button(action: {
-                                
-                            }) {
+                            NavigationLink(destination: OrderCompletion()) {
                                 Text("Next")
                                     .font(.headline.bold())
                                     .frame(width: .infinity, height: 50)

@@ -116,5 +116,13 @@ class DeliveryAdminViewModel: ObservableObject {
             print("Error updating delivery: \(error.localizedDescription)")
         }
     }
+    
+    var selectedDeliveryPrice: Double  {
+        if let selectedDelivery = deliveries.first(where: { $0.id == selectedDelivery?.id }) {
+            return selectedDelivery.deliveryPrice
+        }
+        return 0.0
+    }
+    
 }
 

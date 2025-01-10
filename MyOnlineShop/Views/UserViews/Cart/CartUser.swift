@@ -91,19 +91,6 @@ struct CartUser: View {
                             .background(.blue.opacity(0.8))
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
-                    //                    Button(action: {
-                    //                        NavigationLink {
-                    //                            ShippingDetails()
-                    //                        }
-                    //                    }) {
-                    //                        Text("Check Out")
-                    //                            .font(.headline.bold())
-                    //                            .frame(maxWidth: .infinity)
-                    //                            .frame(height: 50)
-                    //                            .foregroundStyle(.white)
-                    //                            .background(.blue.opacity(0.8))
-                    //                            .clipShape(.buttonBorder)
-                    //                    }
                     
                     Button(action: {
                         couponUserViewModel.couponSheet.toggle()
