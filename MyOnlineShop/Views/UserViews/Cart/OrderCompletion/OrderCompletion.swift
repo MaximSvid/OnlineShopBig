@@ -63,6 +63,18 @@ struct OrderCompletion: View {
                             .font(.headline)
                             .foregroundStyle(couponUserViewModel.appliedCoupon != nil ? .green : .primary)
                     }
+                    
+                    Button(action: {
+                        
+                    }) {
+                        Text("Buy Now")
+                            .font(.headline.bold())
+                            .frame(width: .infinity, height: 50)
+                            .frame(maxWidth: .infinity)
+                            .foregroundStyle(.white)
+                            .background(.blue.opacity(0.8))
+                            .clipShape(RoundedRectangle(cornerRadius: 3))
+                    }
                 }
                 .padding([.leading, .trailing])
             }

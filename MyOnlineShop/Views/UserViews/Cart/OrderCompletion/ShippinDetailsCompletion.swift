@@ -174,7 +174,7 @@ struct ShippinDetailsCompletion: View {
                                 .font(.subheadline)
                                 .foregroundStyle(.gray)
                             
-                            Text("\(selectedDelivery.deliveryPrice)")
+                            Text(String(format: "%.2f", selectedDelivery.deliveryPrice))
                                 .font(.body)
                             
                             Spacer()

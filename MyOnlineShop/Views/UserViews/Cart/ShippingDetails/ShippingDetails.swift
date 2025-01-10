@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct ShippingDetails: View {
-//    @EnvironmentObject var deliveryAdminviewModel: DeliveryAdminViewModel
     @EnvironmentObject var deliveryUserInfoViewModel: DeliveryUserInfoViewModel
-
+    @State private var showError: Bool = false
+    @State private var navigateToOrderCompletion: Bool = false
+    
     @State var focus: Int = 0
     var body: some View {
         NavigationStack {
@@ -75,7 +76,29 @@ struct ShippingDetails: View {
                             
                             DeliveryMethodSelector()
                             
-                            NavigationLink(destination: OrderCompletion()) {
+                            if showError {
+                                Text("Please fill in all fields.")
+                                    .foregroundColor(.red)
+                                    .font(.caption)
+                                    .padding(.top, 5)
+                            }
+                            
+                            Button(action: {
+                                
+                                if !deliveryUserInfoViewModel.firstName.isEmpty && !deliveryUserInfoViewModel.lastName.isEmpty && !deliveryUserInfoViewModel.email.isEmpty &&
+                                    !deliveryUserInfoViewModel.phoneNumber.isEmpty &&
+                                    !deliveryUserInfoViewModel.country.isEmpty &&
+                                    !deliveryUserInfoViewModel.index.isEmpty &&
+                                    !deliveryUserInfoViewModel.city.isEmpty &&
+                                    !deliveryUserInfoViewModel.street.isEmpty &&
+                                    !deliveryUserInfoViewModel.houseNumber.isEmpty
+                                {
+                                    navigateToOrderCompletion = true
+                                } else {
+                                    showError = true
+                                }
+                                
+                            }) {
                                 Text("Next")
                                     .font(.headline.bold())
                                     .frame(width: .infinity, height: 50)
@@ -84,6 +107,7 @@ struct ShippingDetails: View {
                                     .background(.blue.opacity(0.8))
                                     .clipShape(RoundedRectangle(cornerRadius: 3))
                             }
+                            //                            }
                         }
                         .padding([.leading, .trailing])
                     }
@@ -96,11 +120,14 @@ struct ShippingDetails: View {
                     }
                 }
             }
+            .navigationDestination(isPresented: $navigateToOrderCompletion) {
+                OrderCompletion()
+            }
         }
     }
 }
 
 #Preview {
-//    ShippingDetails()
-//        .environmentObject(DeliveryAdminViewModel())
+    //    ShippingDetails()
+    //        .environmentObject(DeliveryAdminViewModel())
 }
