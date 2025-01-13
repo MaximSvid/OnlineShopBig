@@ -10,8 +10,23 @@ import SwiftUI
 struct PaymentAdmin: View {
     @EnvironmentObject var paymentAdminViewModel: PaymentAdminViewModel
     var body: some View {
-        List(paymentAdminViewModel.payments) { payment in
-            PaymentListAdmin(paymentMethod: payment)
+        NavigationStack {
+            VStack {
+                List(paymentAdminViewModel.payments) { payment in
+                    PaymentListAdmin(paymentMethod: payment)
+                        .listRowSeparator(.hidden)
+                }
+                .listStyle(.plain)
+            }
+            .onAppear() {
+                paymentAdminViewModel.observeProducts()
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Text("Payments Admin")
+                        .font(.title.bold())
+                }
+            }
         }
     }
 }

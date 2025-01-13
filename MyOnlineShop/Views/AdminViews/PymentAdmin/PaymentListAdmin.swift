@@ -61,6 +61,7 @@ struct PaymentListAdmin: View {
                             paymentMethod.isVisible ? .green: .gray
                         )
                 }
+                .buttonStyle(.plain)
                 .padding(.trailing)
             }
         }

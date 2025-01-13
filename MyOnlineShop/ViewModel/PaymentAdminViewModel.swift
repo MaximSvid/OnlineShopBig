@@ -29,6 +29,18 @@ class PaymentAdminViewModel: ObservableObject {
         self.paymentAdminRepository = paymentAdminRepository
     }
     
+    func observeProducts() {
+        paymentAdminRepository.observePayment(completion: { result in
+            switch result {
+            case .success(let payments):
+                self.payments = payments
+//                self.filteredPayments = payments
+            case .failure(let error):
+                print("Error observing products: \(error)")
+            }
+        })
+    }
+    
     func toggleVisibility(for payment: PaymentMethod) {
         guard let paymentId = payment.id else { return }
         
