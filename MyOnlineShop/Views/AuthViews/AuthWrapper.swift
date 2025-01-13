@@ -19,6 +19,7 @@ struct AuthWrapper: View {
     @StateObject private var couponUserViewModel = CouponUserViewModel()
     @StateObject private var deliveryAdminViewModel = DeliveryAdminViewModel()
     @StateObject private var deliveryUserInfoViewModel = DeliveryUserInfoViewModel()
+    @StateObject private var paymentAdminViewModel = PaymentAdminViewModel()
     
     var body: some View {
         VStack {
@@ -47,6 +48,7 @@ struct AuthWrapper: View {
         .environmentObject(couponUserViewModel)
         .environmentObject(deliveryAdminViewModel)
         .environmentObject(deliveryUserInfoViewModel)
+        .environmentObject(paymentAdminViewModel)
         .onAppear {
             authViewModel.checkIfUserIsLoggenIn()
             }
@@ -66,6 +68,7 @@ struct AuthWrapper: View {
         .environmentObject(CouponUserViewModel())
         .environmentObject(DeliveryAdminViewModel())
         .environmentObject(DeliveryUserInfoViewModel())
+        .environmentObject(PaymentAdminViewModel())
         
 }
 

@@ -18,9 +18,11 @@ struct AppNavigationAdmin: View {
             Tab("Coupons", systemImage: "tag") {
                 CouponsAdmin()
             }
-            
             Tab("Delivery", systemImage: "truck.box.badge.clock") {
                 DeliveryMethodsAdmin()
+            }
+            Tab("Payments", systemImage: "dollarsign.bank.building") {
+                PaymentAdmin()
             }
             Tab("Admin Settings", systemImage: "gear") {
                 AdminSettingsView()

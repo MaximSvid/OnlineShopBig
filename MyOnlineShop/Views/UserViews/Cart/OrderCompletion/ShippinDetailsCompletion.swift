@@ -10,7 +10,7 @@ import SwiftUI
 struct ShippinDetailsCompletion: View {
     @EnvironmentObject var deliveryUserInfoViewModel: DeliveryUserInfoViewModel
     @EnvironmentObject var deliveryAdminViewModel: DeliveryAdminViewModel
-    @Environment(\.dismiss) private var dismiss // закрыть текущий экран
+//    @Environment(\.dismiss) private var dismiss // закрыть текущий экран
     
     var body: some View {
         ContaiterRechtangle {
@@ -22,18 +22,18 @@ struct ShippinDetailsCompletion: View {
                             .foregroundStyle(.black)
                         Spacer()
                         
-                        Button(action: {
-                            dismiss()
-                        }) {
-                            Image(systemName: "pencil")
-                                .font(.headline)
-                                .foregroundStyle(.white)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 3)
-                                        .fill(Color.brown)
-                                        .shadow(radius: 3)
-                                )
-                        }
+//                        Button(action: {
+//                            dismiss()
+//                        }) {
+//                            Image(systemName: "pencil")
+//                                .font(.headline)
+//                                .foregroundStyle(.white)
+//                                .background(
+//                                    RoundedRectangle(cornerRadius: 3)
+//                                        .fill(Color.brown)
+//                                        .shadow(radius: 3)
+//                                )
+//                        }
                     }
                 }
                 
