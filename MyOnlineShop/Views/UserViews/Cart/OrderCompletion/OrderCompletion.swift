@@ -11,7 +11,7 @@ struct OrderCompletion: View {
     @EnvironmentObject var userCartViewModel: UserCartViewModel
     @EnvironmentObject var couponUserViewModel: CouponUserViewModel
     @EnvironmentObject var deliveryAdminViewModel: DeliveryAdminViewModel
-//    @EnvironmentObject var deliveryUserInfoViewModel: DeliveryUserInfoViewModel
+    @EnvironmentObject var deliveryUserInfoViewModel: DeliveryUserInfoViewModel
     
     var body: some View {
         NavigationStack {
@@ -22,6 +22,8 @@ struct OrderCompletion: View {
                     }
                     
                     ShippinDetailsCompletion()
+                    
+                    PaymentUser()
                     
                     HStack {
                         Text("Price: ")
@@ -65,7 +67,9 @@ struct OrderCompletion: View {
                     }
                     
                     Button(action: {
-                        
+                        //здесь должна быть логика сохранения иформации о пользователе, самом заказе, способе доставки и оплаты
+                        //после успешного выполнения заказа необходимо сделать анимацию - заказ принят успешно и перевод на страницу с заказами
+                        deliveryUserInfoViewModel.addNewDeliveryUserInfo()
                     }) {
                         Text("Buy Now")
                             .font(.headline.bold())

@@ -19,7 +19,7 @@ struct PaymentAdmin: View {
                 .listStyle(.plain)
             }
             .onAppear() {
-                paymentAdminViewModel.observeProducts()
+                paymentAdminViewModel.observePayments()
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {

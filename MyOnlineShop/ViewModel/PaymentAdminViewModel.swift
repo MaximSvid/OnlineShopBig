@@ -13,6 +13,7 @@ class PaymentAdminViewModel: ObservableObject {
     
     @Published var payments: [PaymentMethod] = []
     @Published var filteredPayments: [PaymentMethod] = []
+    @Published var selectedPayment: PaymentMethod?
     
     
     @Published var name: String = ""
@@ -30,8 +31,8 @@ class PaymentAdminViewModel: ObservableObject {
         self.paymentAdminRepository = paymentAdminRepository
     }
     
-    func observeProducts() {
-        paymentAdminRepository.observePayment(completion: { result in
+    func observePayments() {
+        paymentAdminRepository.observePayments(completion: { result in
             switch result {
             case .success(let payments):
                 self.payments = payments

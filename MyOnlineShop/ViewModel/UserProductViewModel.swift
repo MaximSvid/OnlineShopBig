@@ -24,7 +24,6 @@ class UserProductViewModel: ObservableObject {
 
     init(productRepositoryUser: ProductRepositoryUser = ProductRepositoryUserImplementation()) {
         self.productRepositoryUser = productRepositoryUser
-        
         // Наблюдаем за изменениями searchText
         $searchText
             .debounce(for: .milliseconds(300), scheduler: RunLoop.main)
@@ -33,11 +32,6 @@ class UserProductViewModel: ObservableObject {
             }
             .store(in: &cancellables)
     }
-    
-    
-    
-    
-    
     func observeUserProducts() {
         productRepositoryUser.observeProductsUser {result in
             switch result {

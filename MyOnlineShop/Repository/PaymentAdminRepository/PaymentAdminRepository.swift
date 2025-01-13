@@ -6,6 +6,6 @@
 //
 
 protocol PaymentAdminRepository {
-    func observePayment(completion: @escaping (Result<[PaymentMethod], Error>) -> Void)
+    func observePayments(completion: @escaping (Result<[PaymentMethod], Error>) -> Void)
     func toggleVisibility(for paymentId: String, isVisible: Bool, completion: @escaping (Result<Void, Error>) -> Void)
 }

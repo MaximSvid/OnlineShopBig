@@ -11,7 +11,7 @@ class PaymentAdminRepositoryImplementation: PaymentAdminRepository {
 
     private let db = Firestore.firestore()
     
-    func observePayment(completion: @escaping (Result<[PaymentMethod], Error>) -> Void) {
+    func observePayments(completion: @escaping (Result<[PaymentMethod], Error>) -> Void) {
         db.collection("payments").addSnapshotListener { snapshot, error in
             if let error {
                 completion(.failure(error))

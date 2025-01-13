@@ -40,7 +40,7 @@ struct PaymentListAdmin: View {
                 
                 if !paymentMethod.description.isEmpty {
                     Text(paymentMethod.description)
-                        .font(.subheadline)
+                        .font(.caption2)
                         .foregroundStyle(.gray)
                 }
             }
@@ -59,25 +59,21 @@ struct PaymentListAdmin: View {
                     .bold()
             }
             
-//            Text(paymentMethod.isVisible ? "IsViseble" : "invisible") // можешь предложить свой вариант
-//                .font(.callout)
-//                .foregroundStyle(
-//                    paymentMethod.isVisible ? .green: .red
-//                )
-            
             Button(action: {
-                            paymentAdminViewModel.toggleVisibility(for: paymentMethod)
-                        }) {
-                            Image(systemName: paymentMethod.isVisible ? "eye" : "eye.slash")
-                                .foregroundStyle(paymentMethod.isVisible ? .blue : .gray)
-                                .padding(8)
-                        }
-                        .buttonStyle(.plain)
-                        .padding(.trailing)
+                paymentAdminViewModel.toggleVisibility(for: paymentMethod)
+            }) {
+                Image(systemName: paymentMethod.isVisible ? "eye" : "eye.slash")
+                    .foregroundStyle(paymentMethod.isVisible ? .blue : .gray)
+                    .padding(8)
+            }
+            .buttonStyle(.bordered)
+           
         }
+        .frame(maxWidth: .infinity, maxHeight: 80)
+        
     }
 }
 
 #Preview {
-//    PaymentListAdmin()
+    //    PaymentListAdmin()
 }

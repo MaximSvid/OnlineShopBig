@@ -17,21 +17,21 @@ struct DeliveryButton: View {
             HStack {
                 // Checkbox
                 Image(systemName: isSelected ? "checkmark.square.fill" : "square")
-                    .foregroundColor(isSelected ? .green : .gray)
+                    .foregroundStyle(isSelected ? .green : .gray)
 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(delivery.deliveryName)
-                        .foregroundColor(.black)
+                        .foregroundStyle(.black)
 
                     Text(delivery.deliveryTime)
                         .font(.caption)
-                        .foregroundColor(.gray)
+                        .foregroundStyle(.gray)
                 }
 
                 Spacer()
 
                 Text("€\(String(format: "%.2f", delivery.deliveryPrice))")
-                    .foregroundColor(.black)
+                    .foregroundStyle(.black)
             }
             .padding()
             .background(
