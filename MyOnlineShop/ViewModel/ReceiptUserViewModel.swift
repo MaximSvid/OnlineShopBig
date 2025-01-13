@@ -60,5 +60,16 @@ class ReceiptUserViewModel: ObservableObject {
             print("Error adding receipt: \(error)")
         }
     }
+    
+    func fetchReceipts() {
+        receiptUserRepository.fetchCheck { result in
+            switch result {
+            case .success(let receipts):
+                self.receipts = receipts
+            case .failure(let error):
+                print("Error fetching receipts: \(error)")
+            }
+        }
+    }
         
 }
