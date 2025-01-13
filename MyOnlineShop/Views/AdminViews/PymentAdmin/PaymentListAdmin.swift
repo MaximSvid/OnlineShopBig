@@ -36,34 +36,44 @@ struct PaymentListAdmin: View {
             VStack {
                 Text(paymentMethod.name)
                     .font(.headline)
+                    .foregroundStyle(paymentMethod.isVisible ? .black : .gray)
                 
                 if !paymentMethod.description.isEmpty {
                     Text(paymentMethod.description)
                         .font(.subheadline)
                         .foregroundStyle(.gray)
                 }
-                
-                Spacer()
-                
-                Text(paymentMethod.isVisible ? "Visible" : "Hidden")
-                    .font(.callout)
-                    .foregroundStyle(
-                        paymentMethod.isVisible ? .green: .red
-                    )
-                
-                Button(action: {
-                    paymentAdminViewModel.toggleVisibility(for: paymentMethod)
-                }) {
-                    Image(systemName: paymentMethod.isVisible ? "eye" : "eye.slash")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                        .foregroundStyle(
-                            paymentMethod.isVisible ? .green: .gray
-                        )
-                }
-                .buttonStyle(.plain)
-                .padding(.trailing)
             }
+            
+            Spacer()
+            
+            if paymentMethod.isVisible {
+                Text("Active")
+                    .font(.caption)
+                    .foregroundColor(.green)
+                    .bold()
+            } else {
+                Text("Inactive")
+                    .font(.caption)
+                    .foregroundStyle(.red)
+                    .bold()
+            }
+            
+//            Text(paymentMethod.isVisible ? "IsViseble" : "invisible") // можешь предложить свой вариант
+//                .font(.callout)
+//                .foregroundStyle(
+//                    paymentMethod.isVisible ? .green: .red
+//                )
+            
+            Button(action: {
+                            paymentAdminViewModel.toggleVisibility(for: paymentMethod)
+                        }) {
+                            Image(systemName: paymentMethod.isVisible ? "eye" : "eye.slash")
+                                .foregroundStyle(paymentMethod.isVisible ? .blue : .gray)
+                                .padding(8)
+                        }
+                        .buttonStyle(.plain)
+                        .padding(.trailing)
         }
     }
 }

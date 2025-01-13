@@ -36,7 +36,7 @@ class PaymentAdminRepositoryImplementation: PaymentAdminRepository {
     }
     
     func toggleVisibility(for paymentId: String, isVisible: Bool, completion: @escaping (Result<Void, any Error>) -> Void) {
-        db.collection("payment").document(paymentId).updateData(["isVisible": isVisible]) { error in
+        db.collection("payments").document(paymentId).updateData(["isVisible": isVisible]) { error in
             if let error {
                 completion(.failure(error))
             } else {
