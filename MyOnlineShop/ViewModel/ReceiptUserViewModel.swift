@@ -23,7 +23,7 @@ class ReceiptUserViewModel: ObservableObject {
     @Published var orderStatus: OrderSatatus = .new
     @Published var dateCreated: Date? = Date()
     
-//    @Published var userId: String = ""
+    @Published var userId: String = ""
     
     
     private let fb = FirebaseService.shared
@@ -42,34 +42,34 @@ class ReceiptUserViewModel: ObservableObject {
         self.receiptUserRepository = receiptUserRepository
     }
     
-    func addNewReceipt() {
-        let newReceipt = Receipt(
-            products: products,
-            totalProductPrice: totalProductsPrice,
-            userInfo: userInfo,
-            deliveryMethod: deliveryMethod,
-            paymentMethod: paymentMethod,
-            totalPrice: totalPrice,
-            orderStatus: orderStatus
+//    func addNewReceipt() {
+//        let newReceipt = Receipt(
+//            products: products,
+//            totalProductPrice: totalProductsPrice,
+//            userInfo: userInfo,
+//            deliveryMethod: deliveryMethod,
+//            paymentMethod: paymentMethod,
+//            totalPrice: totalPrice,
+//            orderStatus: orderStatus,
 //            userId: userId
-        )
-        do {
-            try receiptUserRepository.addNewCheck(receipt: newReceipt)
-            print("Receipt added: \(newReceipt)")
-        } catch {
-            print("Error adding receipt: \(error)")
-        }
-    }
-    
-    func fetchReceipts() {
-        receiptUserRepository.fetchCheck { result in
-            switch result {
-            case .success(let receipts):
-                self.receipts = receipts
-            case .failure(let error):
-                print("Error fetching receipts: \(error)")
-            }
-        }
-    }
+//        )
+//        do {
+//            try receiptUserRepository.addNewCheck(receipt: newReceipt)
+//            print("Receipt added: \(newReceipt)")
+//        } catch {
+//            print("Error adding receipt: \(error)")
+//        }
+//    }
+//    
+//    func fetchReceipts() {
+//        receiptUserRepository.fetchReceipt { result in
+//            switch result {
+//            case .success(let receipts):
+//                self.receipts = receipts
+//            case .failure(let error):
+//                print("Error fetching receipts: \(error)")
+//            }
+//        }
+//    }
         
 }

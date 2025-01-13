@@ -6,6 +6,6 @@
 //
 
 protocol ReceiptUserRepository {
-    func  addNewCheck(receipt: Receipt) throws
-    func fetchCheck(completion: @escaping (Result<[Receipt], Error>) -> Void)
+//    func addNewReceipt(userId: String, cart: , deliveryMethod: String, deliveryUserInfo: String, paymentMethod: String, completion: @escaping (Result<Void, Error>) -> Void )
+//    func loadReceipt(userId: String, )
 }

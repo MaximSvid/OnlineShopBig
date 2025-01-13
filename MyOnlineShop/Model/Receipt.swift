@@ -23,7 +23,7 @@ struct Receipt: Identifiable, Codable {
     var totalPrice: Double
     var orderStatus: OrderSatatus
     var dateCreated: Date = Date()
-//    var userId: String
+    var userId: String
 }
 
 enum OrderSatatus: String, Codable {
