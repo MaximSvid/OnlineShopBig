@@ -8,8 +8,19 @@ import SwiftUI
 import Firebase
 
 class PaymentAdminRepositoryImplementation: PaymentAdminRepository {
-
+    
     private let db = Firestore.firestore()
+
+    func addDeliveryPaymentMethod(userId: String, paymentMethod: PaymentMethod) throws {
+        let userPaymentMethodRef = db.collection("users").document(userId).collection("userPaymentMethod").document()
+        
+        var data = try Firestore.Encoder().encode(paymentMethod)
+        data["id"] = userPaymentMethodRef.documentID
+        try userPaymentMethodRef.setData(data)
+        
+    }
+    
+
     
     func observePayments(completion: @escaping (Result<[PaymentMethod], Error>) -> Void) {
         db.collection("payments").addSnapshotListener { snapshot, error in

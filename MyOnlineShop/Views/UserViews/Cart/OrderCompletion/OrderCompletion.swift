@@ -12,6 +12,7 @@ struct OrderCompletion: View {
     @EnvironmentObject var couponUserViewModel: CouponUserViewModel
     @EnvironmentObject var deliveryAdminViewModel: DeliveryAdminViewModel
     @EnvironmentObject var deliveryUserInfoViewModel: DeliveryUserInfoViewModel
+    @EnvironmentObject var paymentAdminViewModel: PaymentAdminViewModel
     
     var body: some View {
         NavigationStack {
@@ -70,6 +71,7 @@ struct OrderCompletion: View {
                         //здесь должна быть логика сохранения иформации о пользователе, самом заказе, способе доставки и оплаты
                         //после успешного выполнения заказа необходимо сделать анимацию - заказ принят успешно и перевод на страницу с заказами
                         deliveryUserInfoViewModel.addNewDeliveryUserInfo()
+                        paymentAdminViewModel.addUserPaymentMethod()
                     }) {
                         Text("Buy Now")
                             .font(.headline.bold())

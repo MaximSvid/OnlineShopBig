@@ -24,4 +24,7 @@ struct DeliveryUserInfo: Identifiable, Codable {
     var street: String
     var houseNumber: String
     var apartmentNumber: String = ""
+    
+//    var deliveryMethod: DeliveryMethod
+//    var paymentMethod: PaymentMethod
 }

@@ -14,7 +14,7 @@ class DeliveryUserInfoViewModel: ObservableObject {
     @Published var selectedDeliveryUserInfo: DeliveryUserInfo?
     
     private let fb = FirebaseService.shared
-    private let deliveryUserInfoRepo: DeliveryUserRepo
+    private let deliveryUserInfoRepo: DeliveryUserInfoRepo
     
     @Published var firstName: String = ""
     @Published var lastName: String = ""
@@ -32,13 +32,19 @@ class DeliveryUserInfoViewModel: ObservableObject {
     
     
     init(
-        deliveryUserInfoRepo: DeliveryUserRepo = DeliveryUserRepoImplementation()
+        deliveryUserInfoRepo: DeliveryUserInfoRepo = DeliveryUserInfoRepoImplementation()
     ) {
         self.deliveryUserInfoRepo = deliveryUserInfoRepo
     }
     
+//    func addToDeliveryUserInfo() {
+//        
+//    }
+    
     func addNewDeliveryUserInfo() {
-        let newInfo = DeliveryUserInfo(
+        guard let userId = FirebaseService.shared.userId else { return }
+        let newDeliveryUserInfo = DeliveryUserInfo(
+            id: nil,
             firstName: firstName,
             lastName: lastName,
             email: email,
@@ -47,15 +53,32 @@ class DeliveryUserInfoViewModel: ObservableObject {
             index: index,
             city: city,
             street: street,
-            houseNumber: houseNumber
+            houseNumber: houseNumber,
+            apartmentNumber: apartmentNumber
         )
         
         do {
-            try deliveryUserInfoRepo.addDeliveryUserInfo(deliveryUserInfo: newInfo)
+            try deliveryUserInfoRepo.addDeliveryUserInfo(userId: userId, deliveryInfo: newDeliveryUserInfo)
             print("Delivery user info added successfully")
             resetFields()
         } catch {
             print("Error adding new delivery user info: \(error.localizedDescription)")
+        }
+    }
+
+    
+    func observeDeliveryUserInfo() {
+//        guard let userId = fb.userId else { return }
+//        guard let userId = fb.auth.currentUser?.uid else { return }
+        guard let userId = FirebaseService.shared.userId else { return }
+
+        deliveryUserInfoRepo.observeDeliveryUserInfo(userId: userId) { result in
+            switch result {
+            case .success(let deliveryUserInfo):
+                self.deliveryUserInfo = deliveryUserInfo
+            case .failure(let error):
+                print("Error observing delivery info: \(error.localizedDescription)")
+            }
         }
     }
     
@@ -69,63 +92,54 @@ class DeliveryUserInfoViewModel: ObservableObject {
         index = ""
         city = ""
         street = ""
+        houseNumber = ""
+        apartmentNumber = ""
     }
     
-    func observeDeliveryUserInfo() {
-        deliveryUserInfoRepo.observeDeliveryUserInfo() {result in
-            switch result {
-            case .success(let deliveryUserInfo):
-                self.deliveryUserInfo = deliveryUserInfo
-            case .failure(let error):
-                print("Error observing delivery user info: \(error.localizedDescription)")
-            }
-        }
-    }
-    
-    func prepareForEdit(_ deliveryUserInfo: DeliveryUserInfo) {
-        self.selectedDeliveryUserInfo = deliveryUserInfo
-        self.firstName = deliveryUserInfo.firstName
-        self.lastName = deliveryUserInfo.lastName
-        self.email = deliveryUserInfo.email
-        self.phoneNumber = deliveryUserInfo.phoneNumber
-        self.countryCode = deliveryUserInfo.countryCode
-        self.country = deliveryUserInfo.country
-        self.index = deliveryUserInfo.index
-        self.city = deliveryUserInfo.city
-        self.street = deliveryUserInfo.street
-        self.houseNumber = deliveryUserInfo.houseNumber
-        self.apartmentNumber = deliveryUserInfo.apartmentNumber
-    }
-    
-    func updateDeliveryUserInfo() {
-        guard let existionDeliveryUserInfo = selectedDeliveryUserInfo,
-        let deliveryUserInfoId = existionDeliveryUserInfo.id else {
-            print("No deliveryUserInfoId for update")
-            return
-        }
-        let updatedDeliveryUserInfo = DeliveryUserInfo(
-            id: deliveryUserInfoId,
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            countryCode: countryCode,
-            phoneNumber: phoneNumber,
-            country: country,
-            index: index,
-            city: city,
-            street: street,
-            houseNumber: houseNumber,
-            apartmentNumber: apartmentNumber
-        )
-        do {
-            try deliveryUserInfoRepo.updateDeliveryUserInfo(deliveryUserInfo: updatedDeliveryUserInfo)
-            print("DeliveryUserInfo updated successfully")
-            //update im local array
-            if let index = deliveryUserInfo.firstIndex(where: { $0.id == deliveryUserInfoId }) {
-                deliveryUserInfo[index] = updatedDeliveryUserInfo
-            }
-        } catch {
-            print("Error updating deliveryUserInfo: \(error)")
-        }
-    }
+//    func prepareForEdit(_ deliveryUserInfo: DeliveryUserInfo) {
+//        self.selectedDeliveryUserInfo = deliveryUserInfo
+//        self.firstName = deliveryUserInfo.firstName
+//        self.lastName = deliveryUserInfo.lastName
+//        self.email = deliveryUserInfo.email
+//        self.phoneNumber = deliveryUserInfo.phoneNumber
+//        self.countryCode = deliveryUserInfo.countryCode
+//        self.country = deliveryUserInfo.country
+//        self.index = deliveryUserInfo.index
+//        self.city = deliveryUserInfo.city
+//        self.street = deliveryUserInfo.street
+//        self.houseNumber = deliveryUserInfo.houseNumber
+//        self.apartmentNumber = deliveryUserInfo.apartmentNumber
+//    }
+//    
+//    func updateDeliveryUserInfo() {
+//        guard let existionDeliveryUserInfo = selectedDeliveryUserInfo,
+//        let deliveryUserInfoId = existionDeliveryUserInfo.id else {
+//            print("No deliveryUserInfoId for update")
+//            return
+//        }
+//        let updatedDeliveryUserInfo = DeliveryUserInfo(
+//            id: deliveryUserInfoId,
+//            firstName: firstName,
+//            lastName: lastName,
+//            email: email,
+//            countryCode: countryCode,
+//            phoneNumber: phoneNumber,
+//            country: country,
+//            index: index,
+//            city: city,
+//            street: street,
+//            houseNumber: houseNumber,
+//            apartmentNumber: apartmentNumber
+//        )
+//        do {
+//            try deliveryUserInfoRepo.updateDeliveryUserInfo(deliveryUserInfo: updatedDeliveryUserInfo)
+//            print("DeliveryUserInfo updated successfully")
+//            //update im local array
+//            if let index = deliveryUserInfo.firstIndex(where: { $0.id == deliveryUserInfoId }) {
+//                deliveryUserInfo[index] = updatedDeliveryUserInfo
+//            }
+//        } catch {
+//            print("Error updating deliveryUserInfo: \(error)")
+//        }
+//    }
 }
