@@ -30,6 +30,22 @@ class DeliveryAdminViewModel: ObservableObject {
         self.deliveryRepository = deliveryRepository
     }
     
+    func addUserDeliveryMethod() {
+        guard let userId = FirebaseService.shared.userId else { return }
+        let deliveryMethod = DeliveryMethod(
+            id: nil,
+            deliveryName: selectedDelivery?.deliveryName ?? "",
+            deliveryPrice: selectedDelivery?.deliveryPrice ?? 0.0,
+            deliveryTime: selectedDelivery?.deliveryTime ?? ""
+        )
+        do {
+            try deliveryRepository.addDeliveryUserMethod(userId: userId, deliveryMethod: deliveryMethod)
+            print("Delivery method addad succecfully \(deliveryMethod)")
+        } catch {
+            print("Error adding delivery method: \(error.localizedDescription)")
+        }
+    }
+    
     func addNewDelivery() {
         let newDelivery = DeliveryMethod(
             deliveryName: deliveryName,

@@ -12,6 +12,19 @@ class DeliveryRepoAdminImplementation: DeliveryRepoAdmin {
     
     private let db = Firestore.firestore()
     
+    func addDeliveryUserMethod(userId: String, deliveryMethod: DeliveryMethod) throws {
+        let userDeliveryMethodRef = db.collection("users").document(userId).collection("deliveryMethods").document()
+        var data = try Firestore.Encoder().encode(deliveryMethod)
+        data["id"] = userDeliveryMethodRef.documentID
+        try userDeliveryMethodRef.setData(data)
+        
+    }
+    // Здесь ошибка, тебе не нужен array, тебе нужне только один обект
+    func observeDeliveryUserMethods(userId: String, completion: @escaping (Result<[DeliveryMethod], any Error>) -> Void) {
+        
+    }
+
+    
     func addNewDelivery(delivery: DeliveryMethod) throws {
         do {
             try db.collection("delivery").addDocument(from: delivery)

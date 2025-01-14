@@ -38,10 +38,10 @@ struct DeliveryButton: View {
 //                RoundedRectangle(cornerRadius: 3)
 //                    .fill(isSelected ? Color.green.opacity(0.1) : Color.white)
 //            )
-//            .overlay(
-//                RoundedRectangle(cornerRadius: 3)
-//                    .stroke(isSelected ? .green : .gray.opacity(0.8), lineWidth: 1)
-//            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 3)
+                    .stroke(isSelected ? .green : .gray.opacity(0.8), lineWidth: 1)
+            )
         }
         .buttonStyle(PlainButtonStyle())
     }

@@ -71,6 +71,7 @@ struct OrderCompletion: View {
                         //здесь должна быть логика сохранения иформации о пользователе, самом заказе, способе доставки и оплаты
                         //после успешного выполнения заказа необходимо сделать анимацию - заказ принят успешно и перевод на страницу с заказами
                         deliveryUserInfoViewModel.addNewDeliveryUserInfo()
+                        deliveryAdminViewModel.addUserDeliveryMethod()
                         paymentAdminViewModel.addUserPaymentMethod()
                     }) {
                         Text("Buy Now")

@@ -33,14 +33,14 @@ class PaymentAdminViewModel: ObservableObject {
     
     func addUserPaymentMethod() {
         guard let userId = FirebaseService.shared.userId else { return }
-        let newPaymentMethod = PaymentMethod(
+        let paymentMethod = PaymentMethod(
             id: nil,
             name: selectedPayment?.name ?? "",
             image: selectedPayment?.image ?? "",
             isVisible: selectedPayment?.isVisible ?? false
         )
         do {
-            try paymentAdminRepository.addDeliveryPaymentMethod(userId: userId, paymentMethod: newPaymentMethod)
+            try paymentAdminRepository.addDeliveryPaymentMethod(userId: userId, paymentMethod: paymentMethod)
             print("Payment added successfully")
         } catch {
             print("Error adding payment: \(error)")
