@@ -1,21 +1,19 @@
 //
-//  OrderCompletion.swift
+//  ReceiptListUser.swift
 //  MyOnlineShop
 //
-//  Created by Maxim Svidrak on 10.01.25.
+//  Created by Maxim Svidrak on 14.01.25.
 //
 
 import SwiftUI
-import FirebaseAuth
 
-struct OrderCompletion: View {
+struct ReceiptListUser: View {
+    
     @EnvironmentObject var userCartViewModel: UserCartViewModel
     @EnvironmentObject var couponUserViewModel: CouponUserViewModel
     @EnvironmentObject var deliveryAdminViewModel: DeliveryAdminViewModel
     @EnvironmentObject var deliveryUserInfoViewModel: DeliveryUserInfoViewModel
     @EnvironmentObject var paymentAdminViewModel: PaymentAdminViewModel
-    @EnvironmentObject var receiptUserViewModel: ReceiptUserViewModel
-    
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -68,33 +66,14 @@ struct OrderCompletion: View {
                             .font(.headline)
                             .foregroundStyle(couponUserViewModel.appliedCoupon != nil ? .green : .primary)
                     }
-                    
-                    Button(action: {
-                        //здесь должна быть логика сохранения иформации о пользователе, самом заказе, способе доставки и оплаты
-                        //после успешного выполнения заказа необходимо сделать анимацию - заказ принят успешно и перевод на страницу с заказами
-                        deliveryUserInfoViewModel.addNewDeliveryUserInfo()
-                        deliveryAdminViewModel.addUserDeliveryMethod()
-                        paymentAdminViewModel.addUserPaymentMethod()
-                        Task {
-                            await receiptUserViewModel.fetchAndSaveReceipt(userId: Auth.auth().currentUser!.uid)
-                        }
-                    }) {
-                        Text("Buy Now")
-                            .font(.headline.bold())
-                            .frame(width: .infinity, height: 50)
-                            .frame(maxWidth: .infinity)
-                            .foregroundStyle(.white)
-                            .background(.blue.opacity(0.8))
-                            .clipShape(RoundedRectangle(cornerRadius: 3))
+                }
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Text("Receipt")
+                            .font(.title.bold())
                     }
                 }
                 .padding([.leading, .trailing])
-            }
-        }
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Text("Order Completion")
-                    .font(.title.bold())
             }
         }
         .onAppear {
@@ -106,5 +85,5 @@ struct OrderCompletion: View {
 }
 
 //#Preview {
-//    OrderCompletion()
+//    ReceiptListUser()
 //}

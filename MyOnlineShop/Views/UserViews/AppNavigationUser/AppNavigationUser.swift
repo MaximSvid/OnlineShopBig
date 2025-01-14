@@ -30,11 +30,18 @@ struct AppNavigationUser: View {
                 }
                 .tag(2)
             
+            ReceiptUser()
+                .tabItem {
+                    Label("Receipts", systemImage: "list.clipboard")
+                }
+                .tag(4)
+
+            
             UserSettingsView()
                 .tabItem {
                     Label("Settings", systemImage: "gearshape")
                 }
-                .tag(3)
+                .tag(5)
         }
     }
 }

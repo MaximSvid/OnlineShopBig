@@ -40,7 +40,7 @@ class DeliveryAdminViewModel: ObservableObject {
         )
         do {
             try deliveryRepository.addDeliveryUserMethod(userId: userId, deliveryMethod: deliveryMethod)
-            print("Delivery method addad succecfully \(deliveryMethod)")
+            print("Delivery method addad succecfully")
         } catch {
             print("Error adding delivery method: \(error.localizedDescription)")
         }

@@ -24,19 +24,35 @@ class ReceiptUserViewModel: ObservableObject {
         self.receiptUserRepository = receiptUserRepository
     }
     
-    func fetchReceipt (userId: String) {
+        
+    func fetchAndSaveReceipt(userId: String) async {
         isLoading = true
         errorMessage = nil
         
-        receiptUserRepository.fetchReceiptUser(userId: userId) { result in
-            switch result {
-            case .success(let receiptUser):
-                self.receiptUser = receiptUser
-                self.isLoading = false
-            case .failure(let error):
-                self.errorMessage = error.localizedDescription
+        return await withCheckedContinuation { continuation in
+            receiptUserRepository.fetchReceiptUser(userId: userId) { result in
+                switch result {
+                case .success(let receipt):
+                    self.receiptUser = receipt
+                    // Сразу сохраняем полученный чек
+                    Task {
+                        do {
+                            try self.receiptUserRepository.saveReceipt(receipt)
+                            print("Receipt saved successfully")
+                        } catch {
+                            self.errorMessage = error.localizedDescription
+                            print("Error saving receipt: \(error)")
+                        }
+                    }
+                    self.isLoading = false
+                    
+                case .failure(let error):
+                    self.errorMessage = error.localizedDescription
+                    print("Error fetching receipt: \(error)")
+                }
+                continuation.resume()
             }
         }
     }
-        
+
 }

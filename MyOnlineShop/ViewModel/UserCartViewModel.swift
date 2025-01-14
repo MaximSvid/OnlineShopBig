@@ -13,46 +13,13 @@ class UserCartViewModel: ObservableObject {
     
     @Published var products: [Product] = []
     @Published var itemCount: [Product: Int] = [:]
-    @Published var cartItems: [Product] = []
     
     private let cartRepositoryUser: CartRepositoryUser
     
     init(cartRepositoryUser: CartRepositoryUser = CartRepositoryUserImplementation()) {
         self.cartRepositoryUser = cartRepositoryUser
     }
-    
-    //локальное добавление ----------------------
-    
-    
-//    @Published var itemCount: [Product: Int] = [:]
-    func addToLocalCart(for product: Product) {
-            if !cartItems.contains(where: { $0.id == product.id }) {
-                cartItems.append(product)
-                itemCount[product] = 1
-            } else {
-                itemCount[product]? += 1
-            }
-        }
-    
-    func updateLocalCountProducts(for product: Product, increment: Bool) {
-            guard let currentCount = itemCount[product], currentCount > 0 else { return }
-            if increment {
-                itemCount[product]? += 1
-            } else if currentCount > 1 {
-                itemCount[product]? -= 1
-            } else {
-                // Удалить продукт, если количество стало равно 0
-                itemCount[product] = nil
-                cartItems.removeAll { $0.id == product.id }
-            }
-        }
         
-        var cartLocalItemsCount: Int {
-            cartItems.reduce(0) { $0 + (itemCount[$1] ?? 0) }
-        }
-    
-    //локальное добавление ----------------------
-    
     func addToCart(for product: Product) {
         guard let userId = FirebaseService.shared.userId,
               let productId = product.id else {
