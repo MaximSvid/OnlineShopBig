@@ -6,6 +6,5 @@
 //
 
 protocol ReceiptUserRepository {
-//    func addNewReceipt(userId: String, cart: , deliveryMethod: String, deliveryUserInfo: String, paymentMethod: String, completion: @escaping (Result<Void, Error>) -> Void )
-//    func loadReceipt(userId: String, )
+    func fetchReceiptUser(userId: String, completion: @escaping (Result<Receipt, Error>) -> Void)
 }
