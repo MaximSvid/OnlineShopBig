@@ -167,7 +167,7 @@ struct DetailHomeUser: View {
                 
                 HStack {
                     Button(action: {
-                        userCartViewModel.addToCart(for: product)
+                        userCartViewModel.addToCart(for: product) //при нажатии на кнопку товары добавляются в базу данных, а нужно чтобы они просто локально отображались в cartListUser
                     }) {
                         Text ("Buy Now")
                             .font(.headline.bold())
@@ -203,7 +203,7 @@ struct DetailHomeUser: View {
                 }
             }
             .onAppear {
-                userCartViewModel.loadCart()
+                userCartViewModel.loadCart() 
             }
             .padding([.leading, .trailing])
             .toolbar {
@@ -235,30 +235,6 @@ struct DetailHomeUser: View {
                         }
                     }
                 }
-                
-                //                ToolbarItem(placement: .topBarTrailing) {
-                //                    NavigationLink{
-                //                        CartUser()
-                //                    } label: {
-                //                        ZStack (alignment: .topTrailing) {
-                //                            Image(systemName: "cart")
-                //                                .font(.headline)
-                //                                .foregroundStyle(.gray)
-                //                                .padding(8)
-                //                                .background(Circle().fill(Color.gray.opacity(0.2)))
-                //
-                //                            if userCartViewModel.cartItemsCount > 0 {
-                //                                Text("\(userCartViewModel.cartItemsCount)")
-                //                                    .font(.caption2)
-                //                                    .padding(5)
-                //                                    .foregroundStyle(.white)
-                //                                    .background(Color.red)
-                //                                    .clipShape(Circle())
-                //                                    .offset(x: 10, y: -4)
-                //                            }
-                //                        }
-                //                    }
-                //                }
             }
         }
     }
