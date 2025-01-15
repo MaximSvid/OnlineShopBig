@@ -15,7 +15,7 @@ struct ReceiptUser: View {
 //            ScrollView {
                 VStack {
                     List (receiptUserViewModel.receipts) { receipt in
-                        ReceiptCartUser(receipt: receipt)
+                        ReceiptListUser(receipt: receipt)
                             .listRowSeparator(.hidden)
                     }
                     .listStyle(.plain)
