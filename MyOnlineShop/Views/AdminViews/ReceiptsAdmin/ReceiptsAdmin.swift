@@ -8,11 +8,36 @@
 import SwiftUI
 
 struct ReceiptsAdmin: View {
+    @EnvironmentObject var receiptAdminViewModel: ReceiptAdminViewModel
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        
+        NavigationStack {
+//            ScrollView {
+                VStack {
+                    List (receiptAdminViewModel.receipts) { receipt in
+                        ReceiptListUser(receipt: receipt)
+                            .listRowSeparator(.hidden)
+                    }
+                    .listStyle(.plain)
+                }
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Text("My Receipts")
+                            .font(.title.bold())
+                    }
+                }
+                .onAppear {
+                    Task {
+                        await receiptAdminViewModel.fetchAllReceipts()
+                    }
+                
+                }
+            }
+//        }
     }
 }
 
+
 #Preview {
-    ReceiptsAdmin()
+//    ReceiptsAdmin()
 }

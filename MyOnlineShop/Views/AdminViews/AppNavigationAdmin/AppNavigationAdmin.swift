@@ -24,6 +24,10 @@ struct AppNavigationAdmin: View {
             Tab("Payments", systemImage: "dollarsign.bank.building") {
                 PaymentAdmin()
             }
+            Tab("Receipts", systemImage: "list.clipboard") {
+                ReceiptsAdmin()
+            }
+
             Tab("Admin Settings", systemImage: "gear") {
                 AdminSettingsView()
             }
