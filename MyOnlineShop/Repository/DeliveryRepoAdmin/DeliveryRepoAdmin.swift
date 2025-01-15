@@ -15,5 +15,5 @@ protocol DeliveryRepoAdmin {
     func addDeliveryUserMethod(userId: String, deliveryMethod: DeliveryMethod) throws
     func observeDeliveryUserMethods(userId: String, completion: @escaping (Result<[DeliveryMethod], Error>) -> Void)
     
-    func deleteDeliveryFromUser(userId: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func deleteDeliveryFromUser(userId: String) async throws
 }

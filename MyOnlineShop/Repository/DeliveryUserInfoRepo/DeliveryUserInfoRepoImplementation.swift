@@ -40,23 +40,32 @@ class DeliveryUserInfoRepoImplementation: DeliveryUserInfoRepo {
         }
     }
     
-    func deleteDeliveryUserInfoFromUser(userId: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+    func deleteDeliveryUserInfoFromUser(userId: String) async throws {
         let deliveryUserInfoRef = db.collection("users").document(userId).collection("userDeliveryInfo")
-        deliveryUserInfoRef.getDocuments { snapshot, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            guard let documents = snapshot?.documents else {
-                completion(.success(()))
-                return
-            }
-            for document in documents {
-                document.reference.delete()
-            }
-            completion(.success(()))
+        
+        let snapshot = try await deliveryUserInfoRef.getDocuments()
+        for document in snapshot.documents {
+            try await document.reference.delete()
         }
     }
+    
+//    func deleteDeliveryUserInfoFromUser(userId: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+//        let deliveryUserInfoRef = db.collection("users").document(userId).collection("userDeliveryInfo")
+//        deliveryUserInfoRef.getDocuments { snapshot, error in
+//            if let error = error {
+//                completion(.failure(error))
+//                return
+//            }
+//            guard let documents = snapshot?.documents else {
+//                completion(.success(()))
+//                return
+//            }
+//            for document in documents {
+//                document.reference.delete()
+//            }
+//            completion(.success(()))
+//        }
+//    }
 
     
 }

@@ -12,14 +12,13 @@ struct ReceiptUser: View {
     var body: some View {
         
         NavigationStack {
-            ScrollView {
+//            ScrollView {
                 VStack {
-                    ForEach(receiptUserViewModel.receipts) { receipt in
-                        ForEach(receipt.product) { product in
-                            ReceiptCartUser( product: product)
-                        }
-                        
+                    List (receiptUserViewModel.receipts) { receipt in
+                        ReceiptCartUser(receipt: receipt)
+                            .listRowSeparator(.hidden)
                     }
+                    .listStyle(.plain)
                 }
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
@@ -31,7 +30,7 @@ struct ReceiptUser: View {
                     receiptUserViewModel.observeReceipt()
                 }
             }
-        }
+//        }
     }
 }
 

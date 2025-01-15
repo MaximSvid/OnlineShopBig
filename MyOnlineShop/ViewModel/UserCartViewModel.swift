@@ -111,16 +111,14 @@ class UserCartViewModel: ObservableObject {
         }
     }
     
-    func removeAllFromCart() {
+    func removeAllFromCart() async {
         guard let userId = FirebaseService.shared.userId else { return }
         
-        cartRepositoryUser.removeAllFromCart(userId: userId) { result in
-            switch result {
-            case .success:
-                print("Successfully removed all from cart")
-            case .failure(let error):
-                print("Error removing all from cart: \(error)")
-            }
+        do {
+            try await cartRepositoryUser.removeAllFromCart(userId: userId)
+            print("Debug: All products removed from cart")
+        } catch {
+            print("Error removing all products from cart: \(error)")
         }
     }
     

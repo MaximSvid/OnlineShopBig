@@ -20,20 +20,20 @@ struct FavoriteListView: View {
                             image.resizable()
                                 .scaledToFill()
                                 .frame(width: 70, height: 100)
-                                .cornerRadius(10)
+                                .clipShape(RoundedRectangle(cornerRadius: 3))
                                 .clipped()
                         } placeholder: {
                             Color.gray
                                 .frame(width: 70, height: 100)
                         }
-                        .tag(index)
+//                        .tag(index)
                     }
                 } else {
                     Image("image")
                         .resizable()
                         .scaledToFill()
                         .frame(width: 70, height: 100)
-                        .cornerRadius(10)
+                        .clipShape(RoundedRectangle(cornerRadius: 3))
                         .clipped()
                 }
             }
@@ -116,7 +116,7 @@ struct FavoriteListView: View {
         }
         .frame(width: .infinity, height: 100)
         .background(.white)
-        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .clipShape(RoundedRectangle(cornerRadius: 3))
         .shadow(radius: 3)
         
     }

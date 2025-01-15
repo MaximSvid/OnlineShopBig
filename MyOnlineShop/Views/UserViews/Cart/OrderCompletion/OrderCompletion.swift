@@ -73,16 +73,19 @@ struct OrderCompletion: View {
                         //здесь должна быть логика сохранения иформации о пользователе, самом заказе, способе доставки и оплаты
                         //после успешного выполнения заказа необходимо сделать анимацию - заказ принят успешно и перевод на страницу с заказами
                         Task {
+                            
                             deliveryUserInfoViewModel.addNewDeliveryUserInfo()
                             deliveryAdminViewModel.addUserDeliveryMethod()
                             paymentAdminViewModel.addUserPaymentMethod()
                             
                             await receiptUserViewModel.fetchAndSaveReceipt(userId: Auth.auth().currentUser!.uid)
                             
-                            paymentAdminViewModel.deletePaymentMethodFromUser()
-                            deliveryUserInfoViewModel.deleteDeliveryUserInfoFromUser()
-                            deliveryAdminViewModel.deleteDeliveryFormUser()
-                            userCartViewModel.removeAllFromCart()
+                            //ich become prewiew crached
+                            //нужно настроить чтобы это срабатывало только после анимации и тд
+//                            await paymentAdminViewModel.deletePaymentMethodFromUser()
+//                            await deliveryUserInfoViewModel.deleteDeliveryUserInfoFromUser()
+//                            await deliveryAdminViewModel.deleteDeliveryFormUser()
+//                            await userCartViewModel.removeAllFromCart()
                         }
                     }) {
                         Text("Buy Now")

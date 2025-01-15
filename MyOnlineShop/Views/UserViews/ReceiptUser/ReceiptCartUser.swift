@@ -9,111 +9,85 @@ import SwiftUI
 
 struct ReceiptCartUser: View {
     @EnvironmentObject var receiptUserViewModel: ReceiptUserViewModel
-    var product: Product
+    //    var product: Product
+    var receipt: Receipt
     
     var body: some View {
         HStack {
             ZStack(alignment: .bottom) {
-                if !product.images.isEmpty {
-                    ForEach(product.images.indices, id: \.self) { index in
-                        AsyncImage(url: URL(string: product.images[index])) { image in
+                
+                ForEach(receipt.products) { product in
+                    if let firstImage = product.images.first,
+                       let url = URLComponents(string: firstImage) {
+                        AsyncImage(url: url.url!) { image in
                             image.resizable()
                                 .scaledToFill()
                                 .frame(width: 70, height: 100)
-                                .cornerRadius(10)
+                                .clipShape(RoundedRectangle(cornerRadius: 3))
                                 .clipped()
+                            
                         } placeholder: {
                             Color.gray
                                 .frame(width: 70, height: 100)
                         }
-                        .tag(index)
+                    } else {
+                        Image("image")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 70, height: 100)
+                            .clipShape(RoundedRectangle(cornerRadius: 3))
+                            .clipped()
                     }
-                    
-                } else {
-                    Image("image")
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 70, height: 100)
-                        .cornerRadius(10)
-                        .clipped()
                 }
             }
             
-            VStack(alignment: .leading) {
-                Text(product.title)
-                    .font(.callout)
-                    .padding(.top, 10)
-                    .foregroundStyle(.gray)
-                
-                Spacer()
-                
+            // Секция с информацией о заказе
+            VStack(alignment: .leading, spacing: 8) {
+                // Верхняя строка: статус и дата
                 HStack {
+                    Text(receipt.orderStatus.rawValue)
+                        .font(.caption)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .background(receipt.orderStatus == .processing ? Color.yellow.opacity(0.2) : Color.green.opacity(0.2))
+                        .clipShape(RoundedRectangle(cornerRadius: 3))
                     
-                    Text("One price: ")
-                        .font(.subheadline)
-                        .foregroundStyle(.gray)
-                    
-                    if product.action && product.actionPrice > 0.0 {
-                        // main price mit linie
-                        Text(String(format: "€%.2f", product.price))
-                            .font(.subheadline)
-                            .foregroundStyle(product.isVisible ? .gray : .gray.opacity(0.5))
-                            .strikethrough(true, color: .gray) // linie
-                        
-//                        Spacer()
-                        
-                        // ActionPrice
-                        Text(String(format: "€%.2f", product.actionPrice))
-                            .font(.caption)
-                            .foregroundStyle(.red)
-                    } else {
-                        // Nur main price
-                        Text(String(format: "€%.2f", product.price))
-                            .font(.subheadline)
-                            .foregroundStyle(product.isVisible ? .black : .gray)
-                    }
                     Spacer()
                     
-                    
+                    Text(receipt.dateCreated.formatted(date: .abbreviated, time: .shortened))
+                        .font(.caption)
+                        .foregroundColor(.gray)
                 }
-                .padding(.trailing, 4)
-//                .padding(.leading, 4)
-                .padding(.bottom, 4)
                 
-                // Отображение итоговой цены
-                
+                // Средняя строка: количество товаров и способ доставки
                 HStack {
-                    Text("Total price: ")
+                    Text("\(receipt.products.count) items")
                         .font(.subheadline)
-                        .foregroundStyle(.gray)
                     
-                    Text(
-                        String(
-                            format: "€%.2f",
-                            product.action && product.actionPrice > 0
-                            ? product.actionPrice * Double(receiptUserViewModel.itemCount[product] ?? 1)
-                            : product.price * Double(receiptUserViewModel.itemCount[product] ?? 1)
-                        )
-                    )
-                    .font(.headline)
-                    Spacer()
+                    Text("•")
+                        .foregroundColor(.gray)
+                    
+                    Text(receipt.deliveryMethod.deliveryName)
+                        .font(.subheadline)
                 }
-                Spacer()
                 
-                
+                // Нижняя строка: итоговая цена
+                HStack {
+                    Text("Total:")
+                        .font(.subheadline)
+                    Text("$\(receipt.totalPrice, specifier: "%.2f")")
+                        .font(.headline)
+                        .foregroundColor(.blue)
+                }
             }
+            .padding(.horizontal)
             
             Spacer()
             
-            VStack {
-                Spacer()
-                    Text("\(receiptUserViewModel.itemCount[product] ?? 1)")
-                        .font(.headline)
-                Spacer()
-            }
         }
         .frame(width: .infinity, height: 100)
-        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .background(.white)
+        .clipShape(RoundedRectangle(cornerRadius: 3))
         .shadow(radius: 3)
     }
 }

@@ -75,24 +75,32 @@ class CartRepositoryUserImplementation: CartRepositoryUser {
         }
     }
     
-    func removeAllFromCart(userId: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+    func removeAllFromCart(userId: String) async throws {
         let cartRef = db.collection("users").document(userId).collection("cart")
         
-        cartRef.getDocuments { querySnapshot, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            guard let documents = querySnapshot?.documents else {
-                completion(.success(()))
-                return
-            }
-            for document in documents {
-                document.reference.delete()
-            }
-            completion(.success(()))
-            
+        let snapshot = try await cartRef.getDocuments()
+        for document in snapshot.documents {
+            try await document.reference.delete()
         }
     }
+//    func removeAllFromCart(userId: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+//        let cartRef = db.collection("users").document(userId).collection("cart")
+//        
+//        cartRef.getDocuments { querySnapshot, error in
+//            if let error = error {
+//                completion(.failure(error))
+//                return
+//            }
+//            guard let documents = querySnapshot?.documents else {
+//                completion(.success(()))
+//                return
+//            }
+//            for document in documents {
+//                document.reference.delete()
+//            }
+//            completion(.success(()))
+//            
+//        }
+//    }
     
 }

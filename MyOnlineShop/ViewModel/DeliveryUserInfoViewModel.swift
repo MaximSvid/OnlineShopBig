@@ -96,16 +96,25 @@ class DeliveryUserInfoViewModel: ObservableObject {
         apartmentNumber = ""
     }
     
-    func deleteDeliveryUserInfoFromUser() {
+    func deleteDeliveryUserInfoFromUser() async {
         guard let userId = FirebaseService.shared.userId else { return }
-        
-        deliveryUserInfoRepo.deleteDeliveryUserInfoFromUser(userId: userId) { result in
-            switch result {
-            case .success:
-                print("Successfully remover from deliveryUserInfo")
-            case .failure:
-                print("Error remover from deliveryUserInfo")
-            }
+        do {
+            try await deliveryUserInfoRepo.deleteDeliveryUserInfoFromUser(userId: userId)
+        } catch {
+            print("Error delete deliveryUserInfo")
         }
     }
+    
+//    func deleteDeliveryUserInfoFromUser() {
+//        guard let userId = FirebaseService.shared.userId else { return }
+//        
+//        deliveryUserInfoRepo.deleteDeliveryUserInfoFromUser(userId: userId) { result in
+//            switch result {
+//            case .success:
+//                print("Successfully remover from deliveryUserInfo")
+//            case .failure:
+//                print("Error remover from deliveryUserInfo")
+//            }
+//        }
+//    }
 }

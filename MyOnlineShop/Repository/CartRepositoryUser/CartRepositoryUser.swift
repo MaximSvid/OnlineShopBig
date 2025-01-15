@@ -11,5 +11,5 @@ protocol CartRepositoryUser {
     func updateCountProduct (userId: String, productId: String, productCount: Int, completion: @escaping (Result<Void, any Error>) -> Void)
     func removeFromCart(userId: String, productId: String, completion: @escaping (Result<Void, any Error>) -> Void)
     
-    func removeAllFromCart(userId: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func removeAllFromCart(userId: String) async throws
 }

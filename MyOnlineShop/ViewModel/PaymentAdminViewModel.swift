@@ -77,16 +77,13 @@ class PaymentAdminViewModel: ObservableObject {
         }
     }
     
-    func deletePaymentMethodFromUser() {
+    func deletePaymentMethodFromUser() async {
         guard let userId = FirebaseService.shared.userId else { return }
         
-        paymentAdminRepository.deletePaymentFormUser(userId: userId) { result in
-            switch result {
-            case .success:
-                print("Payment method deleted from user successfully")
-            case .failure:
-                print("Error deleting payment method from user")
-            }
+        do {
+            try await paymentAdminRepository.deletePaymentFormUser(userId: userId)
+            print("Payment method deleted from user successfully")
+        } catch {
+            print("Error deleting payment method from user: \(error)")
         }
-    }
-}
+    }}

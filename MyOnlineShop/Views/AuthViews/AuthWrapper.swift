@@ -55,7 +55,6 @@ struct AuthWrapper: View {
             authViewModel.checkIfUserIsLoggenIn()
             }
     }
-    
 }
 
 #Preview {
