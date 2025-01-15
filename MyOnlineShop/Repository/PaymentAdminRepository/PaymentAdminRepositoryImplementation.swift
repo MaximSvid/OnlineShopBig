@@ -55,4 +55,26 @@ class PaymentAdminRepositoryImplementation: PaymentAdminRepository {
             }
         }
     }
+    
+    func deletePaymentFormUser(userId: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+        let paymetnsFormUserRef = db.collection("users").document(userId).collection("userPaymentMethod")
+        
+        paymetnsFormUserRef.getDocuments { snapshot, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            guard let documents = snapshot?.documents else {
+                completion(.success(()))
+                return
+            }
+            for document in documents {
+                document.reference.delete()
+            }
+            completion(.success(()))
+        }
+        
+    }
+    
 }

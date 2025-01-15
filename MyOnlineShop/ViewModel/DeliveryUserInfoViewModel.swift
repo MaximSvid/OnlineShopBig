@@ -96,50 +96,16 @@ class DeliveryUserInfoViewModel: ObservableObject {
         apartmentNumber = ""
     }
     
-//    func prepareForEdit(_ deliveryUserInfo: DeliveryUserInfo) {
-//        self.selectedDeliveryUserInfo = deliveryUserInfo
-//        self.firstName = deliveryUserInfo.firstName
-//        self.lastName = deliveryUserInfo.lastName
-//        self.email = deliveryUserInfo.email
-//        self.phoneNumber = deliveryUserInfo.phoneNumber
-//        self.countryCode = deliveryUserInfo.countryCode
-//        self.country = deliveryUserInfo.country
-//        self.index = deliveryUserInfo.index
-//        self.city = deliveryUserInfo.city
-//        self.street = deliveryUserInfo.street
-//        self.houseNumber = deliveryUserInfo.houseNumber
-//        self.apartmentNumber = deliveryUserInfo.apartmentNumber
-//    }
-//    
-//    func updateDeliveryUserInfo() {
-//        guard let existionDeliveryUserInfo = selectedDeliveryUserInfo,
-//        let deliveryUserInfoId = existionDeliveryUserInfo.id else {
-//            print("No deliveryUserInfoId for update")
-//            return
-//        }
-//        let updatedDeliveryUserInfo = DeliveryUserInfo(
-//            id: deliveryUserInfoId,
-//            firstName: firstName,
-//            lastName: lastName,
-//            email: email,
-//            countryCode: countryCode,
-//            phoneNumber: phoneNumber,
-//            country: country,
-//            index: index,
-//            city: city,
-//            street: street,
-//            houseNumber: houseNumber,
-//            apartmentNumber: apartmentNumber
-//        )
-//        do {
-//            try deliveryUserInfoRepo.updateDeliveryUserInfo(deliveryUserInfo: updatedDeliveryUserInfo)
-//            print("DeliveryUserInfo updated successfully")
-//            //update im local array
-//            if let index = deliveryUserInfo.firstIndex(where: { $0.id == deliveryUserInfoId }) {
-//                deliveryUserInfo[index] = updatedDeliveryUserInfo
-//            }
-//        } catch {
-//            print("Error updating deliveryUserInfo: \(error)")
-//        }
-//    }
+    func deleteDeliveryUserInfoFromUser() {
+        guard let userId = FirebaseService.shared.userId else { return }
+        
+        deliveryUserInfoRepo.deleteDeliveryUserInfoFromUser(userId: userId) { result in
+            switch result {
+            case .success:
+                print("Successfully remover from deliveryUserInfo")
+            case .failure:
+                print("Error remover from deliveryUserInfo")
+            }
+        }
+    }
 }

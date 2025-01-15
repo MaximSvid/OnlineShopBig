@@ -38,7 +38,7 @@ struct OrderCompletion: View {
                             .font(.subheadline)
                     }
                     .padding(.top)
-
+                    
                     HStack {
                         Text("Delivery price: ")
                             .font(.subheadline)
@@ -72,11 +72,17 @@ struct OrderCompletion: View {
                     Button(action: {
                         //здесь должна быть логика сохранения иформации о пользователе, самом заказе, способе доставки и оплаты
                         //после успешного выполнения заказа необходимо сделать анимацию - заказ принят успешно и перевод на страницу с заказами
-                        deliveryUserInfoViewModel.addNewDeliveryUserInfo()
-                        deliveryAdminViewModel.addUserDeliveryMethod()
-                        paymentAdminViewModel.addUserPaymentMethod()
                         Task {
+                            deliveryUserInfoViewModel.addNewDeliveryUserInfo()
+                            deliveryAdminViewModel.addUserDeliveryMethod()
+                            paymentAdminViewModel.addUserPaymentMethod()
+                            
                             await receiptUserViewModel.fetchAndSaveReceipt(userId: Auth.auth().currentUser!.uid)
+                            
+                            paymentAdminViewModel.deletePaymentMethodFromUser()
+                            deliveryUserInfoViewModel.deleteDeliveryUserInfoFromUser()
+                            deliveryAdminViewModel.deleteDeliveryFormUser()
+                            userCartViewModel.removeAllFromCart()
                         }
                     }) {
                         Text("Buy Now")

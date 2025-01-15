@@ -88,5 +88,25 @@ class DeliveryRepoAdminImplementation: DeliveryRepoAdmin {
             throw error
         }
     }
+    
+    func deleteDeliveryFromUser(userId: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+        let deliveryRef = db.collection("users").document(userId).collection("deliveryMethods")
+        
+        deliveryRef.getDocuments { querySnapshot, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            guard let documents = querySnapshot?.documents else {
+                completion(.success(()))
+                return
+            }
+            
+            for document in documents {
+                document.reference.delete()
+            }
+            completion(.success(()))
+        }
+    }
 
 }

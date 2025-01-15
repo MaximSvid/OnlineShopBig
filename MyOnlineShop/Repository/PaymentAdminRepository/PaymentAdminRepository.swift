@@ -11,4 +11,6 @@ protocol PaymentAdminRepository {
     
     func addDeliveryPaymentMethod(userId: String, paymentMethod: PaymentMethod) throws
     
+    func deletePaymentFormUser(userId: String, completion: @escaping (Result<Void, Error>) -> Void)
+    
 }

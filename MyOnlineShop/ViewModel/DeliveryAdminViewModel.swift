@@ -140,5 +140,20 @@ class DeliveryAdminViewModel: ObservableObject {
         return 0.0
     }
     
+    func deleteDeliveryFormUser() {
+        guard let userId = FirebaseService.shared.userId else { return }
+        
+        deliveryRepository.deleteDeliveryFromUser(userId: userId) { result in
+            switch result {
+            case .success:
+                print("Delivery from user deleted successfull")
+            case .failure:
+                print("Error deleting delivery from user")
+            }
+        }
+    }
+    
 }
+
+
 

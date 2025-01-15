@@ -90,20 +90,6 @@ class UserCartViewModel: ObservableObject {
         
         // Обновляем количество в словаре
         itemCount[product] = newCount
-        
-        // Обновляем количество на сервере
-//        cartRepositoryUser.updateCountProduct(
-//            userId: userId,
-//            productId: productId,
-//            productCount: newCount) { [weak self] result in
-//                switch result {
-//                case .success:
-//                    self?.loadCart()
-//                    
-//                case .failure(let error):
-//                    print("Error update count product: \(error.localizedDescription)")
-//                }
-//            }
     }
     
     func removeFromCart(product: Product) {
@@ -121,6 +107,19 @@ class UserCartViewModel: ObservableObject {
                 self?.loadCart()
             case .failure(let error):
                 print("Error removing from cart: \(error)")
+            }
+        }
+    }
+    
+    func removeAllFromCart() {
+        guard let userId = FirebaseService.shared.userId else { return }
+        
+        cartRepositoryUser.removeAllFromCart(userId: userId) { result in
+            switch result {
+            case .success:
+                print("Successfully removed all from cart")
+            case .failure(let error):
+                print("Error removing all from cart: \(error)")
             }
         }
     }
