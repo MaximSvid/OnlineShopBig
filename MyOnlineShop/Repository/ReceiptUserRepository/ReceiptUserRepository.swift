@@ -8,4 +8,6 @@
 protocol ReceiptUserRepository {
     func saveReceipt(_ receipt: Receipt)  throws
     func fetchReceiptUser(userId: String, completion: @escaping (Result<Receipt, Error>) -> Void)
+    func observeReceiptUser(userId: String, completion: @escaping (Result<[Receipt], Error>) -> Void)
+    
 }

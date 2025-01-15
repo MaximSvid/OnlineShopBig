@@ -1,15 +1,14 @@
 //
-//  CartListCompletion.swift
+//  ReceiptListUser.swift
 //  MyOnlineShop
 //
-//  Created by Maxim Svidrak on 10.01.25.
+//  Created by Maxim Svidrak on 14.01.25.
 //
 
 import SwiftUI
 
-struct CartListCompletion: View {
-    @EnvironmentObject var userProductViewModel: UserProductViewModel
-    @EnvironmentObject var userCartViewModel: UserCartViewModel
+struct ReceiptCartUser: View {
+    @EnvironmentObject var receiptUserViewModel: ReceiptUserViewModel
     var product: Product
     
     var body: some View {
@@ -92,8 +91,8 @@ struct CartListCompletion: View {
                         String(
                             format: "€%.2f",
                             product.action && product.actionPrice > 0
-                            ? product.actionPrice * Double(userCartViewModel.itemCount[product] ?? 1)
-                            : product.price * Double(userCartViewModel.itemCount[product] ?? 1)
+                            ? product.actionPrice * Double(receiptUserViewModel.itemCount[product] ?? 1)
+                            : product.price * Double(receiptUserViewModel.itemCount[product] ?? 1)
                         )
                     )
                     .font(.headline)
@@ -108,7 +107,7 @@ struct CartListCompletion: View {
             
             VStack {
                 Spacer()
-                    Text("\(userCartViewModel.itemCount[product] ?? 1)")
+                    Text("\(receiptUserViewModel.itemCount[product] ?? 1)")
                         .font(.headline)
                 Spacer()
             }
@@ -119,6 +118,9 @@ struct CartListCompletion: View {
     }
 }
 
+
+
+
 //#Preview {
-//    CartListCompletion()
+//    ReceiptListUser()
 //}

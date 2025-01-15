@@ -10,6 +10,7 @@ import FirebaseFirestore
 
 @MainActor
 class ReceiptUserViewModel: ObservableObject {
+    @Published var receipts: [Receipt] = []
     @Published var receiptUser: Receipt?
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
@@ -55,4 +56,17 @@ class ReceiptUserViewModel: ObservableObject {
         }
     }
 
+    func observeReceipt() {
+        guard let userId = FirebaseService.shared.userId else { return }
+        
+        receiptUserRepository.observeReceiptUser(userId: userId) { result in
+            switch result {
+            case .success(let receipts):
+                self.receipts = receipts
+                print("Receipts added: \(receipts)")
+            case .failure(let error):
+                print("Error: \(error)")
+            }
+        }
+    }
 }

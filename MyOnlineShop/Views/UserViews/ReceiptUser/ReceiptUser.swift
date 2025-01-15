@@ -8,20 +8,27 @@
 import SwiftUI
 
 struct ReceiptUser: View {
+    @EnvironmentObject var receiptUserViewModel: ReceiptUserViewModel
     var body: some View {
         
         NavigationStack {
             ScrollView {
                 VStack {
-//                    ForEach() { receipt in
-//                        ReceiptListUser()
-//                    }
+                    ForEach(receiptUserViewModel.receipts) { receipt in
+                        ForEach(receipt.product) { product in
+                            ReceiptCartUser( product: product)
+                        }
+                        
+                    }
                 }
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         Text("My Receipts")
                             .font(.title.bold())
                     }
+                }
+                .onAppear {
+                    receiptUserViewModel.observeReceipt()
                 }
             }
         }

@@ -9,6 +9,7 @@ import SwiftUI
 import Firebase
 
 class ReceiptUserRepositoryImplementation: ReceiptUserRepository {
+        
     
     private let db = Firestore.firestore()
     
@@ -77,6 +78,26 @@ class ReceiptUserRepositoryImplementation: ReceiptUserRepository {
                 completion(.failure(error))
             }
         }
-        
     }
+    
+    //Наблюдаем за колекцией
+    func observeReceiptUser(userId: String, completion: @escaping (Result<[Receipt], any Error>) -> Void) {
+        let userReceiptRef = db.collection("users").document(userId).collection("receipts")
+        
+        userReceiptRef.addSnapshotListener { QuerySnapshot, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            guard let documents = QuerySnapshot?.documents else {
+                completion(.success([]))
+                return
+            }
+            let userReceipts = documents.compactMap { document -> Receipt? in
+                try? document.data(as: Receipt.self)
+            }
+            completion(.success(userReceipts))
+        }
+    }
+
 }
