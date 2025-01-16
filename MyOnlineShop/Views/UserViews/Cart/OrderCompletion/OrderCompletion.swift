@@ -77,6 +77,7 @@ struct OrderCompletion: View {
                             deliveryUserInfoViewModel.addNewDeliveryUserInfo()
                             deliveryAdminViewModel.addUserDeliveryMethod()
                             paymentAdminViewModel.addUserPaymentMethod()
+                            userCartViewModel.updateCountGoods()
                             
                             await receiptUserViewModel.fetchAndSaveReceipt(userId: Auth.auth().currentUser!.uid)
                             

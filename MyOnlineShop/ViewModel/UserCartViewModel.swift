@@ -19,6 +19,18 @@ class UserCartViewModel: ObservableObject {
     init(cartRepositoryUser: CartRepositoryUser = CartRepositoryUserImplementation()) {
         self.cartRepositoryUser = cartRepositoryUser
     }
+    
+    func updateCountGoods() {
+        guard let userId = FirebaseService.shared.userId else {return}
+        
+        for product in products {
+            let orderedQuantity = itemCount[product] ?? 0
+            guard let productId = product.id else { continue }
+            
+            let newCount = product.countProduct - orderedQuantity
+            try? cartRepositoryUser.updateCountGoods(productId: productId, countProduct: newCount)
+        }
+    }
         
     func addToCart(for product: Product) {
         guard let userId = FirebaseService.shared.userId,
@@ -121,5 +133,4 @@ class UserCartViewModel: ObservableObject {
             print("Error removing all products from cart: \(error)")
         }
     }
-    
 }

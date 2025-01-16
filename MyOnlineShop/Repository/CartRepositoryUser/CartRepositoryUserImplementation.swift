@@ -83,24 +83,11 @@ class CartRepositoryUserImplementation: CartRepositoryUser {
             try await document.reference.delete()
         }
     }
-//    func removeAllFromCart(userId: String, completion: @escaping (Result<Void, any Error>) -> Void) {
-//        let cartRef = db.collection("users").document(userId).collection("cart")
-//        
-//        cartRef.getDocuments { querySnapshot, error in
-//            if let error = error {
-//                completion(.failure(error))
-//                return
-//            }
-//            guard let documents = querySnapshot?.documents else {
-//                completion(.success(()))
-//                return
-//            }
-//            for document in documents {
-//                document.reference.delete()
-//            }
-//            completion(.success(()))
-//            
-//        }
-//    }
+    
+    func updateCountGoods(productId: String, countProduct: Int) throws {
+        let countRef = db.collection("products").document(productId)
+        
+        countRef.updateData(["countProduct": countProduct])
+    }
     
 }

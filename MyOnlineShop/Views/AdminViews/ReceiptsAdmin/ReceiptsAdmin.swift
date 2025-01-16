@@ -14,7 +14,12 @@ struct ReceiptsAdmin: View {
         NavigationStack {
             VStack {
                 List (receiptAdminViewModel.receipts.sorted { $0.dateCreated > $1.dateCreated }) { receipt in
-                    ReseiptsListAdmin(receipt: receipt)
+                    NavigationLink {
+                        ReceiptListCardDetailAdmin(receipt: receipt)
+                    } label: {
+                        ReseiptsListAdmin(receipt: receipt)
+                    }
+                    
                         .listRowSeparator(.hidden)
                 }
                 .listStyle(.plain)

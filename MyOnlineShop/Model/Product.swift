@@ -17,6 +17,7 @@ struct Product: Codable, Identifiable, Equatable, Hashable {
     var description: String = ""
     var brand: String = ""
     var countProduct: Int = 0
+    var purchasedQuantity: Int = 0 // Количество товара в текущем заказе
     var category: String = ""
     var images: [String] = []
     var rating: Double = 0.0
