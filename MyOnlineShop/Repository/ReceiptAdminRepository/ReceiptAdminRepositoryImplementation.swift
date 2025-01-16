@@ -16,40 +16,33 @@ class ReceiptAdminRepositoryImplementation: ReceiptAdminRepository {
     
     
     func observeReceipts() async throws -> [Receipt] {
-        let receiptsRef = db.collection("receipts")
+        let usersRef = db.collection("users")
+        //            .collection("receipts")
         
-        let snapshot = try await receiptsRef
-            .order(by: "dateCreated")
-            .getDocuments()
+        let userSnapshot = try await usersRef.getDocuments()
+        print("Number on users \(userSnapshot.documents.count)")
         
-        let receipts = try snapshot.documents.compactMap { document -> Receipt? in
-            try document.data(as: Receipt.self)
+        var allReceipts: [Receipt] = []
+        
+        for userDocument in userSnapshot.documents {
+            let receiptsRef = userDocument.reference.collection("receipts")
+            
+            let receiptsSnapshot = try await receiptsRef.getDocuments()
+            print("User \(userDocument.documentID) has  \(receiptsSnapshot.documents.count)")
+            
+            let receipts = try receiptsSnapshot.documents.compactMap { document -> Receipt? in
+                try document.data(as: Receipt.self)
+            }
+            allReceipts.append(contentsOf: receipts)
         }
-        return receipts
+        print("Count receipts \(allReceipts.count)")
+        return allReceipts
     }
     
     func updateOrderStatus(receiptId: String, newStatus: OrderSatatus) async throws {
-        
-        guard try await checkAdminStatus() else {
-                    throw NSError(domain: "Auth", code: -1)
-                }
-
-        
-        let receiptRef = db.collection("receipts").document(receiptId)
-        try await receiptRef.updateData([
-            "orderStatus": newStatus.rawValue
-        ])
+        //        let receiptRef = db.collection("receipts").document(receiptId)
+        //        try await receiptRef.updateData([
+        //            "orderStatus": newStatus.rawValue
+        //        ])
     }
-    
-    private func checkAdminStatus() async throws -> Bool {
-            guard let userId = auth.currentUser?.uid else {
-                throw NSError(domain: "Auth", code: -1)
-            }
-            
-            let userDoc = try await db.collection("users").document(userId).getDocument()
-            guard let user = try? userDoc.data(as: FireUser.self) else {
-                return false
-            }
-            return user.role == "admin" // или какое у вас значение для админа
-        }
 }

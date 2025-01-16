@@ -20,7 +20,7 @@ class ReceiptUserRepositoryImplementation: ReceiptUserRepository {
             .collection("receipts") // создаст коллекцию receipts
             .document()
             .setData(from: receipt)
-    }
+        }
     
     func fetchReceiptUser(userId: String, completion: @escaping (Result<Receipt, Error>) -> Void) {
         

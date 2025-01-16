@@ -21,7 +21,9 @@ class ReceiptAdminViewModel: ObservableObject {
     
     func fetchAllReceipts() async {
         do {
-            receipts = try await receiptAdminReposiory.observeReceipts()
+            let fetchedReceipts = try await receiptAdminReposiory.observeReceipts()
+            print("Receipts fetched successfully, count: \(fetchedReceipts.count)")
+            self.receipts = fetchedReceipts
         } catch {
             print("Error fetching all receipts: \(error.localizedDescription)")
         }
@@ -35,6 +37,5 @@ class ReceiptAdminViewModel: ObservableObject {
         } catch {
             print("Error updating order status: \(error.localizedDescription)")
         }
-        
     }
 }

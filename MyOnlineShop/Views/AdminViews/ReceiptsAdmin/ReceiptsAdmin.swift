@@ -12,10 +12,9 @@ struct ReceiptsAdmin: View {
     var body: some View {
         
         NavigationStack {
-//            ScrollView {
                 VStack {
                     List (receiptAdminViewModel.receipts) { receipt in
-                        ReceiptListUser(receipt: receipt)
+                        ReseiptsListAdmin(receipt: receipt)
                             .listRowSeparator(.hidden)
                     }
                     .listStyle(.plain)
@@ -30,10 +29,8 @@ struct ReceiptsAdmin: View {
                     Task {
                         await receiptAdminViewModel.fetchAllReceipts()
                     }
-                
                 }
             }
-//        }
     }
 }
 

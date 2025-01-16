@@ -33,7 +33,7 @@ struct AuthWrapper: View {
                         AppNavigationUser()
                     }
                 } else {
-                    ProgressView()
+                    ProgressView() 
                 }
             } else {
                 AuthView()
