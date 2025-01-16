@@ -12,29 +12,29 @@ struct ReceiptsAdmin: View {
     var body: some View {
         
         NavigationStack {
-                VStack {
-                    List (receiptAdminViewModel.receipts) { receipt in
-                        ReseiptsListAdmin(receipt: receipt)
-                            .listRowSeparator(.hidden)
-                    }
-                    .listStyle(.plain)
+            VStack {
+                List (receiptAdminViewModel.receipts.sorted { $0.dateCreated > $1.dateCreated }) { receipt in
+                    ReseiptsListAdmin(receipt: receipt)
+                        .listRowSeparator(.hidden)
                 }
-                .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
-                        Text("My Receipts")
-                            .font(.title.bold())
-                    }
-                }
-                .onAppear {
-                    Task {
-                        await receiptAdminViewModel.fetchAllReceipts()
-                    }
+                .listStyle(.plain)
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Text("User Receipts")
+                        .font(.title.bold())
                 }
             }
+            .onAppear {
+                Task {
+                    await receiptAdminViewModel.fetchAllReceipts()
+                }
+            }
+        }
     }
 }
 
 
 #Preview {
-//    ReceiptsAdmin()
+    //    ReceiptsAdmin()
 }
