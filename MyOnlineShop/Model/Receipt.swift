@@ -23,7 +23,7 @@ struct Receipt: Identifiable, Codable {
     var dateCreated: Date = Date()
     var userId: String
     
-    var orderStatus: OrderSatatus
+    var orderStatus: OrderStatus
 }
 
 struct OrderedProduct: Codable, Identifiable {
@@ -38,7 +38,7 @@ struct OrderedProduct: Codable, Identifiable {
 }
 
 
-enum OrderSatatus: String, Codable, CaseIterable {
+enum OrderStatus: String, Codable, CaseIterable {
     case new = "new"
     case processing = "processing"
     case shipped = "shipped"

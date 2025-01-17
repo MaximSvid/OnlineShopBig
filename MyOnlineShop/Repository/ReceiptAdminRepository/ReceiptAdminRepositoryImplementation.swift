@@ -36,7 +36,7 @@ class ReceiptAdminRepositoryImplementation: ReceiptAdminRepository {
         return allReceipts
     }
     
-    func updateOrderStatus(receiptId: String, newStatus: OrderSatatus)  async throws {
+    func updateOrderStatus(receiptId: String, newStatus: OrderStatus)  async throws {
         let userRef = db.collection("users")
         
         let userSnapshot = try await userRef.getDocuments()

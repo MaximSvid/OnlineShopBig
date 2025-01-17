@@ -25,7 +25,7 @@ struct AppNavigationAdmin: View {
                 PaymentAdmin()
             }
             Tab("Receipts", systemImage: "list.clipboard") {
-                ReceiptsAdmin()
+                AdminReceipts()
             }
 
             Tab("Admin Settings", systemImage: "gear") {

@@ -29,7 +29,7 @@ class ReceiptAdminViewModel: ObservableObject {
         }
     }
     
-    func updateOrderStatus (for receipt: Receipt, newStatus: OrderSatatus) async {
+    func updateOrderStatus (for receipt: Receipt, newStatus: OrderStatus) async {
         guard let receiptId = receipt.id else { return }
         do {
             try await receiptAdminReposiory.updateOrderStatus(receiptId: receiptId, newStatus: newStatus)

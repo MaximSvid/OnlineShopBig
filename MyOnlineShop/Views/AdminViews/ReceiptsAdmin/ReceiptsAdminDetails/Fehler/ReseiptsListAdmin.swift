@@ -23,7 +23,7 @@ struct ReseiptsListAdmin: View {
                         .font(.caption)
                         .foregroundStyle(.gray)
                     
-                    StatusAdmin()
+//                    StatusAdmin()
 //                    Text(receipt.orderStatus.rawValue)
 //                        .font(.caption)
 //                        .padding(.horizontal, 8)

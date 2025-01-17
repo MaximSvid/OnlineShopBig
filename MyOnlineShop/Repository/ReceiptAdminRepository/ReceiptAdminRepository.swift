@@ -7,5 +7,5 @@
 
 protocol ReceiptAdminRepository {
     func observeReceipts() async throws -> [Receipt]
-    func updateOrderStatus(receiptId: String, newStatus: OrderSatatus)  async throws
+    func updateOrderStatus(receiptId: String, newStatus: OrderStatus)  async throws
 }

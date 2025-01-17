@@ -8,12 +8,8 @@
 import SwiftUI
 
 struct ReceiptImageAdmin: View {
-    @EnvironmentObject var receiptAdminViewModel: ReceiptAdminViewModel
-//    var receipt: Receipt
-//    var product: Product
     var receipt: Receipt
 
-    
     var body: some View {
         HStack {
             ZStack(alignment: .bottom) {
