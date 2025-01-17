@@ -16,6 +16,9 @@ struct OrderCompletion: View {
     @EnvironmentObject var paymentAdminViewModel: PaymentAdminViewModel
     @EnvironmentObject var receiptUserViewModel: ReceiptUserViewModel
     
+//    @Binding var selectedTab: Int
+    
+    
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -33,6 +36,7 @@ struct OrderCompletion: View {
                             .font(.subheadline)
                             .foregroundStyle(.gray)
                         Spacer()
+                        
                         
                         Text(String(format: "€ %.2f", couponUserViewModel.finalAmount))
                             .font(.subheadline)
@@ -63,31 +67,19 @@ struct OrderCompletion: View {
                             .font(.subheadline)
                             .foregroundStyle(.gray)
                         Spacer()
-                        
+                        //эта цена должна сохранятся, как финальная цена заказа в базу данных
                         Text(String(format: "€ %.2f", deliveryAdminViewModel.selectedDeliveryPrice + couponUserViewModel.finalAmount))
                             .font(.headline)
                             .foregroundStyle(couponUserViewModel.appliedCoupon != nil ? .green : .primary)
                     }
                     
+                    if deliveryAdminViewModel.isError {
+                        Text (deliveryAdminViewModel.errorMessage ?? "")
+                            .foregroundStyle(.red)
+                            .font(.caption)
+                    }
                     Button(action: {
-                        //здесь должна быть логика сохранения иформации о пользователе, самом заказе, способе доставки и оплаты
-                        //после успешного выполнения заказа необходимо сделать анимацию - заказ принят успешно и перевод на страницу с заказами
-                        Task {
-                            
-                            deliveryUserInfoViewModel.addNewDeliveryUserInfo()
-                            deliveryAdminViewModel.addUserDeliveryMethod()
-                            paymentAdminViewModel.addUserPaymentMethod()
-                            userCartViewModel.updateCountGoods()
-                            
-                            await receiptUserViewModel.fetchAndSaveReceipt(userId: Auth.auth().currentUser!.uid)
-                            
-                            //ich become prewiew crached
-                            //нужно настроить чтобы это срабатывало только после анимации и тд
-//                            await paymentAdminViewModel.deletePaymentMethodFromUser()
-//                            await deliveryUserInfoViewModel.deleteDeliveryUserInfoFromUser()
-//                            await deliveryAdminViewModel.deleteDeliveryFormUser()
-//                            await userCartViewModel.removeAllFromCart()
-                        }
+                        handleOrderSubmission()
                     }) {
                         Text("Buy Now")
                             .font(.headline.bold())
@@ -113,8 +105,32 @@ struct OrderCompletion: View {
             deliveryAdminViewModel.observeDeliveries()
         }
     }
-}
+    
+    private func handleOrderSubmission() {
+        if deliveryAdminViewModel.selectedDelivery != nil {
+            deliveryAdminViewModel.isError = false
+            deliveryAdminViewModel.errorMessage = nil
+            deliveryUserInfoViewModel.addNewDeliveryUserInfo()
+            deliveryAdminViewModel.addUserDeliveryMethod()
+            paymentAdminViewModel.addUserPaymentMethod()
+            userCartViewModel.updateCountGoods()
+            
+            deliveryAdminViewModel.selectedDelivery = nil
+            paymentAdminViewModel.selectedPayment = nil
+            deliveryAdminViewModel.errorMessage = nil
+            
+//            selectedTab = 4
 
-//#Preview {
-//    OrderCompletion()
-//}
+            Task {
+                await receiptUserViewModel.fetchAndSaveReceipt()
+                await paymentAdminViewModel.deletePaymentMethodFromUser()
+                await deliveryUserInfoViewModel.deleteDeliveryUserInfoFromUser()
+                await deliveryAdminViewModel.deleteDeliveryFormUser()
+                await userCartViewModel.removeAllFromCart()
+            }
+            
+            deliveryAdminViewModel.isError = true
+            deliveryAdminViewModel.errorMessage = "Please select a delivery method"
+        }
+    }
+}

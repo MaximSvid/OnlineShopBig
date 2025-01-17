@@ -21,19 +21,6 @@ struct ShippinDetailsCompletion: View {
                             .font(.subheadline)
                             .foregroundStyle(.black)
                         Spacer()
-                        
-//                        Button(action: {
-//                            dismiss()
-//                        }) {
-//                            Image(systemName: "pencil")
-//                                .font(.headline)
-//                                .foregroundStyle(.white)
-//                                .background(
-//                                    RoundedRectangle(cornerRadius: 3)
-//                                        .fill(Color.brown)
-//                                        .shadow(radius: 3)
-//                                )
-//                        }
                     }
                 }
                 

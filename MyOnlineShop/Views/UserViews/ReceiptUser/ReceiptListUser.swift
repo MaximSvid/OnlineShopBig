@@ -64,25 +64,19 @@ struct ReceiptListUser: View {
                         .foregroundColor(.gray)
                 }
                 
-                // Средняя строка: количество товаров и способ доставки
                 HStack {
-                    Text("\(receipt.products.count) items")
-                        .font(.subheadline)
-                    
-                    Text("•")
-                        .foregroundColor(.gray)
-                    
                     Text(receipt.deliveryMethod.deliveryName)
                         .font(.subheadline)
+                    Spacer()
                 }
                 
                 // Нижняя строка: итоговая цена
                 HStack {
-                    Text("Total:")
+                    Text("Total: ")
                         .font(.subheadline)
-//                    Text("$\(receipt.totalPrice, specifier: "%.2f")")
-//                        .font(.headline)
-//                        .foregroundColor(.blue)
+                    Text("$\(receipt.finalTotalPrice, specifier: "%.2f")")
+                        .font(.headline)
+                        .foregroundColor(.blue)
                 }
             }
             .padding(.horizontal)

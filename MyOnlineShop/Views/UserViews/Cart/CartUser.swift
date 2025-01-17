@@ -82,27 +82,37 @@ struct CartUser: View {
                 .padding([.leading, .trailing])
                 
                 HStack {
-                    NavigationLink(destination: ShippingDetails()) {
-                        Text("Check Out")
-                            .font(.headline.bold())
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 50)
-                            .foregroundStyle(.white)
-                            .background(.blue.opacity(0.8))
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    if !userCartViewModel.products.isEmpty {
+                        NavigationLink(destination: ShippingDetails()) {
+                            Text("Check Out")
+                                .font(.headline.bold())
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 50)
+                                .foregroundStyle(.white)
+                                .background(.blue.opacity(0.8))
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                            
+                            Button(action: {
+                                couponUserViewModel.couponSheet.toggle()
+                            }) {
+                                Image(systemName: "tag")
+                                    .font(.headline.bold())
+                                    .frame(width: 50, height: 50)
+                                    .foregroundStyle(.white)
+                                    .background(.blue.opacity(0.8))
+                                    .clipShape(.buttonBorder)
+                            }
+                        }
+
+                    } else {
+                        Text("Your cart is empty")
+                            .font(.headline)
+                            .foregroundStyle(.gray)
                     }
+                                        
                     
-                    Button(action: {
-                        couponUserViewModel.couponSheet.toggle()
-                    }) {
-                        Image(systemName: "tag")
-                            .font(.headline.bold())
-                            .frame(width: 50, height: 50)
-                            .foregroundStyle(.white)
-                            .background(.blue.opacity(0.8))
-                            .clipShape(.buttonBorder)
-                    }
                 }
+                .padding(.bottom)
                 .padding([.leading, .trailing])
             }
             .onChange(of: userCartViewModel.totalSum) { oldValue, newValue in

@@ -167,9 +167,7 @@ struct DetailHomeUser: View {
                 
                 HStack {
                     Button(action: {
-//                        userCartViewModel.addToLocalCart(for: product)
-                        userCartViewModel.addToCart(for: product) //при нажатии на кнопку товары добавляются в базу данных, а нужно чтобы они просто локально отображались в cartListUser
-                    }) {
+                        userCartViewModel.addToCart(for: product)                     }) {
                         Text ("Buy Now")
                             .font(.headline.bold())
                             .frame(width: .infinity, height: 50)

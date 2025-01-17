@@ -26,7 +26,8 @@ class ReceiptUserViewModel: ObservableObject {
     }
     
         
-    func fetchAndSaveReceipt(userId: String) async {
+    func fetchAndSaveReceipt() async {
+        guard let userId = FirebaseService.shared.userId else { return }
         isLoading = true
         errorMessage = nil
         

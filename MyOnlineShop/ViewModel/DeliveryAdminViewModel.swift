@@ -24,6 +24,10 @@ class DeliveryAdminViewModel: ObservableObject {
     private let fb = FirebaseService.shared
     private let deliveryRepository: DeliveryRepoAdmin
     
+    @Published var errorMessage: String?
+    @Published var isError: Bool = false
+
+    
     init(
         deliveryRepository: DeliveryRepoAdmin = DeliveryRepoAdminImplementation()
     ) {

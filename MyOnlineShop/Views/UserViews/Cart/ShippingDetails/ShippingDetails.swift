@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ShippingDetails: View {
     @EnvironmentObject var deliveryUserInfoViewModel: DeliveryUserInfoViewModel
+    @EnvironmentObject var deliveryAdminViewModel: DeliveryAdminViewModel
+
     @State private var showError: Bool = false
     @State private var navigateToOrderCompletion: Bool = false
     
@@ -91,8 +93,8 @@ struct ShippingDetails: View {
                                     !deliveryUserInfoViewModel.index.isEmpty &&
                                     !deliveryUserInfoViewModel.city.isEmpty &&
                                     !deliveryUserInfoViewModel.street.isEmpty &&
-                                    !deliveryUserInfoViewModel.houseNumber.isEmpty
-                                {
+                                    !deliveryUserInfoViewModel.houseNumber.isEmpty &&
+                                    deliveryAdminViewModel.selectedDelivery != nil {
                                     navigateToOrderCompletion = true
                                 } else {
                                     showError = true
@@ -107,7 +109,6 @@ struct ShippingDetails: View {
                                     .background(.blue.opacity(0.8))
                                     .clipShape(RoundedRectangle(cornerRadius: 3))
                             }
-                            //                            }
                         }
                         .padding([.leading, .trailing])
                     }

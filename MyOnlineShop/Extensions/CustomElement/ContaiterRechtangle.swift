@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContaiterRechtangle<Content: View>: View {
     let content: Content
+    
     init(@ViewBuilder content: () -> Content) {
         self.content = content()
     }
@@ -24,6 +25,3 @@ struct ContaiterRechtangle<Content: View>: View {
     }
 }
 
-#Preview {
-//    ContaiterRechtangle()
-}
