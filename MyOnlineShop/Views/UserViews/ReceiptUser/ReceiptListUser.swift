@@ -80,9 +80,9 @@ struct ReceiptListUser: View {
                 HStack {
                     Text("Total:")
                         .font(.subheadline)
-                    Text("$\(receipt.totalPrice, specifier: "%.2f")")
-                        .font(.headline)
-                        .foregroundColor(.blue)
+//                    Text("$\(receipt.totalPrice, specifier: "%.2f")")
+//                        .font(.headline)
+//                        .foregroundColor(.blue)
                 }
             }
             .padding(.horizontal)

@@ -12,18 +12,28 @@ struct ReceiptListCardDetailAdmin: View {
     var receipt: Receipt
     
     var body: some View {
-        List(receipt.products) { product in
-            HStack {
-                ReceiptImageAdmin(product: product)
-                
-                ProductInfoAdmin(product: product)
+        VStack {
+//            StatusAdmin()
+            
+            List(receiptAdminViewModel.receipts) { receipt in
+                HStack {
+                    ReceiptImageAdmin(receipt: receipt)
+                    
+                    //                ProductInfoAdmin(product: receipt)
+                }
+                .listRowSeparator(.hidden)
             }
-            .listRowSeparator(.hidden)
+            .listStyle(.plain)
         }
-        .listStyle(.plain)
+        .onAppear {
+            Task {
+                await receiptAdminViewModel.fetchAllReceipts()
+            }
+            
+        }
     }
 }
 
 #Preview {
-//    ReceiptListCardDetailAdmin()
+    //    ReceiptListCardDetailAdmin()
 }

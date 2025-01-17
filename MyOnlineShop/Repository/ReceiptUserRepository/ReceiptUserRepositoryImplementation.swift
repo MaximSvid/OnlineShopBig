@@ -9,22 +9,22 @@ import SwiftUI
 import Firebase
 
 class ReceiptUserRepositoryImplementation: ReceiptUserRepository {
-        
+    
     
     private let db = Firestore.firestore()
     
-    func saveReceipt(_ receipt: Receipt) throws {
-        let db = Firestore.firestore()
-        try db.collection("users")
-            .document(receipt.userId)
-            .collection("receipts") // создаст коллекцию receipts
-            .document()
-            .setData(from: receipt)
-        }
+        func saveReceipt(_ receipt: Receipt) throws {
+            let db = Firestore.firestore()
+            try db.collection("users")
+                .document(receipt.userId)
+                .collection("receipts") // создаст коллекцию receipts
+                .document()
+                .setData(from: receipt)
+            }
     
     func fetchReceiptUser(userId: String, completion: @escaping (Result<Receipt, Error>) -> Void) {
         
-            
+        
         let userRef = db.collection("users").document(userId)
         
         let cartRef = userRef.collection("cart")
@@ -41,10 +41,23 @@ class ReceiptUserRepositoryImplementation: ReceiptUserRepository {
                     throw NSError(domain: "User info not found", code: -1)
                 }
                 
-                //получаем информацию из корзины
+                // Получаем информацию из корзины
                 let cartSnapshot = try await cartRef.getDocuments()
-                let cartItems = cartSnapshot.documents.compactMap { try? $0.data(as: Product.self)}
-                let totalProductPrice = cartItems.reduce(0) { $0 + ($1.price) }
+                let cartItems: [OrderedProduct] = cartSnapshot.documents.compactMap { document in
+                    guard let product = try? document.data(as: Product.self) else { return nil }
+                    
+                    let quantity = product.purchasedQuantity > 0 ? product.purchasedQuantity : 1 // Убедимся, что количество не 0
+                    return OrderedProduct(
+                        id: document.documentID,
+                        images: product.images,
+                        title: product.title,
+                        quantity: quantity,
+                        pricePerUnit: product.price,
+                        totalPrice: product.price * Double(quantity),
+                        productId: product.id ?? ""
+                    )
+                }
+                let totalProductPrice = cartItems.reduce(0) { $0 + $1.totalPrice }
                 
                 // получаем метод доставки
                 let deliverySnapshot = try await userDeliveryMethodRef.getDocuments()
@@ -60,18 +73,21 @@ class ReceiptUserRepositoryImplementation: ReceiptUserRepository {
                     throw NSError(domain: "Payment method not found", code: -1)
                 }
                 
-                let totalPrice = totalProductPrice + deliveryMethods.deliveryPrice
+                let totalDeliveryPrice = deliveryMethods.deliveryPrice
+                let finalTotalPrice = totalProductPrice + totalDeliveryPrice
                 
+                // Создаём чек
                 let receipt = Receipt(
                     products: cartItems,
                     totalProductPrice: totalProductPrice,
+                    totalDeliveryPrice: totalDeliveryPrice,
+                    finalTotalPrice: finalTotalPrice,
                     userInfo: userInfo,
                     deliveryMethod: deliveryMethods,
                     paymentMethod: paymentMethod,
-                    totalPrice: totalPrice,
-                    orderStatus: .new,
                     dateCreated: Date(),
-                    userId: userId
+                    userId: userId,
+                    orderStatus: .new
                 )
                 completion(.success(receipt))
             } catch {
@@ -99,5 +115,5 @@ class ReceiptUserRepositoryImplementation: ReceiptUserRepository {
             completion(.success(userReceipts))
         }
     }
-
+    
 }

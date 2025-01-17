@@ -13,32 +13,6 @@ struct ReseiptsListAdmin: View {
     
     var body: some View {
         HStack {
-            ZStack(alignment: .bottom) {
-                
-                ForEach(receipt.products) { product in
-                    if let firstImage = product.images.first,
-                       let url = URLComponents(string: firstImage) {
-                        AsyncImage(url: url.url!) { image in
-                            image.resizable()
-                                .scaledToFill()
-                                .frame(width: 70, height: 100)
-                                .clipShape(RoundedRectangle(cornerRadius: 3))
-                                .clipped()
-                            
-                        } placeholder: {
-                            Color.gray
-                                .frame(width: 70, height: 100)
-                        }
-                    } else {
-                        Image("image")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 70, height: 100)
-                            .clipShape(RoundedRectangle(cornerRadius: 3))
-                            .clipped()
-                    }
-                }
-            }
             
             // Секция с информацией о заказе
             VStack(alignment: .leading, spacing: 8) {
@@ -49,12 +23,13 @@ struct ReseiptsListAdmin: View {
                         .font(.caption)
                         .foregroundStyle(.gray)
                     
-                    Text(receipt.orderStatus.rawValue)
-                        .font(.caption)
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 4)
-                        .background(receipt.orderStatus == .processing ? Color.yellow.opacity(0.2) : Color.green.opacity(0.2))
-                        .clipShape(RoundedRectangle(cornerRadius: 3))
+                    StatusAdmin()
+//                    Text(receipt.orderStatus.rawValue)
+//                        .font(.caption)
+//                        .padding(.horizontal, 8)
+//                        .padding(.vertical, 4)
+//                        .background(receipt.orderStatus == .processing ? Color.yellow.opacity(0.2) : Color.green.opacity(0.2))
+//                        .clipShape(RoundedRectangle(cornerRadius: 3))
                     
                     Spacer()
                     
@@ -79,9 +54,6 @@ struct ReseiptsListAdmin: View {
                 HStack {
                     Text("Total:")
                         .font(.subheadline)
-                    Text("$\(receipt.totalPrice, specifier: "%.2f")")
-                        .font(.headline)
-                        .foregroundColor(.blue)
                 }
             }
             .padding(.horizontal)

@@ -11,10 +11,7 @@ import FirebaseAuth
 class ReceiptAdminRepositoryImplementation: ReceiptAdminRepository {
     
     private let db = Firestore.firestore()
-    private let auth = Auth.auth()
-    
-    
-    
+
     func observeReceipts() async throws -> [Receipt] {
         let usersRef = db.collection("users")
         //            .collection("receipts")
@@ -39,10 +36,17 @@ class ReceiptAdminRepositoryImplementation: ReceiptAdminRepository {
         return allReceipts
     }
     
-    func updateOrderStatus(receiptId: String, newStatus: OrderSatatus) async throws {
-        //        let receiptRef = db.collection("receipts").document(receiptId)
-        //        try await receiptRef.updateData([
-        //            "orderStatus": newStatus.rawValue
-        //        ])
+    func updateOrderStatus(receiptId: String, newStatus: OrderSatatus)  async throws {
+        let userRef = db.collection("users")
+        
+        let userSnapshot = try await userRef.getDocuments()
+        print("Number on users \(userSnapshot.documents.count)")
+        
+        for userDocument in userSnapshot.documents {
+            let receiptsRef = userDocument.reference.collection("receipts").document(receiptId)
+            
+            try await receiptsRef.updateData(["orderStatus": newStatus.rawValue])
+            
+        }
     }
 }

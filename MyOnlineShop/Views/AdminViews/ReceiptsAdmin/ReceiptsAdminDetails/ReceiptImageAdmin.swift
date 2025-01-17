@@ -10,32 +10,36 @@ import SwiftUI
 struct ReceiptImageAdmin: View {
     @EnvironmentObject var receiptAdminViewModel: ReceiptAdminViewModel
 //    var receipt: Receipt
-    var product: Product
+//    var product: Product
+    var receipt: Receipt
 
     
     var body: some View {
         HStack {
             ZStack(alignment: .bottom) {
-                if !product.images.isEmpty {
-                    ForEach(product.images.indices, id: \.self) { index in
-                        AsyncImage(url: URL(string: product.images[index])) { image in
+                
+                ForEach(receipt.products) { product in
+                    if let firstImage = product.images.first,
+                       let url = URLComponents(string: firstImage) {
+                        AsyncImage(url: url.url!) { image in
                             image.resizable()
                                 .scaledToFill()
                                 .frame(width: 70, height: 100)
-                                .cornerRadius(10)
+                                .clipShape(RoundedRectangle(cornerRadius: 3))
                                 .clipped()
+                            
                         } placeholder: {
                             Color.gray
                                 .frame(width: 70, height: 100)
                         }
+                    } else {
+                        Image("image")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 70, height: 100)
+                            .clipShape(RoundedRectangle(cornerRadius: 3))
+                            .clipped()
                     }
-                } else {
-                    Image("image")
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 70, height: 100)
-                        .cornerRadius(10)
-                        .clipped()
                 }
             }
         }
