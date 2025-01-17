@@ -74,6 +74,5 @@ struct AuthWrapper: View {
         .environmentObject(PaymentAdminViewModel())
         .environmentObject(ReceiptUserViewModel())
         .environmentObject(ReceiptAdminViewModel())
-        
 }
 

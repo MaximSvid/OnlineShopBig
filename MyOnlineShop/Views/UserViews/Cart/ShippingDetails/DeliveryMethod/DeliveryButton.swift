@@ -34,10 +34,10 @@ struct DeliveryButton: View {
                     .foregroundStyle(.black)
             }
             .padding()
-//            .background(
-//                RoundedRectangle(cornerRadius: 3)
-//                    .fill(isSelected ? Color.green.opacity(0.1) : Color.white)
-//            )
+            .background(
+                RoundedRectangle(cornerRadius: 3)
+                    .fill(isSelected ? Color.green.opacity(0.1) : Color.white)
+            )
             .overlay(
                 RoundedRectangle(cornerRadius: 3)
                     .stroke(isSelected ? .green : .gray.opacity(0.8), lineWidth: 1)

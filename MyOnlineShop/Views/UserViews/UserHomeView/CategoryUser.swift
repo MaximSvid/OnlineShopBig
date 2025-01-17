@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CategoryUser: View {
     @EnvironmentObject var userProductViewModel: UserProductViewModel
+    @State private var selectedCategory: Categories?
     let categories: [Categories]
     var body: some View {
         VStack {
@@ -30,13 +31,14 @@ struct CategoryUser: View {
                         }
                         .padding()
                         .background(
-                            RoundedRectangle(cornerRadius: 8)
+                            RoundedRectangle(cornerRadius: 3)
                                 .fill(Color.white)
+                                .stroke(selectedCategory == category ? Color.green : .white, lineWidth: 1)
                         )
                         .shadow(radius: 3)
                         .onTapGesture {
                             userProductViewModel.filterProducts(by: category)
-                            
+                            selectedCategory = category
                         }
                     }
                 }

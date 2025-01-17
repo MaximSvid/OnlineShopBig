@@ -15,7 +15,6 @@ struct BannerUserView: View {
         VStack {
             if let lastBanner = bannerViewModel.banners.last {
                 TabView {
-                    // Проходим по всем изображениям из последнего баннера
                     ForEach(lastBanner.bannerImage, id: \.self) { imageUrl in
                         if let url = URL(string: imageUrl) {
                             AsyncImage(url: url) { image in
@@ -24,20 +23,15 @@ struct BannerUserView: View {
                                     .scaledToFill()
                                     .frame(maxHeight: 200)
                                     .clipped()
-                                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                                    .clipShape(RoundedRectangle(cornerRadius: 3))
                             } placeholder: {
                                 ProgressView()
                             }
                         }
                     }
                 }
-                    .frame(height: 200)
-                    .tabViewStyle(.page)
-                //                .onReceive(timer) { _ in
-                //                    withAnimation {
-                //                        currentIndex = (currentIndex + 1) % bannerViewModel.banners.count
-                //                    }
-                //                }
+                .frame(height: 200)
+                .tabViewStyle(.page)
             } else {
                 Text("No banners available")
                     .frame(height: 200)

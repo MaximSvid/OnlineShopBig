@@ -65,6 +65,10 @@ struct ReceiptListUser: View {
                 }
                 
                 HStack {
+                    Text("Delivery: ")
+                        .font(.caption)
+                        .foregroundStyle(.gray)
+                    
                     Text(receipt.deliveryMethod.deliveryName)
                         .font(.subheadline)
                     Spacer()
@@ -74,6 +78,7 @@ struct ReceiptListUser: View {
                 HStack {
                     Text("Total: ")
                         .font(.subheadline)
+                        .foregroundStyle(.gray)
                     Text("$\(receipt.finalTotalPrice, specifier: "%.2f")")
                         .font(.headline)
                         .foregroundColor(.blue)
