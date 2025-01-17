@@ -54,7 +54,7 @@ struct ReceiptListUser: View {
                         .font(.caption)
                         .padding(.horizontal, 8)
                         .padding(.vertical, 4)
-                        .background(receipt.orderStatus == .processing ? Color.yellow.opacity(0.2) : Color.green.opacity(0.2))
+                        .background(receipt.orderStatus.color)
                         .clipShape(RoundedRectangle(cornerRadius: 3))
                     
                     Spacer()
