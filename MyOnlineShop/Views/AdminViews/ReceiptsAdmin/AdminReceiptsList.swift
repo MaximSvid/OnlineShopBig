@@ -23,6 +23,9 @@ struct AdminReceiptsList: View {
                 }
             }
         }
+        .onAppear {
+            receiptAdminViewModel.observeOrderStatusChanges(receipt: receipt)
+        }
     }
 }
 

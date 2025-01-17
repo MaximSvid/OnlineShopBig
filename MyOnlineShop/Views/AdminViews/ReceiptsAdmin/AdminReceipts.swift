@@ -15,7 +15,9 @@ struct AdminReceipts: View {
             VStack {
                 List(receiptAdminViewModel.receipts) { receipt in
                     AdminReceiptsList(receipt: receipt)
+                        .listRowSeparator(.hidden)
                 }
+                .listStyle(.plain)
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -26,6 +28,7 @@ struct AdminReceipts: View {
             .onAppear {
                 Task {
                     await receiptAdminViewModel.fetchAllReceipts()
+                    
                 }
             }
         }

@@ -38,4 +38,20 @@ class ReceiptAdminViewModel: ObservableObject {
             print("Error updating order status: \(error.localizedDescription)")
         }
     }
+    
+    func observeOrderStatusChanges(receipt: Receipt)  {
+        guard let userId = FirebaseService.shared.userId else { return }
+        guard let receiptId = receipt.id else {return}
+        
+        do {
+            receiptAdminReposiory.observeOrderStatus(receiptId: receiptId, userId: userId) { result in
+                switch result {
+                case .success(let status):
+                    print("Status update")
+                case .failure(let error):
+                    print("Status update error: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
 }

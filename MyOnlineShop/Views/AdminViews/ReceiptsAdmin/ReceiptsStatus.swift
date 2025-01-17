@@ -13,22 +13,29 @@ struct ReceiptsStatus: View {
     
     var body: some View {
         VStack {
-            Picker("Status", selection: Binding(
+            Picker(selection: Binding(
                 get: {
                     receipt.orderStatus
                 },
                 set: { newStatus in
-                    onStatusChange(newStatus)
+                    if newStatus != receipt.orderStatus {
+                        onStatusChange(newStatus)
+                    }
                 }
             )) {
                 ForEach(OrderStatus.allCases, id: \.self) { status in
                     Text(status.rawValue.capitalized)
                         .tag(status)
                 }
-            }
+            } label: {
+                Text(receipt.orderStatus.rawValue.capitalized)
+                                .padding(8)
+                                .background(receipt.orderStatus.color)
+                                .clipShape(RoundedRectangle(cornerRadius: 3))
+                                .foregroundColor(.white)            }
             .pickerStyle(.menu)
         }
-        .foregroundStyle(receipt.orderStatus.color)
+        
     }
 }
                
