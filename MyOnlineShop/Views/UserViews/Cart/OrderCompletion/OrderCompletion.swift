@@ -16,7 +16,9 @@ struct OrderCompletion: View {
     @EnvironmentObject var paymentAdminViewModel: PaymentAdminViewModel
     @EnvironmentObject var receiptUserViewModel: ReceiptUserViewModel
     
-//    @Binding var selectedTab: Int
+    @State private var showAlert: Bool = false
+    @Binding var selectedTab: Int
+    @State private var navigationToFireworks: Bool = false
     
     
     var body: some View {
@@ -48,15 +50,13 @@ struct OrderCompletion: View {
                             .font(.subheadline)
                             .foregroundStyle(.gray)
                         Spacer()
+                        
                         //здесь не видно вибраную доставку
                         if let selectedDelivery = deliveryAdminViewModel.selectedDelivery {
                             Text(String(format: "€ %.2f", selectedDelivery.deliveryPrice))
                                 .font(.subheadline)
                                 .foregroundStyle(.gray)
-                        } else {
-                            Text("Select delivery method")
-                                .font(.subheadline)
-                                .foregroundStyle(.gray)
+//                            deliveryAdminViewModel.errorMessage = nil
                         }
                     }
                     
@@ -73,13 +73,10 @@ struct OrderCompletion: View {
                             .foregroundStyle(couponUserViewModel.appliedCoupon != nil ? .green : .primary)
                     }
                     
-                    if deliveryAdminViewModel.isError {
-                        Text (deliveryAdminViewModel.errorMessage ?? "")
-                            .foregroundStyle(.red)
-                            .font(.caption)
-                    }
+                    
                     Button(action: {
                         handleOrderSubmission()
+                        showAlert = true
                     }) {
                         Text("Buy Now")
                             .font(.headline.bold())
@@ -89,6 +86,23 @@ struct OrderCompletion: View {
                             .background(.blue.opacity(0.8))
                             .clipShape(RoundedRectangle(cornerRadius: 3))
                     }
+                    .alert(isPresented: $showAlert) {
+                        Alert(
+                            title: Text("Order Received"),
+                            message: Text("You can view your progress in the order information."),
+                            dismissButton: .default(Text("OK"), action: {
+                                selectedTab = 4
+                            })
+                        )
+                    }
+//                    NavigationLink (
+//                        destination: ReceiptUser(),
+//                        isActive: $navigateToReceiptUser
+//                    ) {
+//                        EmptyView()
+//                    }
+//                    .hidden()
+
                 }
                 .padding([.leading, .trailing])
             }
@@ -104,7 +118,7 @@ struct OrderCompletion: View {
             couponUserViewModel.updateFinalAmount(totalSum: userCartViewModel.totalSum)
             deliveryAdminViewModel.observeDeliveries()
         }
-    }
+            }
     
     private func handleOrderSubmission() {
         if deliveryAdminViewModel.selectedDelivery != nil {
@@ -130,7 +144,7 @@ struct OrderCompletion: View {
             }
             
             deliveryAdminViewModel.isError = true
-            deliveryAdminViewModel.errorMessage = "Please select a delivery method"
+//            deliveryAdminViewModel.errorMessage = "Please select a delivery method"
         }
     }
 }

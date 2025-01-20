@@ -18,7 +18,7 @@ struct AppNavigationUser: View {
                 }
                 .tag(0)
             
-            CartUser()
+            CartUser(selectedTab: $selectedTab)
                 .tabItem {
                     Label("My Cart", systemImage: "cart")
                 }

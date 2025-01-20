@@ -11,10 +11,11 @@ struct CartUser: View {
     @EnvironmentObject var userCartViewModel: UserCartViewModel
     @EnvironmentObject var couponUserViewModel: CouponUserViewModel
     
+    @Binding var selectedTab: Int
+    
     var body: some View {
         NavigationStack {
             VStack {
-                
                 List(userCartViewModel.products) { product in
                     CartListUser(product: product)
                         .listRowSeparator(.hidden)
@@ -83,7 +84,7 @@ struct CartUser: View {
                 
                 HStack {
                     if !userCartViewModel.products.isEmpty {
-                        NavigationLink(destination: ShippingDetails()) {
+                        NavigationLink(destination: ShippingDetails( selectedTab: $selectedTab)) {
                             Text("Check Out")
                                 .font(.headline.bold())
                                 .frame(maxWidth: .infinity)

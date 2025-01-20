@@ -13,6 +13,8 @@ struct ShippingDetails: View {
 
     @State private var showError: Bool = false
     @State private var navigateToOrderCompletion: Bool = false
+    @Binding var selectedTab: Int
+
     
     @State var focus: Int = 0
     var body: some View {
@@ -122,7 +124,8 @@ struct ShippingDetails: View {
                 }
             }
             .navigationDestination(isPresented: $navigateToOrderCompletion) {
-                OrderCompletion()
+                OrderCompletion(selectedTab: $selectedTab)
+                    
             }
         }
     }
