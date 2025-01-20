@@ -61,8 +61,6 @@ struct CartListCompletion: View {
                             .foregroundStyle(product.isVisible ? .gray : .gray.opacity(0.5))
                             .strikethrough(true, color: .gray) // linie
                         
-//                        Spacer()
-                        
                         // ActionPrice
                         Text(String(format: "€%.2f", product.actionPrice))
                             .font(.caption)
@@ -74,11 +72,8 @@ struct CartListCompletion: View {
                             .foregroundStyle(product.isVisible ? .black : .gray)
                     }
                     Spacer()
-                    
-                    
                 }
                 .padding(.trailing, 4)
-//                .padding(.leading, 4)
                 .padding(.bottom, 4)
                 
                 // Отображение итоговой цены
@@ -100,8 +95,6 @@ struct CartListCompletion: View {
                     Spacer()
                 }
                 Spacer()
-                
-                
             }
             
             Spacer()
@@ -118,7 +111,3 @@ struct CartListCompletion: View {
         .shadow(radius: 3)
     }
 }
-
-//#Preview {
-//    CartListCompletion()
-//}

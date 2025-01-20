@@ -16,14 +16,14 @@ struct OrderCompletion: View {
     @EnvironmentObject var paymentAdminViewModel: PaymentAdminViewModel
     @EnvironmentObject var receiptUserViewModel: ReceiptUserViewModel
     
-    @State private var showAlert: Bool = false
-    @Binding var selectedTab: Int
     @Environment(\.dismiss) private var dismiss // для закрытия представления orderCompletion
+    
+    @State private var showError: Bool = false
+    @State private var showAlert: Bool = false
     @State private var showFireworks: Bool = false
     @State private var bursts: [FireworkBurst] = []
     
-    //    @State private var navigationToFireworks: Bool = false
-    
+    @Binding var selectedTab: Int
     
     var body: some View {
         NavigationStack {
@@ -38,55 +38,23 @@ struct OrderCompletion: View {
                         
                         PaymentUser()
                         
-                        HStack {
-                            Text("Price: ")
-                                .font(.subheadline)
-                                .foregroundStyle(.gray)
-                            Spacer()
-                            
-                            
-                            Text(String(format: "€ %.2f", couponUserViewModel.finalAmount))
-                                .font(.subheadline)
+                        PriceOrderCompletion()
+                        
+
+                        if showError {
+                            Text("Please select a payment method")
+                                .font(.caption)
+                                .foregroundStyle(.red)
                         }
-                        .padding(.top)
-                        
-                        HStack {
-                            Text("Delivery price: ")
-                                .font(.subheadline)
-                                .foregroundStyle(.gray)
-                            Spacer()
-                            
-                            //здесь не видно вибраную доставку
-                            if let selectedDelivery = deliveryAdminViewModel.selectedDelivery {
-                                Text(String(format: "€ %.2f", selectedDelivery.deliveryPrice))
-                                    .font(.subheadline)
-                                    .foregroundStyle(.gray)
-                                //                            deliveryAdminViewModel.errorMessage = nil
-                            }
-                        }
-                        
-                        Divider()
-                        
-                        HStack {
-                            Text("Total price: ")
-                                .font(.subheadline)
-                                .foregroundStyle(.gray)
-                            Spacer()
-                            //эта цена должна сохранятся, как финальная цена заказа в базу данных
-                            Text(String(format: "€ %.2f", deliveryAdminViewModel.selectedDeliveryPrice + couponUserViewModel.finalAmount))
-                                .font(.headline)
-                                .foregroundStyle(couponUserViewModel.appliedCoupon != nil ? .green : .primary)
-                        }
-                        
                         
                         Button(action: {
                             if paymentAdminViewModel.selectedPayment != nil {
                                 handleOrderSubmission()
                                 showFireworks = true
                                 showAlert = true
+                                showError = false
                             } else {
-                                Text("Please select a payment method")
-                                    .foregroundStyle(.red)
+                                showError = true
                             }
                         }) {
                             Text("Buy Now")
@@ -147,7 +115,7 @@ struct OrderCompletion: View {
             }
         }
     }
-    
+    //данную функцию нет необходимости хранить в репозитории так как это UI логика
     private func startFireworks() {
         Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
             if showFireworks {
