@@ -52,7 +52,7 @@ class PaymentAdminViewModel: ObservableObject {
             switch result {
             case .success(let payments):
                 self.payments = payments
-//                self.filteredPayments = payments
+                //                self.filteredPayments = payments
             case .failure(let error):
                 print("Error observing products: \(error)")
             }
@@ -86,4 +86,5 @@ class PaymentAdminViewModel: ObservableObject {
         } catch {
             print("Error deleting payment method from user: \(error)")
         }
-    }}
+    }
+}

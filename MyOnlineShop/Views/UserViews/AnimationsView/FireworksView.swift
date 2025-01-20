@@ -9,21 +9,37 @@ import SwiftUI
 //https://www.youtube.com/watch?v=KvPh0ght90Q
 
 struct FireworksView: View {
+    @State private var showAlert: Bool = true
     @State private var bursts: [FireworkBurst] = []
+    @Binding var selectedTab: Int
     
     var body: some View {
         ZStack {
-            Text ("Congratulations your order is complete")
-                .font(.title)
+//            Text ("Congratulations your order is complete")
+//                .font(.title)
             
             ForEach(bursts) { burst in
-//                FireworkBurdstView(burst: burst)
+                FireworkBurstView(burst: burst)
             }
         }
         .background(Color.white.ignoresSafeArea())
         .onAppear {
             startFireworks()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                showAlert = true
+            }
         }
+
+        .alert(isPresented: $showAlert) {
+            Alert(
+                title: Text("Order Received"),
+                message: Text("You can view your progress in the order information."),
+                dismissButton: .default(Text("OK"), action: {
+                    selectedTab = 4
+                })
+            )
+        }
+        .navigationBarBackButtonHidden(true)
     }
     
     private func startFireworks() {
@@ -32,8 +48,42 @@ struct FireworksView: View {
             bursts.append(newBurst)
             
             //automatically remove the burst after a delay to prevent buildup
-            bursts.removeAll(where: { $0.id == newBurst.id })
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                bursts.removeAll(where: { $0.id == newBurst.id })
+            }
         }
+    }
+}
+
+struct FireworkBurstView: View {
+    let burst: FireworkBurst
+    
+    var body: some View {
+        ZStack {
+            ForEach(burst.prticles) { particle in
+                FireworkParticleView(particle: particle)
+                    .position(burst.center) // Начало анимации из центра
+            }
+        }
+    }
+}
+
+struct FireworkParticleView: View {
+    let particle: FireworkParticle
+    @State private var animate: Bool = false
+    
+    var body: some View {
+        Circle()
+            .fill(particle.color)
+            .frame(width: 8, height: 8) // Размер частицы
+            .offset(x: animate ? particle.endPoint.x : 0,
+                    y: animate ? particle.endPoint.y : 0) // Смещение частицы
+            .opacity(animate ? 0 : 1) // Постепенное исчезновение
+            .onAppear {
+                withAnimation(.easeOut(duration: 1.5)) { // Анимация вылета
+                    animate = true
+                }
+            }
     }
 }
 
