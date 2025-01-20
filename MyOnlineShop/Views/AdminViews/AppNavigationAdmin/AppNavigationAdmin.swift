@@ -15,21 +15,13 @@ struct AppNavigationAdmin: View {
             Tab("Admin Home", systemImage: "house") {
                 AdminHome()
             }
-            Tab("Coupons", systemImage: "tag") {
-                CouponsAdmin()
-            }
-            Tab("Delivery", systemImage: "truck.box.badge.clock") {
-                DeliveryMethodsAdmin()
-            }
-            Tab("Payments", systemImage: "dollarsign.bank.building") {
-                PaymentAdmin()
-            }
+
             Tab("Receipts", systemImage: "list.clipboard") {
                 AdminReceipts()
             }
 
-            Tab("Admin Settings", systemImage: "gear") {
-                AdminSettingsView()
+            Tab("Other Items", systemImage: "rectangle.and.pencil.and.ellipsis") {
+                OtherItems()
             }
         }
     }
