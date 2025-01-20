@@ -67,9 +67,9 @@ struct OrderCompletion: View {
                         }
                         .alert(isPresented: $showAlert) {
                             Alert(
-                                title: Text("Order Received"),
-                                message: Text("You can view your progress in the order information."),
-                                dismissButton: .default(Text("OK"), action: {
+                                title: Text("🎉 Congratulations! 🎉"),
+                                        message: Text("Thank you for your order! We're already working on it. You can track your order progress in the order information section."),
+                                dismissButton: .default(Text("Ok"), action: {
                                     selectedTab = 4
                                     //задержка в пол секудны, без нее происходят проблемы с navigationTab
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {

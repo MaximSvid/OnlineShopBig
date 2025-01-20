@@ -26,7 +26,7 @@ struct UserSettingsView: View {
                 } header: {
                     Text("Profile")
                 }
-//                Spacer()
+
                 Section {
                     Button(action: {
                         authViewModel.logout()

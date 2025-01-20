@@ -59,8 +59,6 @@ struct OtherItems: View {
                     Text("Payment methods")
                 }
                 
-//                Spacer()
-                
                 Section {
                     Button(action: {
                         authViewModel.logout()
