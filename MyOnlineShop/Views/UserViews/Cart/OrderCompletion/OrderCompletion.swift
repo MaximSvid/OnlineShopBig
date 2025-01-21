@@ -117,8 +117,8 @@ struct OrderCompletion: View {
     }
     //данную функцию нет необходимости хранить в репозитории так как это UI логика
     private func startFireworks() {
-        var timerCount = 0 // Счетчик времени
-        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
+        var timerCount = 0 // Счетчик времени (нужно для того чтобы анимация продолжалась только 5 секунд а затем переставала иначе, если сразу сделать заказ анимация не даст соверишить заказ...
+        Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true) { timer in
             if showFireworks {
                 let newBurst = FireworkBurst()
                 bursts.append(newBurst)
