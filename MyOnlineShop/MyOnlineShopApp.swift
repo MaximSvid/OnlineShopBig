@@ -26,6 +26,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct YourApp: App {
   // register app delegate for Firebase setup
   @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @AppStorage("isDarkMode") private var isDarkMode: Bool = false // dark mode
     
 
 
@@ -34,6 +35,7 @@ struct YourApp: App {
       NavigationView {
           AuthWrapper()
       }
+      .preferredColorScheme(isDarkMode ? .dark : .light) // dark mode
     }
   }
 }

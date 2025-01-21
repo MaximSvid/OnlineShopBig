@@ -25,7 +25,7 @@ struct UserProductCard: View {
                                     image.resizable()
                                         .scaledToFill()
                                         .frame(width: 170, height: 190)
-                                        .cornerRadius(3)
+                                        .clipShape(RoundedRectangle(cornerRadius: 3))
                                         .clipped()
                                 } placeholder: {
                                     Color.gray
@@ -53,7 +53,7 @@ struct UserProductCard: View {
                             .resizable()
                             .scaledToFill()
                             .frame(width: 170, height: 190)
-                            .cornerRadius(3)
+                            .clipShape(RoundedRectangle(cornerRadius: 3))
                             .clipped()
                     }
                 }

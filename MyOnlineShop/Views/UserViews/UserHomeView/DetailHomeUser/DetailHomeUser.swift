@@ -172,9 +172,9 @@ struct DetailHomeUser: View {
                             .font(.headline.bold())
                             .frame(width: .infinity, height: 50)
                             .frame(maxWidth: .infinity)
-                            .foregroundStyle(.white)
-                            .background(.blue.opacity(0.8))
-                            .clipShape(.buttonBorder)
+                            .foregroundStyle(Color.myPrimaryText)
+                            .background(Color.primaryColor)
+                            .clipShape(RoundedRectangle(cornerRadius: 3))
                     }
                     .shadow(radius: 3)
                     
@@ -195,9 +195,9 @@ struct DetailHomeUser: View {
                         .scaleEffect(product.isFavorite ? 1.3 : 1.0)
                         .padding(8)
                     }
-                    .background(Color.white.opacity(0.7))
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                    .padding(2)
+                    .background(Color.primaryColor)
+                    .clipShape(RoundedRectangle(cornerRadius: 3))
+//                    .padding(2)
                     .buttonStyle(BorderedButtonStyle())
                 }
             }
@@ -217,8 +217,7 @@ struct DetailHomeUser: View {
                     } label: {
                         ZStack(alignment: .topTrailing) {
                             Image(systemName: "cart")
-                                .font(.headline)
-                                .foregroundStyle(.gray)
+                                .foregroundStyle(.black)
                                 .padding(8)
                                 .background(Circle().fill(Color.gray.opacity(0.2)))
                             

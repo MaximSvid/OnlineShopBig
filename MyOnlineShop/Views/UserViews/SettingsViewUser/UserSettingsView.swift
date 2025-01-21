@@ -9,6 +9,7 @@ import SwiftUI
 
 struct UserSettingsView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
+    @AppStorage("isDarkMode") private var isDarkMode: Bool = false
     var body: some View {
         NavigationStack {
             List {
@@ -25,6 +26,14 @@ struct UserSettingsView: View {
                     }
                 } header: {
                     Text("Profile")
+                }
+                
+                Section{
+                    Toggle(isOn: $isDarkMode) {
+                     Text("Dark Mode")
+                    }
+                } header: {
+                    Text("Appearance")
                 }
 
                 Section {
@@ -46,8 +55,9 @@ struct UserSettingsView: View {
                 }
 
             }
-            .navigationTitle(Text("Settings").font(.title.bold()))
+            .navigationTitle(Text("Settings"))
         }
+        .preferredColorScheme(isDarkMode ? .dark : .light)
     }
 }
 

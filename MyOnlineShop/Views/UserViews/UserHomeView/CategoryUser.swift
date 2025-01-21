@@ -33,7 +33,7 @@ struct CategoryUser: View {
                         .background(
                             RoundedRectangle(cornerRadius: 3)
                                 .fill(Color.white)
-                                .stroke(selectedCategory == category ? Color.brown : .white, lineWidth: 1)
+                                .stroke(selectedCategory == category ? Color.primaryColor : .white, lineWidth: 1)
                         )
                         .shadow(radius: 3)
                         .onTapGesture {

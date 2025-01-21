@@ -89,8 +89,8 @@ struct CartUser: View {
                                 .font(.headline.bold())
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 50)
-                                .foregroundStyle(.white)
-                                .background(.brown)
+                                .foregroundStyle(Color.myPrimaryText)
+                                .background(Color.primaryColor)
                                 .clipShape(RoundedRectangle(cornerRadius: 3))
                             
                             Button(action: {
@@ -99,8 +99,8 @@ struct CartUser: View {
                                 Image(systemName: "tag")
                                     .font(.headline.bold())
                                     .frame(width: 50, height: 50)
-                                    .foregroundStyle(.white)
-                                    .background(.brown)
+                                    .foregroundStyle(Color.myPrimaryText)
+                                    .background(Color.primaryColor)
                                     .clipShape(RoundedRectangle(cornerRadius: 3))
                             }
                         }

@@ -81,7 +81,7 @@ struct ReceiptListUser: View {
                         .foregroundStyle(.gray)
                     Text("$\(receipt.finalTotalPrice, specifier: "%.2f")")
                         .font(.headline)
-                        .foregroundColor(.blue)
+                        .foregroundColor(Color.primaryColor)
                 }
             }
             .padding(.horizontal)
