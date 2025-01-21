@@ -15,6 +15,7 @@ struct CustomTextField: View {
     var body: some View {
         TextField(placeholder, text: $text)
             .padding()
+            .foregroundStyle(Color.primaryBrown)
             .background(
                 RoundedRectangle(cornerRadius: 3)
                     .stroke(isFocused ? .black : .gray.opacity(0.8), lineWidth: 1)

@@ -18,7 +18,6 @@ struct ShippinDetailsCompletion: View {
                     HStack {
                         Text("Order Summary")
                             .font(.subheadline)
-                            .foregroundStyle(.black)
                         Spacer()
                     }
                 }
@@ -52,7 +51,6 @@ struct ShippinDetailsCompletion: View {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Delivery Method")
                             .font(.subheadline)
-                            .foregroundStyle(.black)
                         
                         CustomInfoRow(title: "Type", value: selectedDelivery.deliveryName)
                         CustomInfoRow(title: "Time", value: selectedDelivery.deliveryTime)

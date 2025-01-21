@@ -21,13 +21,13 @@ struct CartListCompletion: View {
                             image.resizable()
                                 .scaledToFill()
                                 .frame(width: 70, height: 100)
-                                .cornerRadius(10)
+                                .clipShape(RoundedRectangle(cornerRadius: 3))
                                 .clipped()
                         } placeholder: {
-                            Color.gray
+                            ProgressView()
                                 .frame(width: 70, height: 100)
                         }
-                        .tag(index)
+//                        .tag(index)
                     }
                     
                 } else {
@@ -35,7 +35,7 @@ struct CartListCompletion: View {
                         .resizable()
                         .scaledToFill()
                         .frame(width: 70, height: 100)
-                        .cornerRadius(10)
+                        .clipShape(RoundedRectangle(cornerRadius: 3))
                         .clipped()
                 }
             }
@@ -44,7 +44,7 @@ struct CartListCompletion: View {
                 Text(product.title)
                     .font(.callout)
                     .padding(.top, 10)
-                    .foregroundStyle(.gray)
+                    .foregroundStyle(Color.secondaryGray)
                 
                 Spacer()
                 
@@ -52,13 +52,12 @@ struct CartListCompletion: View {
                     
                     Text("One price: ")
                         .font(.subheadline)
-                        .foregroundStyle(.gray)
+                        .foregroundStyle(Color.secondaryGray)
                     
                     if product.action && product.actionPrice > 0.0 {
                         // main price mit linie
                         Text(String(format: "€%.2f", product.price))
                             .font(.subheadline)
-                            .foregroundStyle(product.isVisible ? .gray : .gray.opacity(0.5))
                             .strikethrough(true, color: .gray) // linie
                         
                         // ActionPrice
@@ -69,7 +68,6 @@ struct CartListCompletion: View {
                         // Nur main price
                         Text(String(format: "€%.2f", product.price))
                             .font(.subheadline)
-                            .foregroundStyle(product.isVisible ? .black : .gray)
                     }
                     Spacer()
                 }
@@ -81,7 +79,7 @@ struct CartListCompletion: View {
                 HStack {
                     Text("Total price: ")
                         .font(.subheadline)
-                        .foregroundStyle(.gray)
+                        .foregroundStyle(Color.secondaryGray)
                     
                     Text(
                         String(

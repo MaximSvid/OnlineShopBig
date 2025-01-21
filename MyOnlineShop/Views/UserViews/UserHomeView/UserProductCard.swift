@@ -28,10 +28,8 @@ struct UserProductCard: View {
                                         .clipShape(RoundedRectangle(cornerRadius: 3))
                                         .clipped()
                                 } placeholder: {
-                                    Color.gray
-                                        .frame(width: 170, height: 190)
+                                    ProgressView()                                        .frame(width: 170, height: 190)
                                 }
-                                .tag(index)
                             }
                         }
                         .frame(width: 170, height: 190)
@@ -62,18 +60,18 @@ struct UserProductCard: View {
                     HStack {
                         Text(product.title)
                             .font(.caption)
-                            .foregroundStyle(product.isVisible ? .black : .gray) // isVisible color
+//                            .foregroundStyle(product.isVisible ? .black : .gray) // isVisible color
                         
                         Spacer()
                         
                         Image(systemName: "star.fill")
-                            .foregroundStyle(product.isVisible ? .yellow : .gray)
+                            .foregroundStyle(.yellow)
                             .font(.caption2)
 
                         
                         Text(String(format: "%.1f", product.rating))
                             .font(.caption2)
-                            .foregroundStyle(product.isVisible ? .black : .gray)
+//                            .foregroundStyle(product.isVisible ? .black : .gray)
                     }
                     .padding(.trailing, 4)
                     .padding(.leading, 4)
@@ -81,7 +79,7 @@ struct UserProductCard: View {
                     HStack {
                         Text(product.brand)
                             .font(.caption)
-                            .foregroundStyle(product.isVisible ? .black : .gray)
+//                            .foregroundStyle(product.isVisible ? .black : .gray)
                         
                         Spacer()
                     }
@@ -93,7 +91,7 @@ struct UserProductCard: View {
                             // main price mit linie
                             Text(String(format: "€%.2f", product.price))
                                 .font(.headline)
-                                .foregroundStyle(product.isVisible ? .gray : .gray.opacity(0.5))
+//                                .foregroundStyle(product.isVisible ? .gray : .gray.opacity(0.5))
                                 .strikethrough(true, color: .gray) // linie
                             
                             Spacer()
@@ -106,7 +104,7 @@ struct UserProductCard: View {
                             // Nur main price
                             Text(String(format: "€%.2f", product.price))
                                 .font(.headline)
-                                .foregroundStyle(product.isVisible ? .black : .gray)
+//                                .foregroundStyle(product.isVisible ? .black : .gray)
                         }
                         Spacer()
                     }
@@ -114,7 +112,7 @@ struct UserProductCard: View {
                     .padding(.leading, 4)
                     .padding(.bottom, 4)
                 }
-                .background(.white)
+//                .background(Color.backgroundColor)
             }
             
             HStack {
@@ -122,9 +120,9 @@ struct UserProductCard: View {
                 Spacer()
                 
                 Button(action: {
-                    withAnimation(.spring()) {
+//                    withAnimation(.spring()) {
                         userProductViewModel.toggleFavorite(for: product)
-                    }
+//                    }
                 }) {
                     Image(systemName: userProductViewModel.favoriteProducts.map { product in
                         product.id ?? ""
@@ -133,22 +131,18 @@ struct UserProductCard: View {
                         .resizable()
                         .frame(width: 20, height: 20)
                         .foregroundStyle(product.isFavorite ? .red.opacity(0.8) : .red.opacity(0.8))
-                        .scaleEffect(product.isFavorite ? 1.3 : 1.0)
+//                        .scaleEffect(product.isFavorite ? 1.3 : 1.0)
                         .padding(8)
                 }
-                .background(Color.white.opacity(0.7))
+//                .background(Color.backgroundColor)
                 .clipShape(RoundedRectangle(cornerRadius: 3))
-//                .padding(2)
                 .buttonStyle(BorderedButtonStyle())
             }
         }
         .frame(width: 170, height: 240)
-        .background(.white)
+        .background(Color.myBackground)
         .clipShape(RoundedRectangle(cornerRadius: 3))
         .shadow(radius: 3)
     }
 }
 
-#Preview {
-//    UserProductCard()
-}

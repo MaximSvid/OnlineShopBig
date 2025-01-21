@@ -23,10 +23,9 @@ struct FavoriteListView: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 3))
                                 .clipped()
                         } placeholder: {
-                            Color.gray
+                            ProgressView()
                                 .frame(width: 70, height: 100)
                         }
-//                        .tag(index)
                     }
                 } else {
                     Image("image")
@@ -54,8 +53,7 @@ struct FavoriteListView: View {
                         // main price mit linie
                         Text(String(format: "€%.2f", product.price))
                             .font(.headline)
-                            .foregroundStyle(product.isVisible ? .gray : .gray.opacity(0.5))
-                            .strikethrough(true, color: .gray) // linie
+                            .strikethrough(true, color: Color.secondaryGray) // linie
                         
                         Spacer()
                         
@@ -67,7 +65,6 @@ struct FavoriteListView: View {
                         // Nur main price
                         Text(String(format: "€%.2f", product.price))
                             .font(.headline)
-                            .foregroundStyle(product.isVisible ? .black : .gray)
                     }
                     Spacer()
                 }
@@ -90,11 +87,10 @@ struct FavoriteListView: View {
                         .contains(product.id) ? "heart.fill" : "heart")
                     .resizable()
                     .frame(width: 20, height: 20)
-                    .foregroundStyle(product.isFavorite ? .red : .red)
+                    .foregroundStyle(.red)
                     .padding()
                 }
                 .buttonStyle(.plain)
-                //                .background(Color.white.opacity(0.7))
                 .padding(2)
                 .contentShape(Rectangle())
                 
@@ -115,15 +111,8 @@ struct FavoriteListView: View {
             
         }
         .frame(width: .infinity, height: 100)
-        .background(.white)
+        .background(Color.backgroundColor)
         .clipShape(RoundedRectangle(cornerRadius: 3))
         .shadow(radius: 3)
-        
     }
-}
-
-
-#Preview {
-    //    FavoriteListView()
-    //        .environmentObject(UserProductViewModel())
 }

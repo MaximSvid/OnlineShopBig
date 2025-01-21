@@ -61,8 +61,8 @@ struct OrderCompletion: View {
                                 .font(.headline.bold())
                                 .frame(width: .infinity, height: 50)
                                 .frame(maxWidth: .infinity)
-                                .foregroundStyle(.white)
-                                .background(.blue.opacity(0.8))
+                                .foregroundStyle(Color.backgroundColor)
+                                .background(Color.primaryBrown)
                                 .clipShape(RoundedRectangle(cornerRadius: 3))
                         }
                         .alert(isPresented: $showAlert) {

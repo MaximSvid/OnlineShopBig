@@ -22,7 +22,7 @@ struct CustomButtonWithIsLoading: View {
                     .frame(width: .infinity, height: 50)
                     .frame(maxWidth: .infinity)
                     .foregroundStyle(Color.myPrimaryText)
-                    .background(Color.primaryColor) // В assets
+                    .background(Color.primaryBrown) // В assets
                     .clipShape(RoundedRectangle(cornerRadius: 3))
             }
         }

@@ -25,7 +25,7 @@ struct ShippingDetails: View {
                         VStack(spacing: 20) {
                             HStack {
                                 Text("Personal Details")
-                                    .foregroundStyle(.black.opacity(0.7))
+//                                    .foregroundStyle(.black.opacity(0.7))
                                 Spacer()
                             }
                             CustomTextField(placeholder: "First Name*", text: $deliveryUserInfoViewModel.firstName)
@@ -46,7 +46,7 @@ struct ShippingDetails: View {
                         VStack(spacing: 20) {
                             HStack {
                                 Text("Adress")
-                                    .foregroundStyle(.black.opacity(0.7))
+
                                 Spacer()
                             }
                             CustomTextField(placeholder: "Country*", text: $deliveryUserInfoViewModel.country)
@@ -74,7 +74,7 @@ struct ShippingDetails: View {
                         VStack(spacing: 20) {
                             HStack {
                                 Text("Delivery Method")
-                                    .foregroundStyle(.black.opacity(0.7))
+
                                 Spacer()
                             }
                             
@@ -107,8 +107,8 @@ struct ShippingDetails: View {
                                     .font(.headline.bold())
                                     .frame(width: .infinity, height: 50)
                                     .frame(maxWidth: .infinity)
-                                    .foregroundStyle(.white)
-                                    .background(.blue.opacity(0.8))
+                                    .foregroundStyle(Color.myPrimaryText)
+                                    .background(Color.primaryBrown)
                                     .clipShape(RoundedRectangle(cornerRadius: 3))
                             }
                         }
@@ -131,7 +131,3 @@ struct ShippingDetails: View {
     }
 }
 
-#Preview {
-    //    ShippingDetails()
-    //        .environmentObject(DeliveryAdminViewModel())
-}

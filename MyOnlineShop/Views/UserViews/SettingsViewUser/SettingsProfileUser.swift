@@ -13,7 +13,7 @@ struct SettingsProfileUser: View {
 
     @State private var showError: Bool = false
     @State private var navigateToOrderCompletion: Bool = false
-//    @Binding var selectedTab: Int
+
 
     
     @State var focus: Int = 0
@@ -25,7 +25,7 @@ struct SettingsProfileUser: View {
                         VStack(spacing: 20) {
                             HStack {
                                 Text("Personal Details")
-                                    .foregroundStyle(.black.opacity(0.7))
+                                    
                                 Spacer()
                             }
                             CustomTextField(placeholder: "First Name*", text: $deliveryUserInfoViewModel.firstName)
@@ -46,7 +46,7 @@ struct SettingsProfileUser: View {
                         VStack(spacing: 20) {
                             HStack {
                                 Text("Adress")
-                                    .foregroundStyle(.black.opacity(0.7))
+                                    
                                 Spacer()
                             }
                             CustomTextField(placeholder: "Country*", text: $deliveryUserInfoViewModel.country)
@@ -70,57 +70,11 @@ struct SettingsProfileUser: View {
                             Button(action: {
                                 
                             }) {
-                                Text("Save")
-                                    
+                                Text("Save")       
                             }
                         }
                         .padding([.leading, .trailing])
                     }
-                    
-//                    ContaiterRechtangle {
-//                        VStack(spacing: 20) {
-//                            HStack {
-//                                Text("Delivery Method")
-//                                    .foregroundStyle(.black.opacity(0.7))
-//                                Spacer()
-//                            }
-//                            
-//                            DeliveryMethodSelector()
-//                            
-//                            if showError {
-//                                Text("Please fill in all fields.")
-//                                    .foregroundColor(.red)
-//                                    .font(.caption)
-//                                    .padding(.top, 5)
-//                            }
-//                            
-//                            Button(action: {
-//                                
-//                                if !deliveryUserInfoViewModel.firstName.isEmpty && !deliveryUserInfoViewModel.lastName.isEmpty && !deliveryUserInfoViewModel.email.isEmpty &&
-//                                    !deliveryUserInfoViewModel.phoneNumber.isEmpty &&
-//                                    !deliveryUserInfoViewModel.country.isEmpty &&
-//                                    !deliveryUserInfoViewModel.index.isEmpty &&
-//                                    !deliveryUserInfoViewModel.city.isEmpty &&
-//                                    !deliveryUserInfoViewModel.street.isEmpty &&
-//                                    !deliveryUserInfoViewModel.houseNumber.isEmpty &&
-//                                    deliveryAdminViewModel.selectedDelivery != nil {
-//                                    navigateToOrderCompletion = true
-//                                } else {
-//                                    showError = true
-//                                }
-//                                
-//                            }) {
-//                                Text("Next")
-//                                    .font(.headline.bold())
-//                                    .frame(width: .infinity, height: 50)
-//                                    .frame(maxWidth: .infinity)
-//                                    .foregroundStyle(.white)
-//                                    .background(.blue.opacity(0.8))
-//                                    .clipShape(RoundedRectangle(cornerRadius: 3))
-//                            }
-//                        }
-//                        .padding([.leading, .trailing])
-//                    }
                 }
                 .padding([.leading, .trailing, .top])
                 .toolbar {
@@ -130,10 +84,6 @@ struct SettingsProfileUser: View {
                     }
                 }
             }
-//            .navigationDestination(isPresented: $navigateToOrderCompletion) {
-//                OrderCompletion(selectedTab: $selectedTab)
-//                    
-//            }
         }
     }
 }

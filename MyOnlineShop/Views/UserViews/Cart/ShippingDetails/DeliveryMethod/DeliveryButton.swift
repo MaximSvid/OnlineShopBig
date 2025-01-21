@@ -17,30 +17,28 @@ struct DeliveryButton: View {
             HStack {
                 // Checkbox
                 Image(systemName: isSelected ? "checkmark.square.fill" : "square")
-                    .foregroundStyle(isSelected ? .green : .gray)
+                    .foregroundStyle(isSelected ?  Color.primaryBrown : Color.secondaryGray)
 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(delivery.deliveryName)
-                        .foregroundStyle(.black)
 
                     Text(delivery.deliveryTime)
                         .font(.caption)
-                        .foregroundStyle(.gray)
+                        .foregroundStyle(Color.secondaryGray)
                 }
 
                 Spacer()
 
                 Text("€\(String(format: "%.2f", delivery.deliveryPrice))")
-                    .foregroundStyle(.black)
             }
             .padding()
             .background(
                 RoundedRectangle(cornerRadius: 3)
-                    .fill(isSelected ? Color.green.opacity(0.1) : Color.white)
+                    .fill(isSelected ? Color.primaryBrown.opacity(0.1) : Color.backgroundColor)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 3)
-                    .stroke(isSelected ? .green : .gray.opacity(0.8), lineWidth: 1)
+                    .stroke(isSelected ? Color.primaryBrown.opacity(0.1) : Color.secondaryGray, lineWidth: 1)
             )
         }
         .buttonStyle(PlainButtonStyle())

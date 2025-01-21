@@ -36,7 +36,7 @@ struct CartUser: View {
                         Text(String(format: "€ %.2f", userCartViewModel.totalSum))
                             .font(.headline)
                             .strikethrough(couponUserViewModel.appliedCoupon != nil) //модификатор используется для добавления зачёркивания текста.
-                            .foregroundStyle(couponUserViewModel.appliedCoupon != nil ? .gray : .primary)
+                            .foregroundStyle(couponUserViewModel.appliedCoupon != nil ? Color.secondaryGray : Color.primaryBrown)
                         
                     }
                     
@@ -44,13 +44,13 @@ struct CartUser: View {
                         HStack {
                             Text("Discount (\(coupon.discountType == "percentage" ? "\(Int(coupon.discountValue))%" : "€\(coupon.discountValue)"))")
                                 .font(.subheadline)
-                                .foregroundStyle(.gray)
+                                .foregroundStyle(Color.secondaryGray)
                             
                             Spacer()
                             
                             Text(String(format: "- € %.2f", userCartViewModel.totalSum - couponUserViewModel.finalAmount))
                                 .font(.subheadline)
-                                .foregroundStyle(.green)
+                                .foregroundStyle(Color.primaryBrown)
                         }
                     }
                     
@@ -59,22 +59,22 @@ struct CartUser: View {
                     HStack {
                         Text("Total")
                             .font(.footnote)
-                            .foregroundStyle(.gray)
+                            .foregroundStyle(Color.secondaryGray)
                         Spacer()
                         
                         Text(String(format: "€ %.2f", couponUserViewModel.finalAmount))
                             .font(.headline)
-                            .foregroundStyle(couponUserViewModel.appliedCoupon != nil ? .green : .primary)
+                            .foregroundStyle(couponUserViewModel.appliedCoupon != nil ? Color.primaryBrown : Color.backgroundColor)
                         
                     }
                     if couponUserViewModel.appliedCoupon == nil {
                         Text ("Enter your coupon here to get a discount! Don't miss the chance to save on your purchase.")
                             .font(.caption2)
-                            .foregroundStyle(.gray)
+                            .foregroundStyle(Color.secondaryGray)
                     } else {
                         Text("Coupon \(couponUserViewModel.appliedCoupon!.code) applied successfully!")
                             .font(.subheadline)
-                            .foregroundStyle(.green)
+                            .foregroundStyle(Color.primaryBrown)
                     }
                     
                 }
@@ -90,7 +90,7 @@ struct CartUser: View {
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 50)
                                 .foregroundStyle(Color.myPrimaryText)
-                                .background(Color.primaryColor)
+                                .background(Color.primaryBrown)
                                 .clipShape(RoundedRectangle(cornerRadius: 3))
                             
                             Button(action: {
@@ -100,7 +100,7 @@ struct CartUser: View {
                                     .font(.headline.bold())
                                     .frame(width: 50, height: 50)
                                     .foregroundStyle(Color.myPrimaryText)
-                                    .background(Color.primaryColor)
+                                    .background(Color.primaryBrown)
                                     .clipShape(RoundedRectangle(cornerRadius: 3))
                             }
                         }
@@ -108,7 +108,7 @@ struct CartUser: View {
                     } else {
                         Text("Your cart is empty")
                             .font(.headline)
-                            .foregroundStyle(.gray)
+                            .foregroundStyle(Color.secondaryGray)
                     }
                                         
                     

@@ -16,7 +16,7 @@ struct PaymentMethodeUser: View {
         Button(action: action) {
             HStack {
                 Image(systemName: isSelected ? "checkmark.square.fill" : "square")
-                    .foregroundStyle(isSelected ? Color.green : Color.gray)
+                    .foregroundStyle(isSelected ? Color.primaryBrown : Color.secondaryGray)
                 
                 if !payment.image.isEmpty {
                     AsyncImage(url: URL(string: payment.image)) { image in
@@ -43,19 +43,18 @@ struct PaymentMethodeUser: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(payment.name)
                         .font(.headline)
-                        .foregroundStyle(.black)
+//                        .foregroundStyle(.black)
                     
                     if !payment.description.isEmpty {
                         Text(payment.description)
                             .font(.caption)
-                            .foregroundStyle(.gray)
+                            .foregroundStyle(Color.secondaryGray)
                     }
                 }
             }
-//            .padding()
             .background(
                 RoundedRectangle(cornerRadius: 3)
-                    .fill(.white)
+                    .fill(Color.backgroundColor)
             )
         }
         .clipShape(RoundedRectangle(cornerRadius: 3))

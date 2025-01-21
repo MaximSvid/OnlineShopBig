@@ -20,13 +20,13 @@ struct CartListUser: View {
                             image.resizable()
                                 .scaledToFill()
                                 .frame(width: 70, height: 100)
-                                .cornerRadius(10)
+                                .clipShape(RoundedRectangle(cornerRadius: 3))
                                 .clipped()
                         } placeholder: {
-                            Color.gray
+                            ProgressView()
                                 .frame(width: 70, height: 100)
                         }
-                        .tag(index)
+//                        .tag(index)
                     }
                     
                 } else {
@@ -34,7 +34,7 @@ struct CartListUser: View {
                         .resizable()
                         .scaledToFill()
                         .frame(width: 70, height: 100)
-                        .cornerRadius(10)
+                        .clipShape(RoundedRectangle(cornerRadius: 3))
                         .clipped()
                 }
             }
@@ -43,7 +43,7 @@ struct CartListUser: View {
                 Text(product.title)
                     .font(.callout)
                     .padding(.top, 10)
-                    .foregroundStyle(.gray)
+                    .foregroundStyle(Color.secondaryGray)
                 
                 Spacer()
                 
@@ -54,7 +54,7 @@ struct CartListUser: View {
                         // main price mit linie
                         Text(String(format: "€%.2f", product.price))
                             .font(.subheadline)
-                            .foregroundStyle(product.isVisible ? .gray : .gray.opacity(0.5))
+//                            .foregroundStyle(product.isVisible ? .gray : .gray.opacity(0.5))
                             .strikethrough(true, color: .gray) // linie
                         
 //                        Spacer()
@@ -67,7 +67,7 @@ struct CartListUser: View {
                         // Nur main price
                         Text(String(format: "€%.2f", product.price))
                             .font(.subheadline)
-                            .foregroundStyle(product.isVisible ? .black : .gray)
+//                            .foregroundStyle(product.isVisible ? .black : .gray)
                     }
                     Spacer()
                     
@@ -104,8 +104,8 @@ struct CartListUser: View {
                     }) {
                         Image(systemName: "minus")
                             .frame(width: 20, height: 20)
-                            .foregroundStyle(.white)
-                            .background(.blue)
+                            .foregroundStyle(Color.backgroundColor)
+                            .background(Color.primaryBrown)
                             .clipShape(RoundedRectangle(cornerRadius: 3))
                     }
                     .buttonStyle(.plain)// этот атрибут необходим, чтобы экранировать list и нажимались только кнопки
@@ -120,8 +120,8 @@ struct CartListUser: View {
                     }) {
                         Image(systemName: "plus")
                             .frame(width: 20, height: 20)
-                            .foregroundStyle(.white)
-                            .background(.blue)
+                            .foregroundStyle(Color.backgroundColor)
+                            .background(Color.primaryBrown)
                             .clipShape(RoundedRectangle(cornerRadius: 3))
                     }
                     .buttonStyle(.plain)
@@ -131,7 +131,7 @@ struct CartListUser: View {
         }
         //        .padding()
         .frame(width: .infinity, height: 100)
-        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .clipShape(RoundedRectangle(cornerRadius: 3))
         .shadow(radius: 3)
         
     }

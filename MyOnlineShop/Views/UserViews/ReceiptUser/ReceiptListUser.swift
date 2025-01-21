@@ -27,7 +27,7 @@ struct ReceiptListUser: View {
                                 .clipped()
                             
                         } placeholder: {
-                            Color.gray
+                            ProgressView()
                                 .frame(width: 70, height: 100)
                         }
                     } else {
@@ -48,7 +48,7 @@ struct ReceiptListUser: View {
                 HStack {
                     Text("Status: ")
                         .font(.caption)
-                        .foregroundStyle(.gray)
+//                        .foregroundStyle(.gray)
                     
                     Text(receipt.orderStatus.rawValue)
                         .font(.caption)
@@ -61,13 +61,13 @@ struct ReceiptListUser: View {
                     
                     Text(receipt.dateCreated.formatted(date: .abbreviated, time: .shortened))
                         .font(.caption)
-                        .foregroundColor(.gray)
+                        .foregroundColor(Color.secondaryGray)
                 }
                 
                 HStack {
                     Text("Delivery: ")
                         .font(.caption)
-                        .foregroundStyle(.gray)
+                        .foregroundColor(Color.secondaryGray)
                     
                     Text(receipt.deliveryMethod.deliveryName)
                         .font(.subheadline)
@@ -78,10 +78,10 @@ struct ReceiptListUser: View {
                 HStack {
                     Text("Total: ")
                         .font(.subheadline)
-                        .foregroundStyle(.gray)
+                        .foregroundColor(Color.secondaryGray)
                     Text("$\(receipt.finalTotalPrice, specifier: "%.2f")")
                         .font(.headline)
-                        .foregroundColor(Color.primaryColor)
+                        .foregroundColor(Color.primaryBrown)
                 }
             }
             .padding(.horizontal)
@@ -90,15 +90,9 @@ struct ReceiptListUser: View {
             
         }
         .frame(width: .infinity, height: 100)
-        .background(.white)
+        .background(Color.backgroundColor)
         .clipShape(RoundedRectangle(cornerRadius: 3))
         .shadow(radius: 3)
     }
 }
 
-
-
-
-//#Preview {
-//    ReceiptListUser()
-//}

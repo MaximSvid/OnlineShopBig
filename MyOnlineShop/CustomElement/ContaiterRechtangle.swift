@@ -20,7 +20,7 @@ struct ContaiterRechtangle<Content: View>: View {
         .padding([.top, .bottom])
         .background(
             RoundedRectangle(cornerRadius: 3)
-                .stroke(.gray.opacity(0.8), lineWidth: 1)
+                .stroke(Color.primaryBrown, lineWidth: 1)
         )
     }
 }

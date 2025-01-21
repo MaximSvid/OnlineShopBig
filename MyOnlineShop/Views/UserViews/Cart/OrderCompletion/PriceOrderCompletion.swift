@@ -14,7 +14,7 @@ struct PriceOrderCompletion: View {
         HStack {
             Text("Price: ")
                 .font(.subheadline)
-                .foregroundStyle(.gray)
+                .foregroundStyle(Color.secondaryGray)
             Spacer()
             
             
@@ -26,13 +26,13 @@ struct PriceOrderCompletion: View {
         HStack {
             Text("Delivery price: ")
                 .font(.subheadline)
-                .foregroundStyle(.gray)
+                .foregroundStyle(Color.secondaryGray)
             Spacer()
         
             if let selectedDelivery = deliveryAdminViewModel.selectedDelivery {
                 Text(String(format: "€ %.2f", selectedDelivery.deliveryPrice))
                     .font(.subheadline)
-                    .foregroundStyle(.gray)
+                    .foregroundStyle(Color.secondaryGray)
                 
             }
         }

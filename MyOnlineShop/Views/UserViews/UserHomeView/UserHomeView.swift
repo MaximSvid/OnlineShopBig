@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct UserHomeView: View {
+    @AppStorage("isDarkMode") private var isDarkMode: Bool = false
     @Binding var selectedTab: Int
     @EnvironmentObject var userProductViewModel: UserProductViewModel
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
@@ -39,7 +40,7 @@ struct UserHomeView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Image(systemName: "bell.fill")
 //                        .font(.headline)
-                        .foregroundStyle(.black)
+//                        .foregroundStyle(Color.backgroundColor)
                         .padding(8)
                         .background(Circle().fill(Color.gray.opacity(0.2)))
                 } 
@@ -49,7 +50,7 @@ struct UserHomeView: View {
                     }) {
                         Image(systemName: "magnifyingglass")
 //                            .font(.headline)
-                            .foregroundStyle(.black)
+//                            .foregroundStyle(Color.backgroundColor)
                             .padding(8)
                             .background(Circle().fill(Color.gray.opacity(0.2)))
                     }
@@ -63,6 +64,7 @@ struct UserHomeView: View {
                 prompt: "Search products..."
             )
         }
+        .preferredColorScheme(isDarkMode ? .dark : .light)
     }
 }
 

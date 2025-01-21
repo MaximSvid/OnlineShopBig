@@ -36,7 +36,7 @@ struct BannerUserView: View {
                 Text("No banners available")
                     .frame(height: 200)
                     .frame(maxWidth: .infinity)
-                    .background(Color.gray.opacity(0.1))
+                    .background(Color.secondaryGray)
             }
         }
         .onAppear {

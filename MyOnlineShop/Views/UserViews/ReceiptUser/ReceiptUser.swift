@@ -12,7 +12,6 @@ struct ReceiptUser: View {
     var body: some View {
         
         NavigationStack {
-//            ScrollView {
                 VStack {
                     List (receiptUserViewModel.receipts.sorted { $0.dateCreated > $1.dateCreated}) { receipt in
                         ReceiptListUser(receipt: receipt)
@@ -30,7 +29,6 @@ struct ReceiptUser: View {
                     receiptUserViewModel.observeReceipt()
                 }
             }
-//        }
     }
 }
 

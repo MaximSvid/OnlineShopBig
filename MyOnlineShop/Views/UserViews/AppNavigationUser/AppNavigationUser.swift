@@ -43,7 +43,7 @@ struct AppNavigationUser: View {
                 }
                 .tag(5)
         }
-        .tint(Color.primaryColor)
+        .tint(Color.primaryBrown)
     }
 }
 

@@ -15,7 +15,7 @@ struct Favorite: View {
                 if userProductViewModel.favoriteProducts.isEmpty {
                     Text("You have not added any products to favorite yet")
                         .font(.headline)
-                        .foregroundStyle(.gray)
+                        .foregroundStyle(Color.secondaryGray)
                 } else {
                     List (userProductViewModel.favoriteProducts) { product in
                         FavoriteListView(product: product)
@@ -31,14 +31,9 @@ struct Favorite: View {
                 }
             }
             .onAppear {
-//                userProductViewModel.updateFavoriteList()
                 userProductViewModel.loadFavorites()
             }
         }
     }
 }
 
-#Preview {
-    Favorite()
-        .environmentObject(UserProductViewModel())
-}

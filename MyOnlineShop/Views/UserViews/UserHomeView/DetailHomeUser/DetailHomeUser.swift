@@ -28,17 +28,16 @@ struct DetailHomeUser: View {
                                     image.resizable()
                                         .scaledToFill()
                                         .frame(width: .infinity, height: 250)
-                                        .cornerRadius(12)
+                                        .clipShape(RoundedRectangle(cornerRadius: 3))
                                         .clipped()
                                 } placeholder: {
-                                    Color.gray
+                                    ProgressView()
                                         .frame(width: .infinity, height: 250)
                                 }
-                                .tag(index)
                             }
                         }
                         .frame(width: .infinity, height: 250)
-                        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never)) // это необходимо чтобы изображение не заходило наверх
                         
                         // Индикаторы страниц
                         if product.images.count > 1 {
@@ -56,7 +55,7 @@ struct DetailHomeUser: View {
                             .resizable()
                             .scaledToFill()
                             .frame(width: .infinity, height: 250)
-                            .cornerRadius(12)
+                            .clipShape(RoundedRectangle(cornerRadius: 3))
                             .clipped()
                     }
                 }
@@ -65,10 +64,7 @@ struct DetailHomeUser: View {
                     VStack(alignment: .leading) {
                         Text (product.title)
                             .font(.headline.bold())
-                        
                     }
-                    
-                    
                     Spacer()
                     
                     HStack {
@@ -76,7 +72,7 @@ struct DetailHomeUser: View {
                             // main price mit linie
                             Text(String(format: "€%.2f", product.price))
                                 .font(.headline)
-                                .foregroundStyle(product.isVisible ? .gray : .gray.opacity(0.5))
+//                                .foregroundStyle(product.isVisible ? .gray : .gray.opacity(0.5))
                                 .strikethrough(true, color: .gray) // linie
                             
                             // ActionPrice
@@ -87,7 +83,7 @@ struct DetailHomeUser: View {
                             // Nur main price
                             Text(String(format: "€%.2f", product.price))
                                 .font(.headline)
-                                .foregroundStyle(product.isVisible ? .black : .gray)
+//                                .foregroundStyle(product.isVisible ? .black : .gray)
                         }
                         
                     }
@@ -98,8 +94,6 @@ struct DetailHomeUser: View {
                 HStack {
                     Text(product.brand)
                         .font(.callout)
-                    
-                    
                     Spacer()
                     
                     HStack {
@@ -145,7 +139,7 @@ struct DetailHomeUser: View {
                                     .frame(width: 30, height: 30)
                                     .overlay(
                                         Circle()
-                                            .stroke(productViewModel.selectedColor == color ? Color.gray : Color.clear, lineWidth: 2)
+                                            .stroke(productViewModel.selectedColor == color ? Color.secondaryGray : Color.clear, lineWidth: 2)
                                     )
                                     .onTapGesture {
                                         productViewModel.selectedColor = color
@@ -173,7 +167,7 @@ struct DetailHomeUser: View {
                             .frame(width: .infinity, height: 50)
                             .frame(maxWidth: .infinity)
                             .foregroundStyle(Color.myPrimaryText)
-                            .background(Color.primaryColor)
+                            .background(Color.primaryBrown)
                             .clipShape(RoundedRectangle(cornerRadius: 3))
                     }
                     .shadow(radius: 3)
@@ -195,7 +189,7 @@ struct DetailHomeUser: View {
                         .scaleEffect(product.isFavorite ? 1.3 : 1.0)
                         .padding(8)
                     }
-                    .background(Color.primaryColor)
+                    .background(Color.primaryBrown)
                     .clipShape(RoundedRectangle(cornerRadius: 3))
 //                    .padding(2)
                     .buttonStyle(BorderedButtonStyle())
@@ -217,7 +211,7 @@ struct DetailHomeUser: View {
                     } label: {
                         ZStack(alignment: .topTrailing) {
                             Image(systemName: "cart")
-                                .foregroundStyle(.black)
+//                                .foregroundStyle(.black)
                                 .padding(8)
                                 .background(Circle().fill(Color.gray.opacity(0.2)))
                             
@@ -236,8 +230,4 @@ struct DetailHomeUser: View {
             }
         }
     }
-}
-
-#Preview {
-    //    DetailHomeUser()
 }

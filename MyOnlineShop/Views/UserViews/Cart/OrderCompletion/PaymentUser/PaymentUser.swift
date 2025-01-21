@@ -18,7 +18,7 @@ struct PaymentUser: View {
                 HStack {
                     Text("Payment Methods")
                         .font(.subheadline)
-                        .foregroundStyle(.black)
+//                        .foregroundStyle(.black)
                     
                     Spacer()
                 }
