@@ -40,7 +40,7 @@ struct OrderCompletion: View {
                         
                         PriceOrderCompletion()
                         
-
+                        
                         if showError {
                             Text("Please select a payment method")
                                 .font(.caption)
@@ -68,7 +68,7 @@ struct OrderCompletion: View {
                         .alert(isPresented: $showAlert) {
                             Alert(
                                 title: Text("🎉 Congratulations! 🎉"),
-                                        message: Text("Thank you for your order! We're already working on it. You can track your order progress in the order information section."),
+                                message: Text("Thank you for your order! We're already working on it. You can track your order progress in the order information section."),
                                 dismissButton: .default(Text("Ok"), action: {
                                     selectedTab = 4
                                     //задержка в пол секудны, без нее происходят проблемы с navigationTab
@@ -117,6 +117,7 @@ struct OrderCompletion: View {
     }
     //данную функцию нет необходимости хранить в репозитории так как это UI логика
     private func startFireworks() {
+        var timerCount = 0 // Счетчик времени
         Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
             if showFireworks {
                 let newBurst = FireworkBurst()
@@ -124,6 +125,11 @@ struct OrderCompletion: View {
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                     bursts.removeAll(where: { $0.id == newBurst.id })
+                }
+                timerCount += 1
+                if timerCount >= 10 { // 10 итераций = 5 секунд
+                    showFireworks = false
+                    timer.invalidate()
                 }
             } else {
                 timer.invalidate()
@@ -144,6 +150,7 @@ struct OrderCompletion: View {
             paymentAdminViewModel.selectedPayment = nil
             deliveryAdminViewModel.errorMessage = nil
             couponUserViewModel.appliedCoupon = nil //обнуляю использование купона
+            
             
             Task {
                 await receiptUserViewModel.fetchAndSaveReceipt()
