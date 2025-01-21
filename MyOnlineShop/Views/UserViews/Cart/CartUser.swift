@@ -90,8 +90,8 @@ struct CartUser: View {
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 50)
                                 .foregroundStyle(.white)
-                                .background(.blue.opacity(0.8))
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .background(.brown)
+                                .clipShape(RoundedRectangle(cornerRadius: 3))
                             
                             Button(action: {
                                 couponUserViewModel.couponSheet.toggle()
@@ -100,8 +100,8 @@ struct CartUser: View {
                                     .font(.headline.bold())
                                     .frame(width: 50, height: 50)
                                     .foregroundStyle(.white)
-                                    .background(.blue.opacity(0.8))
-                                    .clipShape(.buttonBorder)
+                                    .background(.brown)
+                                    .clipShape(RoundedRectangle(cornerRadius: 3))
                             }
                         }
 

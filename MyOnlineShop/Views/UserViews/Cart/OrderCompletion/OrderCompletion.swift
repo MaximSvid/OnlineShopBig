@@ -143,6 +143,7 @@ struct OrderCompletion: View {
             deliveryAdminViewModel.selectedDelivery = nil
             paymentAdminViewModel.selectedPayment = nil
             deliveryAdminViewModel.errorMessage = nil
+            couponUserViewModel.appliedCoupon = nil //обнуляю использование купона
             
             Task {
                 await receiptUserViewModel.fetchAndSaveReceipt()

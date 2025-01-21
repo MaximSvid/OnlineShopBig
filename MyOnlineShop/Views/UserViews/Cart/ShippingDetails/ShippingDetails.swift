@@ -16,7 +16,7 @@ struct ShippingDetails: View {
     @Binding var selectedTab: Int
 
     
-    @State var focus: Int = 0
+//    @State var focus: Int = 0
     var body: some View {
         NavigationStack {
             ScrollView {

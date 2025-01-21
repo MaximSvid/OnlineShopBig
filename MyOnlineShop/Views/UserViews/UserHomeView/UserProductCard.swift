@@ -25,7 +25,7 @@ struct UserProductCard: View {
                                     image.resizable()
                                         .scaledToFill()
                                         .frame(width: 170, height: 190)
-                                        .cornerRadius(12)
+                                        .cornerRadius(3)
                                         .clipped()
                                 } placeholder: {
                                     Color.gray
@@ -53,7 +53,7 @@ struct UserProductCard: View {
                             .resizable()
                             .scaledToFill()
                             .frame(width: 170, height: 190)
-                            .cornerRadius(12)
+                            .cornerRadius(3)
                             .clipped()
                     }
                 }
@@ -132,19 +132,19 @@ struct UserProductCard: View {
                         .contains(product.id) ? "heart.fill" : "heart")
                         .resizable()
                         .frame(width: 20, height: 20)
-                        .foregroundStyle(product.isFavorite ? .red : .red)
+                        .foregroundStyle(product.isFavorite ? .red.opacity(0.8) : .red.opacity(0.8))
                         .scaleEffect(product.isFavorite ? 1.3 : 1.0)
                         .padding(8)
                 }
                 .background(Color.white.opacity(0.7))
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-                .padding(2)
+                .clipShape(RoundedRectangle(cornerRadius: 3))
+//                .padding(2)
                 .buttonStyle(BorderedButtonStyle())
             }
         }
         .frame(width: 170, height: 240)
         .background(.white)
-        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .clipShape(RoundedRectangle(cornerRadius: 3))
         .shadow(radius: 3)
     }
 }

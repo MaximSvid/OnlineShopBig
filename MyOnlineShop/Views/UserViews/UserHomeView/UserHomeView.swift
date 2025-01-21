@@ -38,8 +38,8 @@ struct UserHomeView: View {
                 
                 ToolbarItem(placement: .topBarTrailing) {
                     Image(systemName: "bell.fill")
-                        .font(.headline)
-                        .foregroundStyle(.gray)
+//                        .font(.headline)
+                        .foregroundStyle(.black)
                         .padding(8)
                         .background(Circle().fill(Color.gray.opacity(0.2)))
                 } 
@@ -48,8 +48,8 @@ struct UserHomeView: View {
                         userProductViewModel.isSearchVisible = true
                     }) {
                         Image(systemName: "magnifyingglass")
-                            .font(.headline)
-                            .foregroundStyle(.gray)
+//                            .font(.headline)
+                            .foregroundStyle(.black)
                             .padding(8)
                             .background(Circle().fill(Color.gray.opacity(0.2)))
                     }
