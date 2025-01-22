@@ -13,7 +13,7 @@ protocol ReceiptUserRepository {
     
 //    func observeReceiptOneUser(userId: String, completion: @escaping (Result<Receipt, Error>) -> Void)
     
-    func addNewUserInfo(receipt: Receipt) throws
-    func updateUserInfo(receipt: Receipt) throws
+//    func addNewUserInfo(receipt: Receipt) throws
+//    func updateUserInfo(receipt: Receipt) throws
     
 }

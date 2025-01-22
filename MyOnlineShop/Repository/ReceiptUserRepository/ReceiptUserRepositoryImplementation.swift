@@ -115,22 +115,22 @@ class ReceiptUserRepositoryImplementation: ReceiptUserRepository {
         }
     }
     
-    func addNewUserInfo(receipt: Receipt) throws {
-        do {
-            try db.collection("receipts").addDocument(from: receipt)
-        } catch {
-            throw error
-        }
-    }
-    
-    func updateUserInfo(receipt: Receipt) throws {
-        guard let receiptId = receipt.id else {
-            throw NSError(domain: "No receipt ID", code: -1)
-        }
-        do {
-            try db.collection("receipts").document(receiptId).setData(from: receipt)
-        } catch {
-            throw error
-        }
-    }
+//    func addNewUserInfo(receipt: Receipt) throws {
+//        do {
+//            try db.collection("receipts").addDocument(from: receipt)
+//        } catch {
+//            throw error
+//        }
+//    }
+//    
+//    func updateUserInfo(receipt: Receipt) throws {
+//        guard let receiptId = receipt.id else {
+//            throw NSError(domain: "No receipt ID", code: -1)
+//        }
+//        do {
+//            try db.collection("receipts").document(receiptId).setData(from: receipt)
+//        } catch {
+//            throw error
+//        }
+//    }
 }
