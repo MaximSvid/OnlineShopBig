@@ -9,6 +9,8 @@ import SwiftUI
 
 struct AppNavigationUser: View {
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var userCartViewModel: UserCartViewModel
+    
     @State private var selectedTab = 0
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -22,6 +24,7 @@ struct AppNavigationUser: View {
                 .tabItem {
                     Label("My Cart", systemImage: "cart")
                 }
+                .badge(userCartViewModel.cartItemsCount) // отвечает за отображение количество товара в корзине 
                 .tag(1)
             
             Favorite()
