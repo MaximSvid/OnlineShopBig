@@ -9,12 +9,7 @@ import SwiftUI
 
 struct BannerView: View {
     @EnvironmentObject var bannerViewModel: BannerViewModel
-    @EnvironmentObject var imgurViewModel: ImgurViewModel
-    //    var banner: Banner
-    
-    //    @State private var currentIndex = 0
-    //    private let timer = Timer.publish(every: 4, on: .main, in: .common).autoconnect()
-    
+    @EnvironmentObject var imgurViewModel: ImgurViewModel    
     
     var body: some View {
         VStack {

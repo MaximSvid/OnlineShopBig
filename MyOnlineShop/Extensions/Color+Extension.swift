@@ -11,4 +11,5 @@ extension Color {
     static let myPrimaryText = Color("PrimaryText")
     static let backgroundColor = Color("MyBackground")
     static let secondaryGray = Color("Secondary")
+    static let actionColor = Color("actionColor")
 }

@@ -52,8 +52,3 @@ struct CouponsAdmin: View {
         }
     }
 }
-
-#Preview {
-//    CouponsAdmin()
-//        .environmentObject(CouponViewModel())
-}

@@ -27,6 +27,7 @@ struct BannerUserView: View {
                             } placeholder: {
                                 ProgressView()
                             }
+                            
                         }
                     }
                 }
@@ -43,8 +44,4 @@ struct BannerUserView: View {
             bannerViewModel.observeBanner()
         }
     }
-}
-
-#Preview {
-    BannerUserView()
 }

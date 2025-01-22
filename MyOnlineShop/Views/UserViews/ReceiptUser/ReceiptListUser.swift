@@ -79,7 +79,7 @@ struct ReceiptListUser: View {
                     Text("Total: ")
                         .font(.subheadline)
                         .foregroundColor(Color.secondaryGray)
-                    Text("$\(receipt.finalTotalPrice, specifier: "%.2f")")
+                    Text("€\(receipt.finalTotalPrice, specifier: "%.2f")")
                         .font(.headline)
                         .foregroundColor(Color.primaryBrown)
                 }

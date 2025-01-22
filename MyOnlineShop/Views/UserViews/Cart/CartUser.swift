@@ -64,7 +64,7 @@ struct CartUser: View {
                         
                         Text(String(format: "€ %.2f", couponUserViewModel.finalAmount))
                             .font(.headline)
-                            .foregroundStyle(couponUserViewModel.appliedCoupon != nil ? Color.primaryBrown : Color.backgroundColor)
+                            .foregroundStyle(couponUserViewModel.appliedCoupon != nil ? Color.actionColor : Color.backgroundColor)
                         
                     }
                     if couponUserViewModel.appliedCoupon == nil {
@@ -74,7 +74,7 @@ struct CartUser: View {
                     } else {
                         Text("Coupon \(couponUserViewModel.appliedCoupon!.code) applied successfully!")
                             .font(.subheadline)
-                            .foregroundStyle(Color.primaryBrown)
+                            .foregroundStyle(Color.actionColor)
                     }
                     
                 }

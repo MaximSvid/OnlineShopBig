@@ -60,7 +60,7 @@ class ReceiptUserViewModel: ObservableObject {
     func observeReceipt() {
         guard let userId = FirebaseService.shared.userId else { return }
         
-        receiptUserRepository.observeReceiptUser(userId: userId) { result in
+        receiptUserRepository.observeReceiptsUsers(userId: userId) { result in
             switch result {
             case .success(let receipts):
                 self.receipts = receipts
@@ -70,4 +70,6 @@ class ReceiptUserViewModel: ObservableObject {
             }
         }
     }
+    
+    
 }

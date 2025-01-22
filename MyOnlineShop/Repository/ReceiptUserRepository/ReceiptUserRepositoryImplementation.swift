@@ -10,17 +10,16 @@ import Firebase
 
 class ReceiptUserRepositoryImplementation: ReceiptUserRepository {
     
-    
     private let db = Firestore.firestore()
     
-        func saveReceipt(_ receipt: Receipt) throws {
-            let db = Firestore.firestore()
-            try db.collection("users")
-                .document(receipt.userId)
-                .collection("receipts") // создаст коллекцию receipts
-                .document()
-                .setData(from: receipt)
-            }
+    func saveReceipt(_ receipt: Receipt) throws {
+        let db = Firestore.firestore()
+        try db.collection("users")
+            .document(receipt.userId)
+            .collection("receipts") // создаст коллекцию receipts
+            .document()
+            .setData(from: receipt)
+    }
     
     func fetchReceiptUser(userId: String, completion: @escaping (Result<Receipt, Error>) -> Void) {
         
@@ -97,7 +96,7 @@ class ReceiptUserRepositoryImplementation: ReceiptUserRepository {
     }
     
     //Наблюдаем за колекцией
-    func observeReceiptUser(userId: String, completion: @escaping (Result<[Receipt], any Error>) -> Void) {
+    func observeReceiptsUsers(userId: String, completion: @escaping (Result<[Receipt], any Error>) -> Void) {
         let userReceiptRef = db.collection("users").document(userId).collection("receipts")
         
         userReceiptRef.addSnapshotListener { QuerySnapshot, error in
@@ -116,4 +115,22 @@ class ReceiptUserRepositoryImplementation: ReceiptUserRepository {
         }
     }
     
+    func addNewUserInfo(receipt: Receipt) throws {
+        do {
+            try db.collection("receipts").addDocument(from: receipt)
+        } catch {
+            throw error
+        }
+    }
+    
+    func updateUserInfo(receipt: Receipt) throws {
+        guard let receiptId = receipt.id else {
+            throw NSError(domain: "No receipt ID", code: -1)
+        }
+        do {
+            try db.collection("receipts").document(receiptId).setData(from: receipt)
+        } catch {
+            throw error
+        }
+    }
 }

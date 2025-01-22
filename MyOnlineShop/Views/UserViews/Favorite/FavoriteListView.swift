@@ -26,6 +26,7 @@ struct FavoriteListView: View {
                             ProgressView()
                                 .frame(width: 70, height: 100)
                         }
+                        .tag(index) // без этого атрибута отображается некоректно
                     }
                 } else {
                     Image("image")

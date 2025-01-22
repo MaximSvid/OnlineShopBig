@@ -52,12 +52,6 @@ struct EditCoupon: View {
             
             Button(action: {
                 
-//                couponViewModel.couponeCode = couponCode
-//                couponViewModel.discountType = discountType
-//                couponViewModel.discountValue = discountValue
-//                couponViewModel.expirationDate = expirationDate
-//                couponViewModel.isActive = isActive
-                
                 if !couponViewModel.couponeCode.isEmpty && !couponViewModel.discountValue.isZero {
                     toast = Toast(style: .success, message: "Coupon updated successfully")
                     couponViewModel.updateCoupon()
@@ -79,17 +73,5 @@ struct EditCoupon: View {
         }
         .padding([.leading, .trailing])
         .toastView(toast: $toast)
-//        .onAppear {
-//            couponViewModel.setSelectedCoupon(couponViewModel.coupons)
-//            couponCode = couponViewModel.couponeCode
-//            discountType = couponViewModel.discountType
-//            discountValue = couponViewModel.discountValue
-//            expirationDate = couponViewModel.expirationDate
-//            isActive = couponViewModel.isActive
-//        }
     }
-}
-
-#Preview {
-//    EditCoupon()
 }

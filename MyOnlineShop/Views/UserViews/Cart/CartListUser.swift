@@ -26,7 +26,7 @@ struct CartListUser: View {
                             ProgressView()
                                 .frame(width: 70, height: 100)
                         }
-//                        .tag(index)
+                        .tag(index)
                     }
                     
                 } else {

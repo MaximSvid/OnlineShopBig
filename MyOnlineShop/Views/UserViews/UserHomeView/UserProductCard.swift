@@ -30,6 +30,7 @@ struct UserProductCard: View {
                                 } placeholder: {
                                     ProgressView()                                        .frame(width: 170, height: 190)
                                 }
+                                .tag(index)
                             }
                         }
                         .frame(width: 170, height: 190)

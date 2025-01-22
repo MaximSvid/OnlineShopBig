@@ -155,7 +155,7 @@ struct OrderCompletion: View {
             Task {
                 await receiptUserViewModel.fetchAndSaveReceipt()
                 await paymentAdminViewModel.deletePaymentMethodFromUser()
-                await deliveryUserInfoViewModel.deleteDeliveryUserInfoFromUser()
+//                await deliveryUserInfoViewModel.deleteDeliveryUserInfoFromUser() удалять информацию о пользователе нет особого смысла. проще ее сохранять и затем отображать 
                 await deliveryAdminViewModel.deleteDeliveryFormUser()
                 await userCartViewModel.removeAllFromCart()
             }
