@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15B4C7012D40FB0E000A2774 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 15B4C7002D40FB0E000A2774 /* Localizable.xcstrings */; };
 		15CB3D9A2D088B5500B90978 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 15CB3D992D088B5500B90978 /* FirebaseAuth */; };
 		15CB3D9C2D088BB800B90978 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 15CB3D9B2D088BB800B90978 /* FirebaseAnalytics */; };
 		15CB3D9E2D088BC100B90978 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 15CB3D9D2D088BC100B90978 /* FirebaseCore */; };
@@ -32,6 +33,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		15B4C7002D40FB0E000A2774 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		15CB3CD72D086C0400B90978 /* MyOnlineShop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyOnlineShop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		15CB3CE92D086C0600B90978 /* MyOnlineShopTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyOnlineShopTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		15CB3CF32D086C0600B90978 /* MyOnlineShopUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyOnlineShopUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,6 +103,7 @@
 		15CB3CCE2D086C0400B90978 = {
 			isa = PBXGroup;
 			children = (
+				15B4C7002D40FB0E000A2774 /* Localizable.xcstrings */,
 				15CB3CD92D086C0400B90978 /* MyOnlineShop */,
 				15CB3CEC2D086C0600B90978 /* MyOnlineShopTests */,
 				15CB3CF62D086C0600B90978 /* MyOnlineShopUITests */,
@@ -231,6 +234,8 @@
 			knownRegions = (
 				en,
 				Base,
+				de,
+				ru,
 			);
 			mainGroup = 15CB3CCE2D086C0400B90978;
 			minimizedProjectReferenceProxies = 1;
@@ -256,6 +261,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15B4C7012D40FB0E000A2774 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,6 +378,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -428,6 +435,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

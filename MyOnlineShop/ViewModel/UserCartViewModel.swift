@@ -18,10 +18,11 @@ class UserCartViewModel: ObservableObject {
     
     init(cartRepositoryUser: CartRepositoryUser = CartRepositoryUserImplementation()) {
         self.cartRepositoryUser = cartRepositoryUser
+        loadCart() // для отображения количества товаров в корзине
     }
     
     func updateCountGoods() {
-        guard let userId = FirebaseService.shared.userId else {return}
+//        guard let userId = FirebaseService.shared.userId else {return}
         
         for product in products {
             let orderedQuantity = itemCount[product] ?? 0
