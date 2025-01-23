@@ -4,18 +4,19 @@
 //
 //  Created by Maxim Svidrak on 17.12.24.
 //
+import SwiftUI
 
 enum Categories: String, CaseIterable {
-    case allProducts
-    case action
-    case livingRoom
-    case bedroom
-    case kitchen
-    case office
-    case diningRoom
-    case bathroom
-    case decor
-    case lighting
+    case allProducts = "Categories_AllProducts"
+    case action = "Categories_Action"
+    case livingRoom = "Categories_LivingRoom"
+    case bedroom = "Categories_Bedroom"
+    case kitchen = "Categories_Kitchen"
+    case office = "Categories_Office"
+    case diningRoom = "Categories_DiningRoom"
+    case bathroom = "Categories_Bathroom"
+    case decor = "Categories_Decor"
+    case lighting = "Categories_Lighting"
     
     var icon: String {
         switch self {
@@ -33,17 +34,6 @@ enum Categories: String, CaseIterable {
     }
     
     var title: String {
-        switch self {
-        case .allProducts: return "All Products"
-        case .action : return "Action"
-        case .livingRoom: return "Living Room"
-        case .bedroom: return "Bedroom"
-        case .kitchen: return "Kitchen"
-        case .office: return "Office"
-        case .diningRoom: return "Dining Room"
-        case .bathroom: return "Bathroom"
-        case .decor: return "Decor"
-        case .lighting: return "Lighting"
-        }
+        return NSLocalizedString(rawValue, comment: "")
     }
 }
