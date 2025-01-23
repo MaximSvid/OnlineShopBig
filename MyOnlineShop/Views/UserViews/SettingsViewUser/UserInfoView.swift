@@ -7,16 +7,10 @@
 
 import SwiftUI
 
-struct SettingsProfileUser: View {
+struct UserInfoView: View {
     @EnvironmentObject var deliveryUserInfoViewModel: DeliveryUserInfoViewModel
-    @EnvironmentObject var deliveryAdminViewModel: DeliveryAdminViewModel
-
-    @State private var showError: Bool = false
-    @State private var navigateToOrderCompletion: Bool = false
-
-
+    @Environment(\.dismiss) private var dismiss // для закрытия представления
     
-    @State var focus: Int = 0
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -67,11 +61,12 @@ struct SettingsProfileUser: View {
                                 apartment: $deliveryUserInfoViewModel.apartmentNumber
                             )
                             
-                            Button(action: {
-                                
-                            }) {
-                                Text("Save")       
-                            }
+                            CustomMainButton(action: {
+                                deliveryUserInfoViewModel.addOrUpdateDeliveryUserInfo()
+                                dismiss()
+                            }, title: "Save")
+                            
+
                         }
                         .padding([.leading, .trailing])
                     }
@@ -83,6 +78,15 @@ struct SettingsProfileUser: View {
                             .font(.title.bold())
                     }
                 }
+                .onAppear {
+                    deliveryUserInfoViewModel.observeDeliveryUserInfo()
+                    
+                    if !deliveryUserInfoViewModel.deliveryUserInfo.isEmpty {
+                        let firstInfo = deliveryUserInfoViewModel.deliveryUserInfo.first
+                        deliveryUserInfoViewModel.prepareForEdit(firstInfo!)
+                    }
+                }
+
             }
         }
     }

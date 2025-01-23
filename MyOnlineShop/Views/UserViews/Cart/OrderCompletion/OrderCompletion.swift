@@ -141,7 +141,15 @@ struct OrderCompletion: View {
         if paymentAdminViewModel.selectedPayment != nil {
             deliveryAdminViewModel.isError = false
             deliveryAdminViewModel.errorMessage = nil
-            deliveryUserInfoViewModel.addNewDeliveryUserInfo()
+            
+//            if deliveryAdminViewModel.exist {
+//                deliveryUserInfoViewModel.addNewDeliveryUserInfo()
+//            } else {
+//                deliveryAdminViewModel.updateDelivery()
+//            }
+            
+//            deliveryUserInfoViewModel.addNewDeliveryUserInfo()
+            deliveryUserInfoViewModel.addOrUpdateDeliveryUserInfo()// обновить или создать информацию о пользователе
             deliveryAdminViewModel.addUserDeliveryMethod()
             paymentAdminViewModel.addUserPaymentMethod()
             userCartViewModel.updateCountGoods()

@@ -9,12 +9,13 @@ import SwiftUI
 
 struct UserSettingsView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var deliveryUserInfoViewModel: DeliveryUserInfoViewModel
     @AppStorage("isDarkMode") private var isDarkMode: Bool = false
     var body: some View {
         NavigationStack {
             List {
                 Section {
-                    NavigationLink(destination: SettingsProfileUser() ) {
+                    NavigationLink(destination: UserInfoView() ) {
                         HStack {
                             Image(systemName: "person")
                                 .font(.subheadline)
@@ -39,6 +40,7 @@ struct UserSettingsView: View {
                 Section {
                     Button(action: {
                         authViewModel.logout()
+                        deliveryUserInfoViewModel.resetFields() // test 
                     }) {
                         HStack {
                             Image(systemName: "rectangle.portrait.and.arrow.right")

@@ -556,7 +556,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kein Konto?"
+            "value" : "Kein Konto? "
           }
         }
       }
@@ -1053,6 +1053,7 @@
       }
     },
     "Save" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

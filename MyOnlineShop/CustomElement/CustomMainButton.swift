@@ -18,7 +18,7 @@ struct CustomMainButton: View {
                 .frame(width: .infinity, height: 50)
                 .frame(maxWidth: .infinity)
                 .foregroundStyle(.white)
-                .background(.brown)
+                .background(Color.primaryBrown)
                 .clipShape(RoundedRectangle(cornerRadius: 3))
         }
     }

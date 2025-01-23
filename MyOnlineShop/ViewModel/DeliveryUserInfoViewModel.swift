@@ -44,6 +44,7 @@ class DeliveryUserInfoViewModel: ObservableObject {
             firstName: firstName,
             lastName: lastName,
             email: email,
+            countryCode: countryCode,
             phoneNumber: phoneNumber,
             country: country,
             index: index,
@@ -70,13 +71,15 @@ class DeliveryUserInfoViewModel: ObservableObject {
             switch result {
             case .success(let deliveryUserInfo):
                 self.deliveryUserInfo = deliveryUserInfo
+                print("Success observing delivery user info")
             case .failure(let error):
                 print("Error observing delivery info: \(error.localizedDescription)")
             }
         }
     }
     
-    private func resetFields() {
+    //использую эту функцию для обновления состояния личных данных у пользователя когда он выходит из акаунта, чтобы у нового пользователя не сохранялись старые поля(тест)
+     func resetFields() {
         firstName = ""
         lastName = ""
         email = ""
@@ -149,4 +152,19 @@ class DeliveryUserInfoViewModel: ObservableObject {
             print("Error updating deliveryUserInfo: \(error)")
         }
     }
+    
+    func addOrUpdateDeliveryUserInfo () { // проблема в этой функции
+        guard let userId = FirebaseService.shared.userId else { return }
+        
+        deliveryUserInfoRepo.checkIfDeliveryUserInfoExists(userId: userId) { exists in
+            if exists {
+                self.updateDeliveryUserInfo()
+                print("updateDeliveryUserInfo()")
+            } else {
+                self.addNewDeliveryUserInfo()
+                print("addNewDeliveryUserInfo()")
+            }
+        }
+    }
+    
 }

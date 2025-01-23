@@ -50,13 +50,33 @@ class DeliveryUserInfoRepoImplementation: DeliveryUserInfoRepo {
     }
     
     func updateUserInfo(newDeliveryUserInfo: DeliveryUserInfo) throws {
-        guard let deliveryUserInfoId = newDeliveryUserInfo.id else {
+        guard let userId = FirebaseService.shared.userId,
+        let deliveryUserUnfoId = newDeliveryUserInfo.id
+        else {
             throw NSError(domain: "No deliveryUserInfoId", code: -1)
         }
         do {
-            try db.collection("userDeliveryInfo").document(deliveryUserInfoId).setData(from: newDeliveryUserInfo)
+            try db
+                .collection("users")
+                .document(userId)
+                .collection("userDeliveryInfo")
+                .document(deliveryUserUnfoId)
+                .setData(from: newDeliveryUserInfo)
         } catch {
             throw error
+        }
+    }
+    
+    func checkIfDeliveryUserInfoExists(userId: String, completion: @escaping (Bool) -> Void) {
+        let userDeliveryInfoRef = db.collection("users").document(userId).collection("userDeliveryInfo")
+        userDeliveryInfoRef.getDocuments { QuerySnapshot, error in
+            if let error = error {
+                completion(false)
+                print("Error checkIfDeliveryUserInfoExist")
+                return
+            }
+            //если есть хотя бы один документ возвращаем true
+            completion(!QuerySnapshot!.documents.isEmpty)
         }
     }
 }
