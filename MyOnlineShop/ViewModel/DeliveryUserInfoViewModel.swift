@@ -35,6 +35,11 @@ class DeliveryUserInfoViewModel: ObservableObject {
         deliveryUserInfoRepo: DeliveryUserInfoRepo = DeliveryUserInfoRepoImplementation()
     ) {
         self.deliveryUserInfoRepo = deliveryUserInfoRepo
+        //для того чтобы правильно загрузить данные для конкретного пользователя по доставке
+        fb.auth.addStateDidChangeListener { auth, user  in
+            guard user != nil else { return }
+            self.observeDeliveryUserInfo()
+        }
     }
     
     func addNewDeliveryUserInfo() {
@@ -91,6 +96,7 @@ class DeliveryUserInfoViewModel: ObservableObject {
         street = ""
         houseNumber = ""
         apartmentNumber = ""
+         deliveryUserInfo = []
     }
     
     func deleteDeliveryUserInfoFromUser() async {
@@ -102,8 +108,9 @@ class DeliveryUserInfoViewModel: ObservableObject {
         }
     }
     
-    func prepareForEdit(_ deliveryUserInfo: DeliveryUserInfo) {
-        self.selectedDeliveryUserInfo = deliveryUserInfo
+    func prepareForEdit() {
+        guard let deliveryUserInfo = self.deliveryUserInfo.first else { return }
+        
         self.firstName = deliveryUserInfo.firstName
         self.lastName = deliveryUserInfo.lastName
         self.email = deliveryUserInfo.email

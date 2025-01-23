@@ -64,12 +64,13 @@ class AuthViewModel: ObservableObject {
             }
         }
     
-    func loginWithEmail() {
+    func loginWithEmail(completion: @escaping () -> Void) {
             Task {
                 do {
                     try await userRepository.loginWithEmail(email: email, password: password)
                     self.user = fb.auth.currentUser
                     await checkUserRole()
+                    completion() // если пользователь успешно входит добавляю функцию чтобы загрузить количество товара уже при вызове loginWithEmail
                 } catch let error as NSError {
                     switch AuthErrorCode(rawValue: error.code) {
                     case .invalidEmail:

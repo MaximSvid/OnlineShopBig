@@ -79,11 +79,11 @@ struct UserInfoView: View {
                     }
                 }
                 .onAppear {
-                    deliveryUserInfoViewModel.observeDeliveryUserInfo()
+//                    deliveryUserInfoViewModel.observeDeliveryUserInfo()
                     
                     if !deliveryUserInfoViewModel.deliveryUserInfo.isEmpty {
                         let firstInfo = deliveryUserInfoViewModel.deliveryUserInfo.first
-                        deliveryUserInfoViewModel.prepareForEdit(firstInfo!)
+                        deliveryUserInfoViewModel.prepareForEdit()
                     }
                 }
 

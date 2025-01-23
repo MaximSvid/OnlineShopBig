@@ -10,6 +10,7 @@ import SwiftUI
 struct AuthView: View {
     
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var userCartViewModel: UserCartViewModel
    
     var body: some View {
         NavigationStack {
@@ -51,7 +52,9 @@ struct AuthView: View {
                 
                 
                 Button (action: {
-                    authViewModel.loginWithEmail()
+                    authViewModel.loginWithEmail {
+                        userCartViewModel.loadCart()
+                    }
                 }) {
                     Text("Login")
                         .font(.headline.bold())
