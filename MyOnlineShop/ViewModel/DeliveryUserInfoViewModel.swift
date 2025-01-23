@@ -111,6 +111,8 @@ class DeliveryUserInfoViewModel: ObservableObject {
     func prepareForEdit() {
         guard let deliveryUserInfo = self.deliveryUserInfo.first else { return }
         
+        self.selectedDeliveryUserInfo = deliveryUserInfo
+        
         self.firstName = deliveryUserInfo.firstName
         self.lastName = deliveryUserInfo.lastName
         self.email = deliveryUserInfo.email
@@ -166,12 +168,9 @@ class DeliveryUserInfoViewModel: ObservableObject {
         deliveryUserInfoRepo.checkIfDeliveryUserInfoExists(userId: userId) { exists in
             if exists {
                 self.updateDeliveryUserInfo()
-                print("updateDeliveryUserInfo()")
             } else {
                 self.addNewDeliveryUserInfo()
-                print("addNewDeliveryUserInfo()")
             }
         }
     }
-    
 }
