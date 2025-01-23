@@ -63,7 +63,7 @@ struct DetailHomeUser: View {
                 HStack {
                     VStack(alignment: .leading) {
                         Text (product.title)
-                            .font(.headline.bold())
+                            .font(.title3.bold())
                     }
                     Spacer()
                     
@@ -71,9 +71,10 @@ struct DetailHomeUser: View {
                         if product.action && product.actionPrice > 0.0 {
                             // main price mit linie
                             Text(String(format: "€%.2f", product.price))
-                                .font(.headline)
-//                                .foregroundStyle(product.isVisible ? .gray : .gray.opacity(0.5))
-                                .strikethrough(true, color: .gray) // linie
+                                .font(.body)
+                                .foregroundStyle(Color.secondaryGray)
+                            //                                .foregroundStyle(product.isVisible ? .gray : .gray.opacity(0.5))
+                                .strikethrough(true, color: Color.secondaryGray) // linie
                             
                             // ActionPrice
                             Text(String(format: "€%.2f", product.actionPrice))
@@ -82,8 +83,8 @@ struct DetailHomeUser: View {
                         } else {
                             // Nur main price
                             Text(String(format: "€%.2f", product.price))
-                                .font(.headline)
-//                                .foregroundStyle(product.isVisible ? .black : .gray)
+                                .font(.title3)
+                            //                                .foregroundStyle(product.isVisible ? .black : .gray)
                         }
                         
                     }
@@ -93,7 +94,8 @@ struct DetailHomeUser: View {
                 
                 HStack {
                     Text(product.brand)
-                        .font(.callout)
+                        .font(.subheadline)
+                        .foregroundStyle(Color.secondaryGray)
                     Spacer()
                     
                     HStack {
@@ -101,22 +103,23 @@ struct DetailHomeUser: View {
                             .font(.callout)
                             .foregroundStyle(.yellow)
                         
-                        Text(String(format: "%.1f", product.rating))                            .font(.callout)
+                        Text(String(format: "%.1f", product.rating))                       .font(.callout)
                     }
                 }
                 
                 HStack {
                     Text("Quantity of goods:")
-                        .font(.callout)
+                        .font(.subheadline)
+                        .foregroundStyle(Color.secondaryGray)
                     
                     Spacer()
                     if product.countProduct > 0 {
                         Text("\(product.countProduct)")
-                            .font(.callout)
-                            .foregroundStyle(product.countProduct <= 10 ? .red : .primary)
+                            .font(.subheadline)
+                            .foregroundStyle(product.countProduct <= 10 ? .red : Color.myPrimaryText)
                     } else {
                         Text("Out of stock")
-                            .font(.callout)
+                            .font(.subheadline)
                             .foregroundStyle(.red)
                             .onAppear {
                                 productViewModel.toggleVisibility(for: product)
@@ -129,7 +132,7 @@ struct DetailHomeUser: View {
                 HStack {
                     Text("Select a  Color")
                         .font(.headline)
-                        .foregroundStyle(.gray)
+                        .foregroundStyle(Color.secondaryGray)
                     
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 16) {
@@ -162,15 +165,15 @@ struct DetailHomeUser: View {
                 HStack {
                     Button(action: {
                         userCartViewModel.addToCart(for: product)                     }) {
-                        Text ("Buy Now")
-                            .font(.headline.bold())
-                            .frame(width: .infinity, height: 50)
-                            .frame(maxWidth: .infinity)
-                            .foregroundStyle(Color.myPrimaryText)
-                            .background(Color.primaryBrown)
-                            .clipShape(RoundedRectangle(cornerRadius: 3))
-                    }
-                    .shadow(radius: 3)
+                            Text ("Buy Now")
+                                .font(.headline.bold())
+                                .frame(width: .infinity, height: 50)
+                                .frame(maxWidth: .infinity)
+                                .foregroundStyle(Color.myPrimaryText)
+                                .background(Color.primaryBrown)
+                                .clipShape(RoundedRectangle(cornerRadius: 3))
+                        }
+                        .shadow(radius: 3)
                     
                     Spacer()
                     
@@ -191,12 +194,12 @@ struct DetailHomeUser: View {
                     }
                     .background(Color.primaryBrown)
                     .clipShape(RoundedRectangle(cornerRadius: 3))
-//                    .padding(2)
+                    //                    .padding(2)
                     .buttonStyle(BorderedButtonStyle())
                 }
             }
             .onAppear {
-                userCartViewModel.loadCart() 
+                userCartViewModel.loadCart()
             }
             .padding([.leading, .trailing])
             .toolbar {
@@ -211,7 +214,7 @@ struct DetailHomeUser: View {
                     } label: {
                         ZStack(alignment: .topTrailing) {
                             Image(systemName: "cart")
-//                                .foregroundStyle(.black)
+                            //                                .foregroundStyle(.black)
                                 .padding(8)
                                 .background(Circle().fill(Color.gray.opacity(0.2)))
                             
