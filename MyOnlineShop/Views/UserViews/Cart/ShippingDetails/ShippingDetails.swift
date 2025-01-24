@@ -115,7 +115,14 @@ struct ShippingDetails: View {
                         .padding([.leading, .trailing])
                     }
                 }
-                .padding([.leading, .trailing, .top])
+                .onAppear {
+//                    deliveryUserInfoViewModel.observeDeliveryUserInfo()
+                    
+                    if !deliveryUserInfoViewModel.deliveryUserInfo.isEmpty {
+                        let firstInfo = deliveryUserInfoViewModel.deliveryUserInfo.first
+                        deliveryUserInfoViewModel.prepareForEdit()
+                    }
+                }                .padding([.leading, .trailing, .top])
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         Text("Shipping Details")

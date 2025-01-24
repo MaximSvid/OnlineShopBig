@@ -11,6 +11,9 @@ struct DetailHomeUser: View {
     @EnvironmentObject var productViewModel: ProductViewModel
     @EnvironmentObject var userProductViewModel: UserProductViewModel
     @EnvironmentObject var userCartViewModel: UserCartViewModel
+    
+    @Environment(\.dismiss) private var dismiss // для закрытия представления
+    
     @Binding var selectedTab: Int
     var product: Product
     @State private var currentImageIndex = 0
@@ -211,6 +214,9 @@ struct DetailHomeUser: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         selectedTab = 1 // Переключаемся на вкладку корзины
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            dismiss() // close view
+                        }
                     } label: {
                         ZStack(alignment: .topTrailing) {
                             Image(systemName: "cart")

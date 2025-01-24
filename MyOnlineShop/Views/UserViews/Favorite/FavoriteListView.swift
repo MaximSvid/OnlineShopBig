@@ -68,6 +68,8 @@ struct FavoriteListView: View {
                             .font(.headline)
                     }
                     Spacer()
+                    
+                    
                 }
                 .padding(.trailing, 4)
                 .padding(.leading, 4)
@@ -79,6 +81,17 @@ struct FavoriteListView: View {
             Spacer()
             
             VStack {
+                
+//                Button(action: {
+//                    userProductViewModel.toggleFavorite(for: product)
+//                }) {
+//                    Image(systemName: userProductViewModel.products.first(where: { $0.id == product.id })?.isFavorite ?? false ? "heart.fill" : "heart")
+//                    .resizable()
+//                    .frame(width: 20, height: 20)
+//                    .foregroundStyle(.red)
+//                    .padding()
+//                }
+                
                 Button(action: {
                     userProductViewModel.toggleFavorite(for: product)
                 }) {

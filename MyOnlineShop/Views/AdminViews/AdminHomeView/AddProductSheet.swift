@@ -131,9 +131,6 @@ struct AddProductSheet: View {
                 .pickerStyle(.wheel)
                 .padding(.bottom)
                 
-                
-                
-                
                 HStack {
                     VStack {
                         
@@ -145,10 +142,10 @@ struct AddProductSheet: View {
                         
                         TextField("Rating", text: $ratingString)
                             .onChange(of: ratingString) {
-                                productViewModel.rating = Double(Int(ratingString) ?? 0)
+                                productViewModel.rating = Double(Int(ratingString) ?? Int(0.0))
                             }
                             .onAppear {
-                                ratingString = String(productViewModel.rating)
+                                ratingString = String(format: "%.1f", productViewModel.rating)
                             }
                             .keyboardType(.numberPad)
                             .textFieldStyle(.roundedBorder)

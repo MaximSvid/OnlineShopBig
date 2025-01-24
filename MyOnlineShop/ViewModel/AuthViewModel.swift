@@ -22,13 +22,22 @@ class AuthViewModel: ObservableObject {
     @Published var errorMessage: String? = ""// kommt eine message when fehler gibt
     
     private let userViewModel: UserViewModel
+    private let userRepository: UserRepository
     
+    //для реальной работы
     init(userViewModel: UserViewModel) {
         self.userViewModel = userViewModel
+        self.userRepository = UserRepositoryImplementation()
         
     }
     
-    private let userRepository = UserRepositoryImplementation()
+    //для unit test
+    init(userViewModel: UserViewModel, userRepository: UserRepository) {
+        self.userViewModel = userViewModel
+        self.userRepository = userRepository
+    }
+    
+//    private let userRepository = UserRepositoryImplementation()
     
     private let fb = FirebaseService.shared
     private let db = Firestore.firestore()

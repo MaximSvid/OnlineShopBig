@@ -5,31 +5,36 @@
 //  Created by Maxim Svidrak on 24.01.25.
 //
 
-import XCTest
-
-final class AuthViewModelTests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
-}
+//import XCTest
+//@testable import MyOnlineShop
+//
+//final class AuthViewModelTests: XCTestCase {
+//    var authViewModel: AuthViewModel
+//    var authMockRepository: AuthMockRepository
+//
+//    @MainActor func testRegisterWithEmail_EmptyFields_SetsErrorMessage() {
+//            // Подготовка
+//            authViewModel.email = ""
+//            authViewModel.password = ""
+//            authViewModel.confirmPassword = ""
+//            authViewModel.userName = ""
+//            
+//            // Действие
+//            authViewModel.registerWithEmail(name: "")
+//            
+//            // Проверка
+//            XCTAssertEqual(authViewModel.errorMessage, "Please fill all fields")
+//        }
+//    
+//    @MainActor func testRegisterWithEmail_MisnatchedPasswords_SetsErrorMessage() {
+//        authViewModel.email = "test@test.com"
+//        authViewModel.userName = "TestUser"
+//        authViewModel.password = "123456"
+//        authViewModel.confirmPassword = "123456"
+//        
+//        authViewModel.registerWithEmail(name: "TestUser")
+//        
+//        XCTAssertEqual(authViewModel.errorMessage, "Passwords do not match")
+//    }
+//
+//}

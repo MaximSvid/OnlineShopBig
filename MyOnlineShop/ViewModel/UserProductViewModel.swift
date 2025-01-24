@@ -73,13 +73,13 @@ class UserProductViewModel: ObservableObject {
         // Локальное обновление статуса
         products[index].isFavorite.toggle()
         
-        // Сразу обновляем UI для избранного
-            if products[index].isFavorite {
-                favoriteProducts.append(products[index])
-            } else {
-                favoriteProducts.removeAll { $0.id == productID }
-            }
-
+        // Немедленное обновление избранных продуктов
+//            if products[index].isFavorite {
+//                favoriteProducts.append(product)
+//            } else {
+//                favoriteProducts.removeAll { $0.id == productID }
+//            }
+        
             productRepositoryUser.updateFavoriteStatus(
                 userID: userID,
                 productID: productID,
@@ -88,7 +88,7 @@ class UserProductViewModel: ObservableObject {
             ) { result in
                 switch result {
                 case .success:
-                    print("Favorite status successfully updated for product \(productID)")
+                    print("Favorite status successfully updated for product \(productID) \(self.products[index].isFavorite)")
                     self.loadFavorites()
                 case .failure(let error):
                     print("Failed to update favorite status: \(error.localizedDescription)")
