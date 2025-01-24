@@ -26,7 +26,7 @@ struct EditProductSheet: View {
     
     @State private var category: Categories = .livingRoom
     //    @State private var selectedColor: ColorEnum = .red
-    @State private var selectedColor: ColorEnum = .red
+    @State private var selectedColor: ColorEnum = .caramelBrown
     @State private var isVisible: Bool = true
     
     var body: some View {
@@ -207,7 +207,7 @@ struct EditProductSheet: View {
                 description = product.description
                 brand = product.brand
                 category = Categories(rawValue: product.category) ?? .livingRoom
-                selectedColor = ColorEnum(rawValue: product.selectedColor) ?? .blue
+                selectedColor = ColorEnum(rawValue: product.selectedColor) ?? .caramelBrown
                 isVisible = product.isVisible
                 action = product.action
             }

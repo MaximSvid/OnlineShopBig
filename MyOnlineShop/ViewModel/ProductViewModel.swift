@@ -74,7 +74,7 @@ class ProductViewModel: ObservableObject {
     }
     
     @Published var category: Categories = .livingRoom
-    @Published var selectedColor: ColorEnum = .blue
+    @Published var selectedColor: ColorEnum = .caramelBrown
     private func resetFields() {
         title = ""
         price = 0.0
@@ -86,7 +86,7 @@ class ProductViewModel: ObservableObject {
         images = []
         rating = 0
         isVisible = true
-        selectedColor = .blue
+        selectedColor = .caramelBrown
         isFavorite = false
         action = false
         
@@ -186,7 +186,7 @@ class ProductViewModel: ObservableObject {
         self.images = product.images
         self.rating = product.rating
         self.isVisible = product.isVisible
-        self.selectedColor = ColorEnum(rawValue: product.selectedColor) ?? .blue
+        self.selectedColor = ColorEnum(rawValue: product.selectedColor) ?? .caramelBrown
         self.action = product.action
     }
     

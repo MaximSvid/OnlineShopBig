@@ -107,31 +107,31 @@ struct DetailHomeUser: View {
                     }
                 }
                 
-                HStack {
-                    Text("Quantity of goods:")
-                        .font(.subheadline)
-                        .foregroundStyle(Color.secondaryGray)
-                    
-                    Spacer()
-                    if product.countProduct > 0 {
-                        Text("\(product.countProduct)")
-                            .font(.subheadline)
-                            .foregroundStyle(product.countProduct <= 10 ? .red : Color.myPrimaryText)
-                    } else {
-                        Text("Out of stock")
-                            .font(.subheadline)
-                            .foregroundStyle(.red)
-                            .onAppear {
-                                productViewModel.toggleVisibility(for: product)
-                            }
-                    }
-                }
-                .padding(.top, 3)
-                .padding(.bottom, 3)
+//                HStack {
+//                    Text("Quantity of goods:")
+//                        .font(.subheadline)
+//                        .foregroundStyle(Color.secondaryGray)
+//
+//                    Spacer()
+//                    if product.countProduct > 0 {
+//                        Text("\(product.countProduct)")
+//                            .font(.subheadline)
+//                            .foregroundStyle(product.countProduct <= 10 ? .red : Color.myPrimaryText)
+//                    } else {
+//                        Text("Out of stock")
+//                            .font(.subheadline)
+//                            .foregroundStyle(.red)
+//                            .onAppear {
+//                                productViewModel.toggleVisibility(for: product)
+//                            }
+//                    }
+//                }
+//                .padding(.top, 3)
+//                .padding(.bottom, 3)
                 
                 HStack {
                     Text("Select a  Color")
-                        .font(.headline)
+                        .font(.subheadline)
                         .foregroundStyle(Color.secondaryGray)
                     
                     ScrollView(.horizontal, showsIndicators: false) {
