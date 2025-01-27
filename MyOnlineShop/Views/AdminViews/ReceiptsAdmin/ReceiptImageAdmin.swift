@@ -25,7 +25,7 @@ struct ReceiptImageAdmin: View {
                                 .clipped()
                             
                         } placeholder: {
-                            Color.gray
+                            ProgressView()
                                 .frame(width: 70, height: 100)
                         }
                     } else {

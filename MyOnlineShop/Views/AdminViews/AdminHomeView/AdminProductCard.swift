@@ -24,11 +24,10 @@ struct AdminProductCard: View {
                                         image.resizable()
                                             .scaledToFill()
                                             .frame(width: 170, height: 190)
-                                            .cornerRadius(12)
+                                            .clipShape(RoundedRectangle(cornerRadius: 3))
                                             .clipped()
                                     } placeholder: {
-                                        Color.gray
-                                            .frame(width: 170, height: 190)
+                                        ProgressView()                                            .frame(width: 170, height: 190)
                                     }
                                     .tag(index)
                                 }
@@ -52,7 +51,7 @@ struct AdminProductCard: View {
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: 170, height: 190)
-                                .cornerRadius(12)
+                                .clipShape(RoundedRectangle(cornerRadius: 3))
                                 .clipped()
                         }
                     }
@@ -124,7 +123,7 @@ struct AdminProductCard: View {
                             .padding(8)
                     }
                     .background(Color.white.opacity(0.7))
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .clipShape(RoundedRectangle(cornerRadius: 3))
                     .padding()
                     
                     Spacer()
@@ -137,18 +136,13 @@ struct AdminProductCard: View {
                             .padding(8)
                     }
                     .background(Color.white.opacity(0.7))
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .clipShape(RoundedRectangle(cornerRadius: 3))
                     .padding()
                 }
             }
             .frame(width: 170, height: 240)
             .background(.white)
-            .clipShape(RoundedRectangle(cornerRadius: 8))
+            .clipShape(RoundedRectangle(cornerRadius: 3))
             .shadow(radius: 3)
         }
-}
-
-#Preview {
-    //    AdminProductCard()
-    //        .environmentObject(ProductViewModel())
 }

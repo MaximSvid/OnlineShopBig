@@ -56,7 +56,7 @@ struct AddNewDelivery: View {
                             .frame(width: .infinity, height: 50)
                             .frame(maxWidth: .infinity)
                             .foregroundStyle(.white)
-                            .background(.blue.opacity(0.8))
+                            .background(Color.primaryBrown)
                             .clipShape(RoundedRectangle(cornerRadius: 3))
                     }
                 }

@@ -24,6 +24,7 @@ struct AppNavigationAdmin: View {
                 OtherItems()
             }
         }
+        .tint(Color.primaryBrown)
     }
 }
 

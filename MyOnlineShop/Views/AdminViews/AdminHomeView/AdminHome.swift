@@ -17,10 +17,7 @@ struct AdminHome: View {
         NavigationStack {
             ScrollView {
                 VStack {
-                    
-                    
                     BannerView()
-                    
                     
                     Category(categories: Categories.allCases)
                     
@@ -48,10 +45,4 @@ struct AdminHome: View {
         }
         
     }
-}
-
-#Preview {
-    //    AdminHome()
-    //        .environmentObject(ProductViewModel())
-    //        .environmentObject(BannerViewModel())
 }

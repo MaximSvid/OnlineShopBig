@@ -55,7 +55,13 @@ struct CouponListAdmin: View {
             }) {
                 Image(systemName: "pencil")
                     .font(.headline)
-                    .foregroundStyle(.green)
+//                    .foregroundStyle(.green)
+                    .foregroundStyle(.white)
+                    .padding(3)
+                    .background(
+                        RoundedRectangle(cornerRadius: 3)
+                            .fill(Color.primaryBrown)
+                    )
             }
             .buttonStyle(.plain)// этот атрибут необходим, чтобы экранировать list и нажимались только кнопки
 

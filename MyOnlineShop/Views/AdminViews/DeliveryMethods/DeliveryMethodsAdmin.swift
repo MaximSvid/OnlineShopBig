@@ -29,8 +29,12 @@ struct DeliveryMethodsAdmin: View {
                     }) {
                         Image(systemName: "plus")
                             .font(.headline)
-                            .background(Circle().fill(Color.green))
                             .foregroundStyle(.white)
+                            .padding(3)
+                            .background(
+                                RoundedRectangle(cornerRadius: 3)
+                                    .fill(Color.primaryBrown)
+                            )
                         
                     }
                 }

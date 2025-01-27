@@ -15,12 +15,6 @@ struct ImageUploadView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            
-//            Text("Selected Images Count: \(productViewModel.imgurViewModel.selectedImages.count)")
-//                            .font(.caption)
-//                            .foregroundColor(.gray)
-            
-            // Image preview grid
             LazyVGrid(columns: [
                 GridItem(.adaptive(minimum: 100))
             ], spacing: 10) {
@@ -29,9 +23,9 @@ struct ImageUploadView: View {
                         .resizable()
                         .scaledToFill()
                         .frame(width: 100, height: 100)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .overlay(RoundedRectangle(cornerRadius: 10)
-                            .stroke(.gray.opacity(0.5), lineWidth: 2))
+                        .clipShape(RoundedRectangle(cornerRadius: 3))
+//                        .overlay(RoundedRectangle(cornerRadius: 10)
+//                            .stroke(.gray.opacity(0.5), lineWidth: 2))
                 }
                 
                 if productViewModel.imgurViewModel.selectedImages.isEmpty {
@@ -39,9 +33,9 @@ struct ImageUploadView: View {
                         .resizable()
                         .scaledToFill()
                         .frame(width: 100, height: 100)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .overlay(RoundedRectangle(cornerRadius: 10)
-                            .stroke(.gray.opacity(0.5), lineWidth: 2))
+                        .clipShape(RoundedRectangle(cornerRadius: 3))
+//                        .overlay(RoundedRectangle(cornerRadius: 10)
+//                            .stroke(.gray.opacity(0.5), lineWidth: 2))
                 }
             }
             
@@ -60,7 +54,8 @@ struct ImageUploadView: View {
                     .font(.headline)
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(RoundedRectangle(cornerRadius: 10).fill(Color.blue))
+                    .background(Color.primaryBrown)
+                    .clipShape(RoundedRectangle(cornerRadius: 3))
             }
             
             // Upload button
@@ -85,9 +80,4 @@ struct ImageUploadView: View {
             productViewModel.imgurViewModel.uploadImages()
         }
     }
-}
-
-
-#Preview {
-    //    ImageUploadView()
 }

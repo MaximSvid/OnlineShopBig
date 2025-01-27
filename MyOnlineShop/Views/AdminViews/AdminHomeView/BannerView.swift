@@ -22,8 +22,8 @@ struct BannerView: View {
                     Text("Add New Banner+")
                         .font(.headline)
                         .foregroundStyle(.white)
-                        .background(.blue.opacity(0.8))
-                        .clipShape(.buttonBorder)
+                        .background(Color.primaryBrown)
+                        .clipShape(RoundedRectangle(cornerRadius: 3))
                 }
                 .shadow(radius: 3)
             }
@@ -49,11 +49,6 @@ struct BannerView: View {
                 }
                     .frame(height: 200)
                     .tabViewStyle(.page)
-                //                .onReceive(timer) { _ in
-                //                    withAnimation {
-                //                        currentIndex = (currentIndex + 1) % bannerViewModel.banners.count
-                //                    }
-                //                }
             } else {
                 Text("No banners available")
                     .frame(height: 200)

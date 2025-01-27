@@ -27,10 +27,10 @@ struct DetailHomeAdmin: View {
                                     image.resizable()
                                         .scaledToFill()
                                         .frame(width: .infinity, height: 250)
-                                        .cornerRadius(12)
+                                        .clipShape(RoundedRectangle(cornerRadius: 3))
                                         .clipped()
                                 } placeholder: {
-                                    Color.gray
+                                    ProgressView()
                                         .frame(width: .infinity, height: 250)
                                 }
                                 .tag(index)
@@ -55,7 +55,7 @@ struct DetailHomeAdmin: View {
                             .resizable()
                             .scaledToFill()
                             .frame(width: .infinity, height: 250)
-                            .cornerRadius(12)
+                            .clipShape(RoundedRectangle(cornerRadius: 3))
                             .clipped()
                     }
                 }

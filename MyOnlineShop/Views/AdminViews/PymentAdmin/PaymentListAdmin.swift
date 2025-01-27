@@ -63,7 +63,7 @@ struct PaymentListAdmin: View {
                 paymentAdminViewModel.toggleVisibility(for: paymentMethod)
             }) {
                 Image(systemName: paymentMethod.isVisible ? "eye" : "eye.slash")
-                    .foregroundStyle(paymentMethod.isVisible ? .blue : .gray)
+                    .foregroundStyle(paymentMethod.isVisible ? .green : .gray)
                     .padding(8)
             }
             .buttonStyle(.bordered)

@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+//import GoogleSignIn
+//import GoogleSignInSwift
 
 struct AuthView: View {
     
@@ -80,20 +82,11 @@ struct AuthView: View {
                         authViewModel.errorMessage = ""
                     }
                     .padding(.bottom, 30)
-                
-//                HStack {
-//                    Rectangle()
-//                        .frame(height: 0.5)
-//                        .foregroundStyle(.gray.opacity(0.4))
-//                    Text("Or")
-//                        .foregroundStyle(.gray)
-//                        .padding(.horizontal, 8)
-//                    Rectangle()
-//                        .frame(height: 0.5)
-//                        .foregroundStyle(.gray.opacity(0.4))
-//                }
-//                .padding(.bottom, 30)
                 .padding(.bottom, 200)
+                
+//                GoogleSignInButton {
+//                    authViewModel.loginWithGoogle()
+//                }
                 
 //                Button (action: {
 //                    

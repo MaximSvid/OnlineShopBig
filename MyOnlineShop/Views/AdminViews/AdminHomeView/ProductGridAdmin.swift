@@ -25,8 +25,10 @@ struct ProductGridAdmin: View {
                     Text("Add New Product+")
                         .font(.headline)
                         .foregroundStyle(.white)
-                        .background(.blue.opacity(0.8))
-                        .clipShape(.buttonBorder)
+//                        .padding()
+                        .background(Color.primaryBrown)
+                        .clipShape(RoundedRectangle(cornerRadius: 3))
+                        
                 }
                 .shadow(radius: 3)
             }
@@ -36,7 +38,7 @@ struct ProductGridAdmin: View {
                     NavigationLink (destination: DetailHomeAdmin(product: product)) {
                         AdminProductCard(product: product)
                             .frame(width: 170, height: 240)
-                            
+                        
                     }
                     
                 }
@@ -46,7 +48,7 @@ struct ProductGridAdmin: View {
 }
 
 #Preview {
-//    ProductGrid()
-//        .environmentObject(ProductViewModel())
+    //    ProductGrid()
+    //        .environmentObject(ProductViewModel())
     //
 }

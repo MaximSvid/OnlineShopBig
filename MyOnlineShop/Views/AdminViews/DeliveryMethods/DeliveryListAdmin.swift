@@ -39,9 +39,6 @@ struct DeliveryListAdmin: View {
                         .foregroundStyle(.black)
                     Spacer()
                 }
-                
-                
-
             }
             Spacer()
             Divider()
@@ -51,8 +48,13 @@ struct DeliveryListAdmin: View {
                 
             }) {
                 Image(systemName: "pencil")
-                    .font(.title)
-                    .foregroundStyle(.green)
+                    .font(.headline)
+                    .foregroundStyle(.white)
+                    .padding(3)
+                    .background(
+                        RoundedRectangle(cornerRadius: 3)
+                            .fill(Color.primaryBrown)
+                    )
             }
             .buttonStyle(.plain)
         }

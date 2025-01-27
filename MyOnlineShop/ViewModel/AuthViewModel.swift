@@ -9,6 +9,7 @@ import SwiftUI
 import FirebaseAuth
 import Firebase
 
+
 @MainActor
 class AuthViewModel: ObservableObject {
     
@@ -143,5 +144,28 @@ class AuthViewModel: ObservableObject {
                 }
             }
         }
+    
+//    func loginWithGoogle() {
+//        guard let rootViewController = UIApplication.shared.firstKeyWindow?.rootViewController else { return }
+//        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+//        let config = GIDConfiguration(clientID: clientID)
+//        GIDSignIn.sharedInstance.configuration = config
+//        
+//        Task {
+//            do {
+//                let result = try await GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController)
+//                guard let idToken = result.user.idToken?.tokenString else { return }
+//                let accessToken = result.user.accessToken.tokenString
+//                let credentials = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
+//                let firebaseResult = try await fb.auth.signIn(with: credentials)
+//                
+//                // Check if user exists here
+//                let user = AppUser(id: firebaseResult.user.uid, email: firebaseResult.user.email ?? "")
+//                try self.fb.database.collection("users").document(user.id).setData(from: user)
+//            } catch {
+//                print(error)
+//            }
+//        }
+//    }
 
 }

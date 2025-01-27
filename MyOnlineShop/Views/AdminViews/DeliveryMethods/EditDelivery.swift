@@ -9,7 +9,7 @@ import SwiftUI
 
 struct EditDelivery: View {
     @EnvironmentObject var deliveryAdminViewModel: DeliveryAdminViewModel
-    @State private var toast: Toast? = nil
+//    @State private var toast: Toast? = nil
     
     var body: some View {
         VStack {
@@ -46,7 +46,7 @@ struct EditDelivery: View {
                             .frame(width: .infinity, height: 50)
                             .frame(maxWidth: .infinity)
                             .foregroundStyle(.white)
-                            .background(.blue.opacity(0.8))
+                            .background(Color.primaryBrown)
                             .clipShape(RoundedRectangle(cornerRadius: 3))
                     }
                 }
@@ -54,8 +54,7 @@ struct EditDelivery: View {
                 
                 //                Spacer()
             }
-            //            .padding([.leading, .trailing])
-            .toastView(toast: $toast)
+//            .toastView(toast: $toast)
         }
         .padding([.leading, .trailing])
     }
