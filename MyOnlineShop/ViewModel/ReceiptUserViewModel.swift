@@ -71,5 +71,9 @@ class ReceiptUserViewModel: ObservableObject {
         }
     }
     
+    func receiptsCount() -> Int {
+        return receipts.count
+    }
+    
     
 }

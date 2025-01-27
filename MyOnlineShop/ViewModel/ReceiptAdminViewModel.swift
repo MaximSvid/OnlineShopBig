@@ -47,11 +47,14 @@ class ReceiptAdminViewModel: ObservableObject {
             receiptAdminReposiory.observeOrderStatus(receiptId: receiptId, userId: userId) { result in
                 switch result {
                 case .success(let status):
-                    print("Status update")
+                    print("Status update \(status)")
                 case .failure(let error):
                     print("Status update error: \(error.localizedDescription)")
                 }
             }
         }
+    }
+    func receiptsCount() -> Int {
+        return receipts.count
     }
 }

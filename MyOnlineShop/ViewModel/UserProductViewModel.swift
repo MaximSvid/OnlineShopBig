@@ -45,6 +45,10 @@ class UserProductViewModel: ObservableObject {
         }
     }
     
+    func favoriteCount() -> Int {
+        return favoriteProducts.count
+    }
+    
     func showAllProducts() {
         filteredProducts = products
         print("Showing all products. Ohne filter")

@@ -56,14 +56,15 @@ struct AuthView: View {
                 Button (action: {
                     authViewModel.loginWithEmail {
                         userCartViewModel.loadCart()
+                        
                     }
                 }) {
                     Text("Login")
                         .font(.headline.bold())
                         .frame(maxWidth: .infinity, maxHeight: 50)
                         .foregroundStyle(.white)
-                        .background(.green.opacity(0.8))
-                        .clipShape(.buttonBorder)
+                        .background(Color.green)
+                        .clipShape(RoundedRectangle(cornerRadius: 3))
                 }
                 .padding(.bottom)
                 .shadow(radius: 3)

@@ -11,7 +11,7 @@ struct Coupon: Identifiable, Codable {
     @DocumentID var id: String?
     
     var code: String
-    var discountType: String // Тип скидки (discountType): процент (percentage) или фиксированная сумма (fixed).
+    var discountType: String                   // Тип скидки (discountType): процент (percentage) или фиксированная сумма (fixed).
     var discountValue: Double
     var expirationDate: Date
     var isActive: Bool = false

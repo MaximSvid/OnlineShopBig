@@ -10,6 +10,8 @@ import SwiftUI
 struct AppNavigationUser: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var userCartViewModel: UserCartViewModel
+    @EnvironmentObject var userProductViewModel: UserProductViewModel
+    @EnvironmentObject var receiptsUserViewModel: ReceiptUserViewModel
     
     @State private var selectedTab = 0
     var body: some View {
@@ -31,12 +33,14 @@ struct AppNavigationUser: View {
                 .tabItem {
                     Label("Favorite", systemImage: "star")
                 }
+                .badge(userProductViewModel.favoriteCount()) // anzahl Poducten im favorite
                 .tag(2)
             
             ReceiptUser()
                 .tabItem {
                     Label("Receipts", systemImage: "list.clipboard")
                 }
+                .badge(receiptsUserViewModel.receiptsCount())
                 .tag(4)
 
             

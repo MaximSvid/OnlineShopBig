@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AppNavigationAdmin: View {
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var receiptAdminViewModel: ReceiptAdminViewModel
     
     var body: some View {
         TabView {
@@ -19,6 +20,7 @@ struct AppNavigationAdmin: View {
             Tab("Receipts", systemImage: "list.clipboard") {
                 AdminReceipts()
             }
+            .badge(receiptAdminViewModel.receiptsCount())
 
             Tab("Other Items", systemImage: "rectangle.and.pencil.and.ellipsis") {
                 OtherItems()

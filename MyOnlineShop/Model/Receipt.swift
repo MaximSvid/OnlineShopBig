@@ -10,16 +10,16 @@ import FirebaseFirestore
 struct Receipt: Identifiable, Codable {
     @DocumentID var id: String?
     
-    var products: [OrderedProduct] // Изменено для хранения информации о заказанных товарах
-    var totalProductPrice: Double  // Общая стоимость товаров
-    var totalDeliveryPrice: Double // Стоимость доставки
-    var finalTotalPrice: Double    // Итоговая сумма (включая доставку и скидки)
+    var products: [OrderedProduct]                 // Изменено для хранения информации о заказанных товарах
+    var totalProductPrice: Double                 // Общая стоимость товаров
+    var totalDeliveryPrice: Double                // Стоимость доставки
+    var finalTotalPrice: Double                   // Итоговая сумма (включая доставку и скидки)
     
     var userInfo: DeliveryUserInfo
     var deliveryMethod: DeliveryMethod
     var paymentMethod: PaymentMethod
     
-    // общая информация о чеке
+                                                  // общая информация о чеке
     var dateCreated: Date = Date()
     var userId: String
     
@@ -30,11 +30,11 @@ struct OrderedProduct: Codable, Identifiable {
     var id: String
     var images: [String]
     var title: String
-    var quantity: Int          // Количество купленных единиц
-    var pricePerUnit: Double   // Цена за единицу
-    var totalPrice: Double     // Общая стоимость позиции
+    var quantity: Int                             // Количество купленных единиц
+    var pricePerUnit: Double                      // Цена за единицу
+    var totalPrice: Double                        // Общая стоимость позиции
     
-    var productId: String      // Ссылка на оригинальный товар
+    var productId: String                          // Ссылка на оригинальный товар
 }
 
 
