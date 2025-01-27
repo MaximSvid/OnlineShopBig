@@ -58,7 +58,7 @@ struct DeliveryListAdmin: View {
             }
             .buttonStyle(.plain)
         }
-        .frame(width: .infinity, height: 80)
+        .frame(maxWidth: .infinity, maxHeight: 80)
         .frame(maxWidth: .infinity)
         .padding()
         .background(

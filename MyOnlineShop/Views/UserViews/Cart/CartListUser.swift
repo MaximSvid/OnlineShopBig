@@ -130,7 +130,7 @@ struct CartListUser: View {
             }
         }
         //        .padding()
-        .frame(width: .infinity, height: 100)
+        .frame(maxWidth: .infinity, maxHeight: 100)
         .clipShape(RoundedRectangle(cornerRadius: 3))
         .shadow(radius: 3)
         

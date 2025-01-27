@@ -18,10 +18,20 @@ struct DetailHomeUser: View {
     var product: Product
     @State private var currentImageIndex = 0
     
+    //для зумирования (ЕЩЕ не протестировал)
+    @GestureState private var magnifyBy = 1.0
+    var magnification: some Gesture {
+        MagnifyGesture()
+            .updating($magnifyBy) { value, state, transaction in
+                state = value.magnification
+            }
+    }
+    
     
     var body: some View {
         NavigationStack {
             VStack (alignment: .leading) {
+                
                 
                 ZStack(alignment: .bottom) {
                     if !product.images.isEmpty {
@@ -30,16 +40,18 @@ struct DetailHomeUser: View {
                                 AsyncImage(url: URL(string: product.images[index])) { image in
                                     image.resizable()
                                         .scaledToFill()
-                                        .frame(width: .infinity, height: 250)
+//                                        .frame(maxWidth: .infinity, maxHeight: 250)
                                         .clipShape(RoundedRectangle(cornerRadius: 3))
                                         .clipped()
+                                        .scaleEffect(magnifyBy)
+                                        .gesture(magnification)
                                 } placeholder: {
                                     ProgressView()
-                                        .frame(width: .infinity, height: 250)
+                                        .frame(maxWidth: .infinity, maxHeight: 250)
                                 }
                             }
                         }
-                        .frame(width: .infinity, height: 250)
+                        .frame(height: 250)
                         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never)) // это необходимо чтобы изображение не заходило наверх
                         
                         // Индикаторы страниц
@@ -110,28 +122,6 @@ struct DetailHomeUser: View {
                     }
                 }
                 
-//                HStack {
-//                    Text("Quantity of goods:")
-//                        .font(.subheadline)
-//                        .foregroundStyle(Color.secondaryGray)
-//
-//                    Spacer()
-//                    if product.countProduct > 0 {
-//                        Text("\(product.countProduct)")
-//                            .font(.subheadline)
-//                            .foregroundStyle(product.countProduct <= 10 ? .red : Color.myPrimaryText)
-//                    } else {
-//                        Text("Out of stock")
-//                            .font(.subheadline)
-//                            .foregroundStyle(.red)
-//                            .onAppear {
-//                                productViewModel.toggleVisibility(for: product)
-//                            }
-//                    }
-//                }
-//                .padding(.top, 3)
-//                .padding(.bottom, 3)
-                
                 HStack {
                     Text("Select a  Color")
                         .font(.subheadline)
@@ -170,7 +160,7 @@ struct DetailHomeUser: View {
                         userCartViewModel.addToCart(for: product)                     }) {
                             Text ("Buy Now")
                                 .font(.headline.bold())
-                                .frame(width: .infinity, height: 50)
+                                .frame(maxWidth: .infinity, maxHeight: 50)
                                 .frame(maxWidth: .infinity)
                                 .foregroundStyle(Color.myPrimaryText)
                                 .background(Color.primaryBrown)

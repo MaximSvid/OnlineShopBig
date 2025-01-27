@@ -53,7 +53,7 @@ struct AddNewDelivery: View {
                     }) {
                         Text("Add")
                             .font(.headline.bold())
-                            .frame(width: .infinity, height: 50)
+                            .frame(maxWidth: .infinity, maxHeight: 50)
                             .frame(maxWidth: .infinity)
                             .foregroundStyle(.white)
                             .background(Color.primaryBrown)

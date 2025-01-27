@@ -89,7 +89,7 @@ struct ReceiptListUser: View {
             Spacer()
             
         }
-        .frame(width: .infinity, height: 100)
+        .frame(maxWidth: .infinity, maxHeight: 100)
         .background(Color.backgroundColor)
         .clipShape(RoundedRectangle(cornerRadius: 3))
         .shadow(radius: 3)

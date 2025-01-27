@@ -79,7 +79,7 @@ struct OtherItems: View {
                 }
                 
                 
-            }.navigationTitle(Text("Other Items").font(.title.bold()))
+            }.navigationTitle(Text("Other Items"))
         }
     }
 }

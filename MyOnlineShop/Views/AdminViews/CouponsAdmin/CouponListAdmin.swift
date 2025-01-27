@@ -66,7 +66,7 @@ struct CouponListAdmin: View {
             .buttonStyle(.plain)// этот атрибут необходим, чтобы экранировать list и нажимались только кнопки
 
         }
-        .frame(width: .infinity, height: 80)
+        .frame(maxWidth: .infinity, maxHeight: 80)
         .frame(maxWidth: .infinity)
         .padding()
         .background(RoundedRectangle(cornerRadius: 3)

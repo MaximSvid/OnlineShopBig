@@ -63,7 +63,7 @@ struct AddNewCoupon: View {
             }) {
                 Text("Add Coupon Code")
                     .font(.headline.bold())
-                    .frame(width: .infinity, height: 50)
+                    .frame(maxWidth: .infinity, maxHeight: 50)
                     .frame(maxWidth: .infinity)
                     .foregroundStyle(.white)
                     .background(Color.primaryBrown)

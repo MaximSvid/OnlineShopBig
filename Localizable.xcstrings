@@ -22,6 +22,7 @@
       }
     },
     "%lld items" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "variations" : {
@@ -62,6 +63,7 @@
       }
     },
     "•" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -822,6 +824,7 @@
       }
     },
     "Hello, World!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1097,6 +1100,9 @@
         }
       }
     },
+    "Please fill all fields" : {
+
+    },
     "Please fill in all fields." : {
       "localizations" : {
         "de" : {
@@ -1148,6 +1154,7 @@
       }
     },
     "Product count: " : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1268,6 +1275,7 @@
       }
     },
     "Sign In with Apple" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1278,6 +1286,7 @@
       }
     },
     "Sign In with facebook" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1288,6 +1297,7 @@
       }
     },
     "Sign In with Google" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1358,6 +1368,7 @@
       }
     },
     "Total:" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

@@ -26,17 +26,17 @@ struct DetailHomeAdmin: View {
                                 AsyncImage(url: URL(string: product.images[index])) { image in
                                     image.resizable()
                                         .scaledToFill()
-                                        .frame(width: .infinity, height: 250)
+//                                        .frame(width: .infinity, height: 250)
                                         .clipShape(RoundedRectangle(cornerRadius: 3))
                                         .clipped()
                                 } placeholder: {
                                     ProgressView()
-                                        .frame(width: .infinity, height: 250)
+                                        .frame(maxWidth: .infinity, maxHeight: 250)
                                 }
                                 .tag(index)
                             }
                         }
-                        .frame(width: .infinity, height: 250)
+                        .frame(maxWidth: .infinity, maxHeight: 250)
                         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                         
                         // Индикаторы страниц

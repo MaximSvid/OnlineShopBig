@@ -16,7 +16,7 @@ class DeliveryRepoAdminImplementation: DeliveryRepoAdmin {
         let userDeliveryMethodRef = db.collection("users").document(userId).collection("deliveryMethods").document()
         var data = try Firestore.Encoder().encode(deliveryMethod)
         data["id"] = userDeliveryMethodRef.documentID
-        try userDeliveryMethodRef.setData(data)
+        userDeliveryMethodRef.setData(data)
         
     }
     // Здесь ошибка, тебе не нужен array, тебе нужне только один обект

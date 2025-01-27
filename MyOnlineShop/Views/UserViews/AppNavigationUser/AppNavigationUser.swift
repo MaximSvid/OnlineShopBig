@@ -40,7 +40,7 @@ struct AppNavigationUser: View {
                 .tabItem {
                     Label("Receipts", systemImage: "list.clipboard")
                 }
-                .badge(receiptsUserViewModel.receiptsCount())
+//                .badge(receiptsUserViewModel.receiptsCount())
                 .tag(4)
 
             
