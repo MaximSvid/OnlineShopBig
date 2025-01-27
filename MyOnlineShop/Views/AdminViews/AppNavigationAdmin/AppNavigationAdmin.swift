@@ -20,7 +20,7 @@ struct AppNavigationAdmin: View {
             Tab("Receipts", systemImage: "list.clipboard") {
                 AdminReceipts()
             }
-            .badge(receiptAdminViewModel.receiptsCount())
+//            .badge(receiptAdminViewModel.receiptsCount())
 
             Tab("Other Items", systemImage: "rectangle.and.pencil.and.ellipsis") {
                 OtherItems()
