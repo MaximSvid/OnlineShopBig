@@ -89,10 +89,10 @@ Dieses Modell wird nach der Bestellung generiert und enthält alle zuvor eingege
 ![Bildschirmfoto 2025-01-27 um 13 11 37](https://github.com/user-attachments/assets/b5f49f8c-77b9-4771-9de5-38cf941cac52)
 ![Bildschirmfoto 2025-01-27 um 13 12 19](https://github.com/user-attachments/assets/8b99ad13-a86b-4e1f-a08c-27fb209f2603)
 ![Bildschirmfoto 2025-01-27 um 13 12 48](https://github.com/user-attachments/assets/da21a0b6-5410-4e73-9b2a-f59a6176a145)
-![Bildschirmfoto 2025-01-27 um 13 13 22](https://github.com/user-attachments/assets/9d03b52d-4163-442d-b253-0f8ea677a759)
-![Bildschirmfoto 2025-01-27 um 13 13 39](https://github.com/user-attachments/assets/1df2af8d-b5f0-4512-8650-ef26af652930)
 
 ![Bildschirmfoto 2025-01-27 um 13 44 02](https://github.com/user-attachments/assets/ea62aab9-63a5-4f6f-9483-6be7fe85b132)
 ![Bildschirmfoto 2025-01-27 um 13 44 18](https://github.com/user-attachments/assets/29fa0dac-6f79-48ee-a1ec-0bfc36720eb3)
 
+![Bildschirmfoto 2025-01-27 um 13 45 08](https://github.com/user-attachments/assets/9d476e59-c056-43e7-9b08-018e628dae81)
+![Bildschirmfoto 2025-01-27 um 13 44 34](https://github.com/user-attachments/assets/ba178fd8-c8d4-47f5-abae-e6ef781049dc)
 
