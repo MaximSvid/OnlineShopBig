@@ -12,28 +12,50 @@ Die App löst das Problem der komplizierten und oft unübersichtlichen Verwaltun
 
 Die App ermöglicht es, Produkte in wenigen Schritten hinzuzufügen und zu bearbeiten, mit Funktionen wie Preisgestaltung, Kategorisierung und Bestandsverwaltung. Sie bietet eine benutzerfreundliche Oberfläche sowohl für Administratoren als auch für Kunden. Darüber hinaus ermöglicht die App eine schnelle Bestellung und Verwaltung von Bestellungen, was den gesamten Verkaufsprozess vereinfacht.
 
-## Features:
+## Funktionen:
 
-The application is built using the MVVM architecture, with Firebase (Firestore Database) as the core backend and Imgur API for image uploads.
+Die Anwendung basiert auf der MVVM-Architektur und nutzt Firebase (Firestore Database) als Backend sowie die Imgur API für das Hochladen von Bildern.
 
-## Admin Features:
 
-	•	Create, edit, and delete products.
-	•	Manage banners.
-	•	Create, edit, and delete discount coupons.
-	•	Add, edit, and remove delivery methods.
-	•	Control payment methods (toggle visibility).
-	•	View all user orders and update their status, which is also reflected on the user’s end.
+## Modelle in der Anwendung:
+
+### 1.	Produktmodell (Product):
+
+Wird zur Erstellung von Produkten verwendet, die vom Administrator definiert werden. Jedes Produkt enthält grundlegende Informationen wie Name, Beschreibung, Preis, Bilder und Verfügbarkeit.
 
 ![Bildschirmfoto 2025-01-27 um 13 41 04](https://github.com/user-attachments/assets/053eaed4-ba18-44a6-862e-90922a679dbb)
+
+### 2.	Coupon-Modell (Coupone):
+Ermöglicht die Erstellung von Rabatt-Coupons durch den Administrator. Diese können entweder als fester Betrag oder als prozentualer Rabatt definiert werden. Nutzer können diese Coupons bei der Bestellung einlösen.
+
+![Bildschirmfoto 2025-01-27 um 13 43 26](https://github.com/user-attachments/assets/eb8c4c4b-d3f8-4943-bf10-fb6cc39babc1)
+
+### 3.	Benutzer-Lieferinformationen (DeliveryUserInfo):
+Dieses Modell gehört zum Nutzer und dient zur Verwaltung der Lieferadresse. Nutzer können ihre Adressinformationen jederzeit bearbeiten.
+
+![Bildschirmfoto 2025-01-27 um 13 42 43](https://github.com/user-attachments/assets/dca3c337-eb0d-47ad-8a32-2c71d994453f)
+
+### 4. Liefermethode und Zahlungsmethode (DeliveryMethod & PaymentMethod):
+Beide Modelle werden zur finalen Erstellung einer Bestellung genutzt. Der Nutzer wählt die bevorzugte Liefer- und Zahlungsmethode aus den vom Administrator definierten Optionen.
+
+![Bildschirmfoto 2025-01-27 um 13 42 33](https://github.com/user-attachments/assets/fb888a94-d358-407d-a37f-42911cb3461a)
+
+![Bildschirmfoto 2025-01-27 um 13 42 56](https://github.com/user-attachments/assets/fe258e8e-8a3e-43c5-92c3-f2a360a34241)
+
+### 5. Rechnungen (Receipts):
+Dieses Modell wird nach der Bestellung generiert und enthält alle zuvor eingegebenen Daten. Es dient zur Speicherung und Nachverfolgung der Bestellung sowie ihres Status.
+
 ![Bildschirmfoto 2025-01-27 um 13 51 23](https://github.com/user-attachments/assets/fbe5952c-e61f-4c2b-a6b1-4067e74d4ba6)
 ![Bildschirmfoto 2025-01-27 um 13 51 30](https://github.com/user-attachments/assets/1ef0d8f2-c127-4b9d-8716-df9d0f27610e)
 
+## Admin-Funktionen:
 
-![Bildschirmfoto 2025-01-27 um 13 42 33](https://github.com/user-attachments/assets/fb888a94-d358-407d-a37f-42911cb3461a)
-![Bildschirmfoto 2025-01-27 um 13 42 43](https://github.com/user-attachments/assets/dca3c337-eb0d-47ad-8a32-2c71d994453f)
-![Bildschirmfoto 2025-01-27 um 13 42 56](https://github.com/user-attachments/assets/fe258e8e-8a3e-43c5-92c3-f2a360a34241)
-![Bildschirmfoto 2025-01-27 um 13 43 26](https://github.com/user-attachments/assets/eb8c4c4b-d3f8-4943-bf10-fb6cc39babc1)
+	•	Produkte erstellen, bearbeiten und löschen.
+	•	Banner verwalten.
+	•	Rabatt-Coupons erstellen, bearbeiten und löschen.
+	•	Liefermethoden hinzufügen, bearbeiten und entfernen.
+	•	Zahlungsmethoden verwalten (sichtbar/unsichtbar schalten).
+	•	Bestellungen aller Nutzer einsehen und deren Status aktualisieren – die Änderungen sind für die Nutzer in Echtzeit sichtbar.
 
 ![Bildschirmfoto 2025-01-27 um 13 14 26](https://github.com/user-attachments/assets/f34b1bb9-70b2-4edf-be0c-979e7ce0fed8)
 ![Bildschirmfoto 2025-01-27 um 13 15 12](https://github.com/user-attachments/assets/5123b8a3-e688-4ce4-b3a3-be66c4ddc87b)
@@ -47,20 +69,18 @@ The application is built using the MVVM architecture, with Firebase (Firestore D
 ![Bildschirmfoto 2025-01-27 um 13 18 50](https://github.com/user-attachments/assets/c4b0dfe0-58d8-4dca-9e30-4982f4133f7a)
 
 
+ ## Nutzer-Funktionen:
  
+   	•	Produkte zu Favoriten hinzufügen.
+	•	Produkte suchen.
+	•	Produkte kaufen.
+	•	Persönliche Daten bearbeiten, Liefermethoden wählen und Zahlungsmethoden auswählen.
+	•	Bestellverlauf einsehen und den Status der Bestellungen verfolgen.
+	•	Dark Mode, implementiert über Assets.
+	•	Registrierung und Anmeldung über Firebase Authentication.
+	•	Mehrsprachigkeit: Die App unterstützt zwei Sprachen, die sich automatisch an die Region des Nutzers anpassen.
 
- ## User Features:
- 
-	•	Add products to favorites.
-	•	Search for products.
-	•	Purchase products.
-	•	Add and edit personal details, choose delivery methods, and select payment options.
-	•	View order history and track order status updates.
-	•	Enjoy Dark Mode, implemented via assets.
-	•	Register and log in using Firebase Authentication.
-	•	Multi-language support: the app automatically switches between two languages based on the user’s region.
-
- ![Bildschirmfoto 2025-01-27 um 13 07 25](https://github.com/user-attachments/assets/f5783a8c-c51f-4724-b9ab-68d87f4a5bc5)
+![Bildschirmfoto 2025-01-27 um 13 07 25](https://github.com/user-attachments/assets/f5783a8c-c51f-4724-b9ab-68d87f4a5bc5)
 ![Bildschirmfoto 2025-01-27 um 13 08 02](https://github.com/user-attachments/assets/1cd5f74b-0e49-4b26-8463-9470f9618833)
 ![Bildschirmfoto 2025-01-27 um 13 09 03](https://github.com/user-attachments/assets/7476fa3e-56e1-46cb-9ef1-88fca43adcb2)
 ![Bildschirmfoto 2025-01-27 um 13 08 45](https://github.com/user-attachments/assets/ed18a037-9ebb-47ab-8edd-a421d0faee12)
@@ -69,11 +89,10 @@ The application is built using the MVVM architecture, with Firebase (Firestore D
 ![Bildschirmfoto 2025-01-27 um 13 11 37](https://github.com/user-attachments/assets/b5f49f8c-77b9-4771-9de5-38cf941cac52)
 ![Bildschirmfoto 2025-01-27 um 13 12 19](https://github.com/user-attachments/assets/8b99ad13-a86b-4e1f-a08c-27fb209f2603)
 ![Bildschirmfoto 2025-01-27 um 13 12 48](https://github.com/user-attachments/assets/da21a0b6-5410-4e73-9b2a-f59a6176a145)
-![Bildschirmfoto 2025-01-27 um 13 13 22](https://github.com/user-attachments/assets/9d03b52d-4163-442d-b253-0f8ea677a759)
-![Bildschirmfoto 2025-01-27 um 13 13 39](https://github.com/user-attachments/assets/1df2af8d-b5f0-4512-8650-ef26af652930)
 
 ![Bildschirmfoto 2025-01-27 um 13 44 02](https://github.com/user-attachments/assets/ea62aab9-63a5-4f6f-9483-6be7fe85b132)
 ![Bildschirmfoto 2025-01-27 um 13 44 18](https://github.com/user-attachments/assets/29fa0dac-6f79-48ee-a1ec-0bfc36720eb3)
-![Bildschirmfoto 2025-01-27 um 13 44 34](https://github.com/user-attachments/assets/c436c154-49bb-4b4a-9d32-108e0b3d2e7c)
-![Bildschirmfoto 2025-01-27 um 13 45 08](https://github.com/user-attachments/assets/c6fa4605-0af2-4284-a919-b86102ebb93c)
+
+![Bildschirmfoto 2025-01-27 um 13 45 08](https://github.com/user-attachments/assets/9d476e59-c056-43e7-9b08-018e628dae81)
+![Bildschirmfoto 2025-01-27 um 13 44 34](https://github.com/user-attachments/assets/ba178fd8-c8d4-47f5-abae-e6ef781049dc)
 
