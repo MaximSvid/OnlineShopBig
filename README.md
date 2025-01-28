@@ -2,15 +2,18 @@
 
 ## Warum hast du dich für diese App entschieden?
 
-Ich habe mich für diese App entschieden, weil ich in den letzten 10 Jahren intensiv mit Internetshops gearbeitet habe, jedoch nie die Gelegenheit hatte, einen eigenen zu erstellen. Diese Erfahrung hat mir gezeigt, wie wichtig es ist, eine benutzerfreundliche und effiziente Lösung für die Verwaltung und Bestellung von Produkten zu entwickeln. Die App soll meine Vision von einem einfach zu bedienenden und funktionalen Online-Shop verwirklichen.
+Ich habe etwa 10 Jahre mit verschiedenen Online-Shops gearbeitet. Eine meiner Aufgaben war es, Produktkarten zu erstellen und mit Rabattgutscheinen zu arbeiten. Jetzt habe ich die Möglichkeit, zu sehen, wie alles von innen funktioniert: nicht nur als Benutzer und Administrator, sondern auch als Programmierer.
 
 ## Was soll diese App für ein Problem lösen, warum sollte man diese App nutzen?
 
-Die App löst das Problem der komplizierten und oft unübersichtlichen Verwaltung von Online-Shop-Produkten. Sie bietet eine benutzerfreundliche Plattform, um Produkte schnell und einfach hinzuzufügen, zu bearbeiten und zu verwalten, insbesondere aus der Sicht eines Administrators. Kunden können Produkte mühelos durchsuchen und bestellen, was das Einkaufserlebnis für sie erheblich verbessert. Die App ist besonders nützlich für Unternehmen, die eine effiziente und unkomplizierte Lösung für ihren Online-Shop suchen.
+Das ist eine sehr gute Frage, warum man genau diese App verwenden sollte. Normalerweise wird nur der Benutzerteil als App geschrieben, während der administrative Teil über den Browser genutzt wird, was nicht immer bequem ist. Manchmal muss der Administrator Änderungen vornehmen, ohne einen MacBook oder ein anderes Gerät dabei zu haben – nur direkt vom Telefon aus. Diese App löst genau dieses Problem: Der Administrator kann Änderungen direkt vom Telefon aus vornehmen, was bequem und schnell ist.
 
 ## Was kann die App?
 
-Die App ermöglicht es, Produkte in wenigen Schritten hinzuzufügen und zu bearbeiten, mit Funktionen wie Preisgestaltung, Kategorisierung und Bestandsverwaltung. Sie bietet eine benutzerfreundliche Oberfläche sowohl für Administratoren als auch für Kunden. Darüber hinaus ermöglicht die App eine schnelle Bestellung und Verwaltung von Bestellungen, was den gesamten Verkaufsprozess vereinfacht.
+Diese App ist in zwei Teile unterteilt.
+Die Funktionen für den Administrator umfassen: Erstellen, Bearbeiten, Löschen und Ausblenden von Produkten für den Benutzer. Erstellen, Löschen und Bearbeiten von Rabattgutscheinen. Erstellen und Verwalten von Lieferoptionen. Verwalten von Zahlungsmethoden. Alle Bestellungen der Benutzer einsehen und deren Status ändern.
+
+Die Funktionen für den Benutzer umfassen: Produkte nach Namen, Firmen usw. suchen. Nach Kategorien oder Aktionen sortieren. Produkte kaufen: Benutzerdaten eingeben, Liefer- und Zahlungsmethode auswählen und den Kauf abschließen. Nach Abschluss des Kaufs sieht der Benutzer eine kleine Animation und wird zu einem Bereich weitergeleitet, in dem er den Status seiner Bestellung (die vom Administrator kontrolliert wird) sehen kann. Der Benutzer hat auch die Möglichkeit, den Dark Mode zu nutzen.
 
 ## Funktionen:
 
