@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CustomMainButton: View {
-    var action: () -> Void
+    var action: () -> Void // это замыкание(Clousure) которое ничего не принимает и возвращает ничего (void) это действие которое будет выполнено при нажатии на кнопку
     var title: String
     
     var body: some View {
@@ -21,6 +21,7 @@ struct CustomMainButton: View {
                 .background(Color.primaryBrown)
                 .clipShape(RoundedRectangle(cornerRadius: 3))
         }
+        .shadow(radius: 3)
     }
 }
 

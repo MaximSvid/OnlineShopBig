@@ -14,198 +14,106 @@ import SwiftUI
 struct AddProductSheet: View {
     @EnvironmentObject var productViewModel: ProductViewModel
     @EnvironmentObject var imgurViewModel: ImgurViewModel
-    @State private var priceString: String = ""
-    @State private var actionPriceString: String = ""
-    @State private var countString: String = ""
-    @State private var ratingString: String = ""
-    @State private var toast: Toast? = nil
+    @State private var errorMessage: Bool = false
     
     var body: some View {
         ScrollView {
-            VStack {
-                Text("Add Product")
-                    .font(.title)
-                    .padding([.top, .bottom])
-                
-                ImageUploadView()
-                
-                Divider()
-                
-                HStack {
-                    Text("Product Name")
-                        .font(.body)
-                    Spacer()
-                }
-                
-                TextField("Product Name", text: $productViewModel.title)
-                    .textFieldStyle(.roundedBorder)
-                    .padding(.bottom)
-                
-                HStack {
-                    VStack (alignment: .leading) {
-                        Text("Price")
-                            .font(.body)
-                        TextField("Price", text: $priceString)
-                            .keyboardType(.decimalPad)
-                            .onChange(of: priceString) {
-                                productViewModel.price = Double(priceString) ?? 0.0
-                            }
-                            .onAppear {
-                                priceString = String(format: "%.2f", productViewModel.price)
-                            }
-                            .textFieldStyle(.roundedBorder)
-                    }
-                    
-                    Spacer()
-                    
-                    VStack (alignment: .leading) {
-                        Text("Action Price")
-                            .font(.body)
-                        TextField("Action Price", text: $actionPriceString)
-                            .keyboardType(.decimalPad)
-                            .onChange(of: actionPriceString) {
-                                productViewModel.actionPrice = Double(actionPriceString) ?? 0.0
-                            }
-                            .onAppear {
-                                actionPriceString = String(format: "%.2f", productViewModel.actionPrice)
-                            }
-                            .textFieldStyle(.roundedBorder)
-                    }
-                    
-                    
-                    
-                }
-                .padding(.bottom)
-                
-                VStack (alignment: .leading) {
-                    Text("Count Products")
-                        .font(.body)
-                    
-                    TextField("Count Products", text: $countString)
-                        .onChange(of: countString) {
-                            productViewModel.countProduct = Int(countString) ?? 0
-                        }
-                        .onAppear {
-                            countString = String(productViewModel.countProduct)
-                        }
-                        .textFieldStyle(.roundedBorder)
-                }
-                
-                HStack {
-                    Text ("Brand")
-                        .font(.body)
-                    Spacer()
-                }
-                
-                TextField("Brand", text: $productViewModel.brand)
-                    .textFieldStyle(.roundedBorder)
-                    .padding(.bottom)
-                
-                HStack {
-                    Text("Description")
-                        .font(.body)
-                    Spacer()
-                }
-                
-                TextEditor (text: $productViewModel.description)
-                    .frame(height: 100)
-                    .padding(.vertical, 8)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(.gray.opacity(0.4), lineWidth: 0.5)
-                    )
-                    .padding(.bottom)
-                
-                HStack {
-                    Text("Category")
-                        .font(.body)
-                    Spacer()
-                }
-                
-                Picker("Category", selection: $productViewModel.category) {
-                    ForEach(Categories.allCases.filter {$0 != .allProducts && $0 != .action }, id: \.self) {category in
-                        Text(category.rawValue)
-                            .tag(category)
-                    }
-                }
-                .pickerStyle(.wheel)
-                .padding(.bottom)
-                
-                HStack {
-                    VStack {
-                        
-                        HStack {
-                            Text("Rating")
-                                .font(.body)
-                            Spacer()
-                        }
-                        
-                        TextField("Rating", text: $ratingString)
-                            .onChange(of: ratingString) {
-                                productViewModel.rating = Double(Int(ratingString) ?? Int(0.0))
-                            }
-                            .onAppear {
-                                ratingString = String(format: "%.1f", productViewModel.rating)
-                            }
-                            .keyboardType(.numberPad)
-                            .textFieldStyle(.roundedBorder)
-                    }
-                    
-                    Spacer()
-                    VStack {
-                        Toggle("Visibility", isOn: $productViewModel.isVisible)
-                    }
-                }
-                
-                Toggle("Action", isOn: $productViewModel.action)
-                
-                HStack {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 16) {
-                            ForEach(ColorEnum.allCases, id: \.self) { color in
-                                Circle()
-                                    .fill(color.color)
-                                    .frame(width: 30, height: 30)
-                                    .overlay(
-                                        Circle()
-                                            .stroke(productViewModel.selectedColor == color ? Color.black : Color.clear, lineWidth: 0.3)
-                                    )
-                                    .onTapGesture {
-                                        productViewModel.selectedColor = color
-                                    }
-                            }
-                        }
-                        .padding(.horizontal, 8)
-                    }
-                }
+            Text("Add Product")
+                .font(.title)
                 .padding([.top, .bottom])
-                
-                Button(action: {
-                    
-                    guard !productViewModel.title.isEmpty
-                    else {
-                        toast = Toast(style: .error, message: "Please fill all fields")
-                        return
+            
+            ImageUploadView()
+            
+            Divider()
+            
+            CustomTitleRow(title: "Product Name")
+            CustomTextField(placeholder: "Product Name", text: $productViewModel.title)
+            
+            CustomTitleRow(title: "Price")
+            CustomNumberDoubleField(placeholder: "Price", value: $productViewModel.price)
+            
+            CustomTitleRow(title: "Action Price")
+            CustomNumberDoubleField(placeholder: "Action Price", value: $productViewModel.actionPrice)
+            
+            CustomTitleRow(title: "Count Products")
+            CostomNumberIntField(placeholder: "Count Products", value: $productViewModel.countProduct)
+            
+            CustomTitleRow(title: "Brand")
+            CustomTextField(placeholder: "Brand", text: $productViewModel.brand)
+            
+            CustomTitleRow(title: "Description")
+            TextEditor (text: $productViewModel.description)
+                .frame(height: 100)
+                .padding(.vertical, 8)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(.gray.opacity(0.4), lineWidth: 0.5)
+                )
+                .padding(.bottom)
+            
+            CustomTitleRow(title: "Category")
+            Picker("Category", selection: $productViewModel.category) {
+                ForEach(Categories.allCases.filter {$0 != .allProducts && $0 != .action }, id: \.self) {category in
+                    Text(category.rawValue)
+                        .tag(category)
+                }
+            }
+            .pickerStyle(.wheel)
+            .padding(.bottom)
+            
+            CustomTitleRow(title: "Rating")
+            CustomNumberDoubleField(placeholder: "Rating", value: $productViewModel.rating)
+            
+            VStack {
+                Toggle("Visibility", isOn: $productViewModel.isVisible)
+            }
+            .padding(.bottom)
+            .padding(.trailing)
+            
+            Toggle("Action", isOn: $productViewModel.action)
+                .padding(.trailing)
+            
+            HStack {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 16) {
+                        ForEach(ColorEnum.allCases, id: \.self) { color in
+                            Circle()
+                                .fill(color.color)
+                                .frame(width: 30, height: 30)
+                                .overlay(
+                                    Circle()
+                                        .stroke(productViewModel.selectedColor == color ? Color.black : Color.clear, lineWidth: 1)
+                                )
+                                .onTapGesture {
+                                    productViewModel.selectedColor = color
+                                }
+                        }
                     }
+                    .padding(.horizontal, 8)
+                }
+            }
+            .padding([.top, .bottom])
+            
+            if errorMessage {
+                Text("Please fill all fields")
+                    .font(.caption)
+                    .foregroundStyle(.red)
+            }
+            
+            CustomMainButton(action: {
+                if productViewModel.title.isEmpty {
+                    errorMessage = true
+                } else {
                     productViewModel.addNewProduct()
                     productViewModel.isAddSheetOpen.toggle()
-                }) {
-                    Text ("Add+")
-                        .font(.headline.bold())
-                        .frame(width: .infinity, height: 50)
-                        .frame(maxWidth: .infinity)
-                        .foregroundStyle(.white)
-                        .background(Color.primaryBrown)
-                        .clipShape(RoundedRectangle(cornerRadius: 3))
                 }
-                .shadow(radius: 3)
-            }
-            .padding([.trailing, .leading])
-            .toastView(toast: $toast)
+            }, title: "Add+")
         }
-        
+        .scrollIndicators(.hidden)
+        .padding([.trailing, .leading])
     }
 }
+
 
 #Preview {
     AddProductSheet()
