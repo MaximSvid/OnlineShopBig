@@ -16,11 +16,7 @@ struct AddNewBanner: View {
     
     var body: some View {
         VStack {
-            
-            Text("Add Banner")
-                .font(.title)
-                .padding([.top, .bottom])
-
+            CustomTitle(title: "Add New Banner")
             
             LazyVGrid (columns: columns) {
                 ForEach(bannerViewModel.imgurViewModel.selectedImages.indices, id: \.self) { index in
@@ -69,7 +65,7 @@ struct AddNewBanner: View {
                 .frame(maxWidth: .infinity)
                 .padding()
                 .background(RoundedRectangle(cornerRadius: 3)
-                    .fill(bannerViewModel.imgurViewModel.isUploading ? Color.gray : Color.green))
+                    .fill(bannerViewModel.imgurViewModel.isUploading ? Color.gray : Color.primaryBrown))
                 .disabled(bannerViewModel.imgurViewModel.isUploading)
             
             HStack {

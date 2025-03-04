@@ -9,7 +9,7 @@ import SwiftUI
 
 class WebServiceImgur {
     
-    private let clientId = "39df8ec3a089a91"
+    private let clientId = Secrets.imgurClientId
     
     func downloadImages <T: Codable> (url: String) async throws -> T {
         
@@ -29,6 +29,4 @@ class WebServiceImgur {
         }
         return decoded
     }
-    
-    
 }

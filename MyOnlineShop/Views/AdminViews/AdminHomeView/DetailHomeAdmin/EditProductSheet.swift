@@ -192,6 +192,7 @@ struct EditProductSheet: View {
                         .frame(maxWidth: .infinity, maxHeight: 50)
                         .frame(maxWidth: .infinity)
                         .foregroundStyle(.white)
+                        .padding()
                         .background(Color.primaryBrown)
                         .clipShape(RoundedRectangle(cornerRadius: 3))
                 }

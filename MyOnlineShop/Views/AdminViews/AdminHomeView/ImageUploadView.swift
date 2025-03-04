@@ -57,22 +57,7 @@ struct ImageUploadView: View {
                     .background(Color.primaryBrown)
                     .clipShape(RoundedRectangle(cornerRadius: 3))
             }
-            
-            // Upload button
-//                Button(action: productViewModel.imgurViewModel.uploadImages) {
-//                    if imgurViewModel.isUploading {
-//                        ProgressView()
-//                            .tint(.white)
-//                    } else {
-//                        Text("Upload Images")
-//                            .foregroundColor(.white)
-//                    }
-//                }
-//                .frame(maxWidth: .infinity)
-//                .padding()
-//                .background(RoundedRectangle(cornerRadius: 10)
-//                    .fill(imgurViewModel.isUploading ? Color.gray : Color.green))
-//                .disabled(imgurViewModel.isUploading)
+
         }
         .padding()
         .onChange(of: productViewModel.imgurViewModel.selectedItems) { _ in

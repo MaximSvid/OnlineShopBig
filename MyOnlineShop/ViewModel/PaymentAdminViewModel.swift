@@ -15,7 +15,6 @@ class PaymentAdminViewModel: ObservableObject {
     @Published var filteredPayments: [PaymentMethod] = []
     @Published var selectedPayment: PaymentMethod?
     
-    
     @Published var name: String = ""
     @Published var image: String = ""
     @Published var description: String = ""

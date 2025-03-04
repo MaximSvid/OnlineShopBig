@@ -11,7 +11,7 @@ class ProductRepositoryImplementation: ProductRepositoryAdmin {
     
     private let db = Firestore.firestore()
     
-    func addNewProduct(product: Product)  throws {
+    func addNewProduct(product: Product) throws {
         do {
             try db.collection("products").addDocument(from: product)
         } catch {
@@ -26,12 +26,7 @@ class ProductRepositoryImplementation: ProductRepositoryAdmin {
                 completion(.failure(error))
                 return
             }
-            
-            guard let documents = querySnapshot?.documents else {
-                completion(.failure(NSError(domain: "No documents", code: -1)))
-                return
-            }
-            
+            guard let documents = querySnapshot?.documents else { return }
             let products = documents.compactMap { document -> Product? in
                 do {
                     return try document.data(as: Product.self)
@@ -53,6 +48,7 @@ class ProductRepositoryImplementation: ProductRepositoryAdmin {
                 }
             }
         }
+    
     func toggleVisibility(for productId: String, isVisible: Bool, completion: @escaping (Result<Void, Error>) -> Void) {
             db.collection("products").document(productId).updateData([
                 "isVisible": isVisible

@@ -204,6 +204,7 @@
       }
     },
     "Add+" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1101,7 +1102,14 @@
       }
     },
     "Please fill all fields" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fühlen Sie bitte alle Felder"
+          }
+        }
+      }
     },
     "Please fill in all fields." : {
       "localizations" : {
