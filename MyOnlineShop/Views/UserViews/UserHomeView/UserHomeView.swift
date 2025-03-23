@@ -17,13 +17,9 @@ struct UserHomeView: View {
         NavigationStack {
             ScrollView {
                 VStack {
-                    
                     BannerUserView()
-                    
                     CategoryUser(categories: Categories.allCases)
                     ProductGridUser(selectedTab: $selectedTab, columns: columns)
-                    
-                    
                     Spacer()
                 }
                 .padding([.leading, .trailing])
@@ -37,20 +33,16 @@ struct UserHomeView: View {
                         .font(.title.bold())
                 }
                 
-                ToolbarItem(placement: .topBarTrailing) {
-                    Image(systemName: "bell.fill")
-//                        .font(.headline)
-//                        .foregroundStyle(Color.backgroundColor)
-                        .padding(8)
-                        .background(Circle().fill(Color.gray.opacity(0.2)))
-                } 
+//                ToolbarItem(placement: .topBarTrailing) {
+//                    Image(systemName: "bell.fill")
+//                        .padding(8)
+//                        .background(Circle().fill(Color.gray.opacity(0.2)))
+//                } 
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
                         userProductViewModel.isSearchVisible = true
                     }) {
                         Image(systemName: "magnifyingglass")
-//                            .font(.headline)
-//                            .foregroundStyle(Color.backgroundColor)
                             .padding(8)
                             .background(Circle().fill(Color.gray.opacity(0.2)))
                     }

@@ -10,3 +10,5 @@ struct ImgurImageData: Codable {
     let id: String
     let link: String
 }
+
+

@@ -16,7 +16,7 @@ import SwiftUI
 
 
 class ImageRepositoryImplementation: ImageRepository {
-    private let imgurClientId = "39df8ec3a089a91"
+    private let imgurClientId = Secrets.imgurClientId
     private let baseURL = "https://api.imgur.com/3/image"
     
     func uploadImage(imageData: Data) async throws -> String {
@@ -83,7 +83,5 @@ class ImageRepositoryImplementation: ImageRepository {
         // Gibt den fertigen Body zurück
         return body
     }
-    
-    
 }
 

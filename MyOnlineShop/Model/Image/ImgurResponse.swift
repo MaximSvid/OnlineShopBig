@@ -9,5 +9,6 @@
 struct ImgurResponse: Codable {
     let data: ImgurImageData
     let success: Bool
-    let status: Int
+//    let status: Int
 }
+

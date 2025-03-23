@@ -30,6 +30,7 @@ class UserRepositoryImplementation: UserRepository {
     
     func checkUserRole() async throws {
         guard let uid = fb.auth.currentUser?.uid else {
+//            throw print("User not logged in")
                 throw NSError(domain: "User not logged in", code: -1)
             }
             

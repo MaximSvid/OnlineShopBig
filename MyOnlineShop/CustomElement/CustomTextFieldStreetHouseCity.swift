@@ -43,7 +43,6 @@ struct CustomTextFieldStreetHouseCity: View {
             
             TextField(apartmentPlaceholder, text: $apartment)
                 .padding()
-//                .frame(width: 150)
                 .background(
                     RoundedRectangle(cornerRadius: 3)
                         .stroke(isApartmentFocused ? .black : .gray.opacity(0.8), lineWidth: 1)
@@ -53,8 +52,4 @@ struct CustomTextFieldStreetHouseCity: View {
 
         }
     }
-}
-
-#Preview {
-//    CustomTextFieldStreetHouseCity()
 }
