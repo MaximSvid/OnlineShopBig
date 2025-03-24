@@ -12,19 +12,7 @@ class DeliveryRepoAdminImplementation: DeliveryRepoAdmin {
     
     private let db = Firestore.firestore()
     
-    func addDeliveryUserMethod(userId: String, deliveryMethod: DeliveryMethod) throws {
-        let userDeliveryMethodRef = db.collection("users").document(userId).collection("deliveryMethods").document()
-        var data = try Firestore.Encoder().encode(deliveryMethod)
-        data["id"] = userDeliveryMethodRef.documentID
-        userDeliveryMethodRef.setData(data)
-        
-    }
-    // Здесь ошибка, тебе не нужен array, тебе нужне только один обект
-    func observeDeliveryUserMethods(userId: String, completion: @escaping (Result<[DeliveryMethod], any Error>) -> Void) {
-        
-    }
-
-    
+    // Fügt eine neue Versandmethode zur Datenbank hinzu
     func addNewDelivery(delivery: DeliveryMethod) throws {
         do {
             try db.collection("delivery").addDocument(from: delivery)
@@ -33,6 +21,15 @@ class DeliveryRepoAdminImplementation: DeliveryRepoAdmin {
         }
     }
     
+    // Fügt eine Versandmethode für einen Benutzer hinzu
+    func addDeliveryUserMethod(userId: String, deliveryMethod: DeliveryMethod) throws {
+        let userDeliveryMethodRef = db.collection("users").document(userId).collection("deliveryMethods").document()
+        var data = try Firestore.Encoder().encode(deliveryMethod)
+        data["id"] = userDeliveryMethodRef.documentID
+        userDeliveryMethodRef.setData(data)
+    }
+    
+    // Beobachtet Änderungen an Versandmethoden und gibt sie zurück
     func observeDelivery(completion: @escaping (Result<[DeliveryMethod], any Error>) -> Void) {
         db.collection("delivery").addSnapshotListener { snapshot, error in
             if let error = error {
@@ -45,15 +42,6 @@ class DeliveryRepoAdminImplementation: DeliveryRepoAdmin {
             }
             
             let deliveries = documents.compactMap { document -> DeliveryMethod? in
-                //compactMap: Преобразует каждый элемент коллекции, но убирает все nil из результата.
-                /*
-                 1.    documents — массив документов, полученных из Firebase.
-                     2.    Для каждого документа применяется замыкание compactMap, где:
-                     •    Пытаемся преобразовать document в модель Delivery с помощью функции data(as:).
-                     •    Если преобразование удачно, объект Delivery добавляется в массив.
-                     •    Если преобразование не удалось (например, данные в документе повреждены или отсутствуют обязательные поля), возвращается nil, и элемент не добавляется в массив.
-                     3.    Результат: массив объектов Delivery, где нет nil.
-                 */
                 do {
                     return try document.data(as: DeliveryMethod.self)
                 } catch {
@@ -65,6 +53,7 @@ class DeliveryRepoAdminImplementation: DeliveryRepoAdmin {
         }
     }
     
+    // Entfernt eine Versandmethode aus der Datenbank
     func deleteDelivery(deliveryId: String, completion: @escaping (Result<Void, any Error>) -> Void) {
         db.collection("delivery").document(deliveryId).delete { err in
             if let err {
@@ -75,9 +64,7 @@ class DeliveryRepoAdminImplementation: DeliveryRepoAdmin {
         }
     }
     
-/*
- completion — это замыкание, которое принимает один параметр типа Result<Void, any Error> и не возвращает значения (Void). Result — это перечисление, которое может представлять либо успешное завершение операции (success), либо ошибку (failure).
- */
+    // Aktualisiert eine bestehende Versandmethode in der Datenbank
     func updateDelivery(delivery: DeliveryMethod) throws {
         guard let deliveryId = delivery.id else {
             throw NSError(domain: "DeliveryRepoAdminImplementation", code: -1)
@@ -89,6 +76,7 @@ class DeliveryRepoAdminImplementation: DeliveryRepoAdmin {
         }
     }
     
+    // Entfernt alle Versandmethoden eines Benutzers
     func deleteDeliveryFromUser(userId: String) async throws {
         let deliveryRef = db.collection("users").document(userId).collection("deliveryMethods")
         
@@ -98,24 +86,5 @@ class DeliveryRepoAdminImplementation: DeliveryRepoAdmin {
             try await document.reference.delete()
         }
     }
-//    func deleteDeliveryFromUser(userId: String, completion: @escaping (Result<Void, any Error>) -> Void) {
-//        let deliveryRef = db.collection("users").document(userId).collection("deliveryMethods")
-//        
-//        deliveryRef.getDocuments { querySnapshot, error in
-//            if let error = error {
-//                completion(.failure(error))
-//                return
-//            }
-//            guard let documents = querySnapshot?.documents else {
-//                completion(.success(()))
-//                return
-//            }
-//            
-//            for document in documents {
-//                document.reference.delete()
-//            }
-//            completion(.success(()))
-//        }
-//    }
 
 }

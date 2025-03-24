@@ -11,6 +11,7 @@ import Firebase
 class UserRepositoryImplementation: UserRepository {
     private let fb = FirebaseService.shared
 
+    // Registriert einen neuen Benutzer mit E-Mail, Passwort und Name in Firebase
     func registerWithEmail(name: String, email: String, password: String) async throws {
         let result = try await fb.auth.createUser(withEmail: email, password: password)
         let user = FireUser(
@@ -24,13 +25,14 @@ class UserRepositoryImplementation: UserRepository {
             .setData(from: user)
     }
     
+    // Meldet einen Benutzer mit E-Mail und Passwort an
     func loginWithEmail(email: String, password: String) async throws {
         try await fb.auth.signIn(withEmail: email, password: password)
     }
     
+    // Überprüft die Rolle des angemeldeten Benutzers
     func checkUserRole() async throws {
         guard let uid = fb.auth.currentUser?.uid else {
-//            throw print("User not logged in")
                 throw NSError(domain: "User not logged in", code: -1)
             }
             
@@ -47,10 +49,12 @@ class UserRepositoryImplementation: UserRepository {
             print("User role: \(role)")
     }
     
+    // Meldet den aktuellen Benutzer ab
     func logout() throws {
         try fb.auth.signOut()
     }
     
+    // Prüft, ob ein Benutzer angemeldet ist, und zeigt dessen Daten
     func checkIfUserIsLoggedIn() async throws {
         guard let currentUser = fb.auth.currentUser else {
                 throw NSError(domain: "No user is logged in", code: -1)

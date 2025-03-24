@@ -8,6 +8,12 @@
 import SwiftUI
 import FirebaseFirestore
 
+/**
+ * Struktur, die Lieferinformationen eines Benutzers in Firebase repräsentiert.
+ * Enthält eine optionale ID sowie persönliche Daten wie Name, E-Mail, Telefonnummer und Adressdetails.
+ * Konform zu `Codable` für JSON-Serialisierung und `Identifiable` für SwiftUI.
+ * `@DocumentID` markiert die ID als Dokument-ID in Firestore, ist optional.
+ */
 struct DeliveryUserInfo: Identifiable, Codable {
     @DocumentID var id: String?
     

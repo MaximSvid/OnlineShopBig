@@ -11,6 +11,7 @@ class WebServiceImgur {
     
     private let clientId = Secrets.imgurClientId
     
+    // Lädt Daten von einer URL; <T: Codable> erlaubt die Rückgabe eines beliebigen dekodierbaren Typs
     func downloadImages <T: Codable> (url: String) async throws -> T {
         
         guard let url = URL(string: url) else {

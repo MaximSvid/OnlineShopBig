@@ -24,10 +24,12 @@ class CouponUserViewModel: ObservableObject {
     
     private let couponRepositoryUser: CouponRepositoryUser
     
+    // Initialisiert das ViewModel mit einem Coupon-Repository für Benutzer
     init(couponRepositoryUser: CouponRepositoryUser = CouponRepositoryUserImplementation()) {
         self.couponRepositoryUser = couponRepositoryUser
     }
     
+    // Wendet einen Coupon-Code auf einen Betrag an
     func applyCouponCode(_ code: String, to amount: Double) async{
         isLoading = true
         errorMessage = nil
@@ -59,9 +61,9 @@ class CouponUserViewModel: ObservableObject {
         isLoading = false
     }
     
+    // Aktualisiert den finalen Betrag basierend auf einem Gesamtbetrag
     func updateFinalAmount(totalSum: Double) {
         if let coupon = appliedCoupon {
-            // Пересчитываем скидку при изменении общей суммы
             let newAmount = couponRepositoryUser.applyCoupon(coupon: coupon, to: totalSum)
             discountedAmount = newAmount
             finalAmount = newAmount

@@ -10,9 +10,7 @@ protocol DeliveryUserInfoRepo {
     func addDeliveryUserInfo(userId: String, deliveryInfo: DeliveryUserInfo) throws
     func observeDeliveryUserInfo(userId: String, completion: @escaping (Result<[DeliveryUserInfo], Error>) -> Void)
     func deleteDeliveryUserInfoFromUser(userId: String) async throws
-    
     func updateUserInfo(newDeliveryUserInfo: DeliveryUserInfo) throws
-    
     func checkIfDeliveryUserInfoExists(userId: String, completion: @escaping (Bool) -> Void)
 }
 

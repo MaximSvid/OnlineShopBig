@@ -12,8 +12,7 @@ class CartRepositoryUserImplementation: CartRepositoryUser {
         
     private let db = Firestore.firestore()
 
-    
-    //?   nich sicher über diese func
+    // Fügt ein Produkt zum Warenkorb eines Benutzers hinzu
     func getToCart(userId: String, productId: String, product: Product, completion: @escaping (Result<Void, any Error>) -> Void) {
         let userCartRef = db.collection("users").document(userId).collection("cart").document(productId)
         
@@ -32,6 +31,7 @@ class CartRepositoryUserImplementation: CartRepositoryUser {
         }
     }
     
+    // Lädt alle Produkte aus dem Warenkorb eines Benutzers
     func loadCartProducts(userId: String, completion: @escaping (Result<[Product], any Error>) -> Void) {
         let cartRef = db.collection("users").document(userId).collection("cart")
         
@@ -51,6 +51,7 @@ class CartRepositoryUserImplementation: CartRepositoryUser {
         }
     }
     
+    // Aktualisiert die Anzahl eines Produkts im Warenkorb
     func updateCountProduct (userId: String, productId: String, productCount: Int, completion: @escaping (Result<Void, any Error>) -> Void) {
         
         let userCartRef = db.collection("users").document(userId).collection("cart").document(productId)
@@ -64,6 +65,7 @@ class CartRepositoryUserImplementation: CartRepositoryUser {
         }
     }
     
+    // Entfernt ein Produkt aus dem Warenkorb eines Benutzers
     func removeFromCart(userId: String, productId: String, completion: @escaping (Result<Void, any Error>) -> Void) {
         let userCartRef = db.collection("users").document(userId).collection("cart").document(productId)
         userCartRef.delete() { error in
@@ -75,6 +77,7 @@ class CartRepositoryUserImplementation: CartRepositoryUser {
         }
     }
     
+    // Entfernt alle Produkte aus dem Warenkorb eines Benutzers
     func removeAllFromCart(userId: String) async throws {
         let cartRef = db.collection("users").document(userId).collection("cart")
         
@@ -84,6 +87,7 @@ class CartRepositoryUserImplementation: CartRepositoryUser {
         }
     }
     
+    // Aktualisiert die Anzahl eines Produkts in der Produktliste
     func updateCountGoods(productId: String, countProduct: Int) throws {
         let countRef = db.collection("products").document(productId)
         

@@ -12,18 +12,18 @@ class ReceiptUserRepositoryImplementation: ReceiptUserRepository {
     
     private let db = Firestore.firestore()
     
+    // Speichert einen Beleg in der Datenbank
     func saveReceipt(_ receipt: Receipt) throws {
         let db = Firestore.firestore()
         try db.collection("users")
             .document(receipt.userId)
-            .collection("receipts") // создаст коллекцию receipts
+            .collection("receipts") // Erstellt die Sammlung "receipts"
             .document()
             .setData(from: receipt)
     }
     
+    // Holt die Belegdaten eines Benutzers
     func fetchReceiptUser(userId: String, completion: @escaping (Result<Receipt, Error>) -> Void) {
-        
-        
         let userRef = db.collection("users").document(userId)
         
         let cartRef = userRef.collection("cart")
@@ -33,19 +33,19 @@ class ReceiptUserRepositoryImplementation: ReceiptUserRepository {
         
         Task {
             do {
-                //получаем информацию о пользователе
+                // Holt Benutzerinformationen
                 let userInfoSnapshot = try await userInfoRef.getDocuments()
                 guard let userInfoDoc = userInfoSnapshot.documents.first,
                       let userInfo = try? userInfoDoc.data(as: DeliveryUserInfo.self) else {
                     throw NSError(domain: "User info not found", code: -1)
                 }
                 
-                // Получаем информацию из корзины
+                // Holt Informationen aus dem Warenkorb
                 let cartSnapshot = try await cartRef.getDocuments()
                 let cartItems: [OrderedProduct] = cartSnapshot.documents.compactMap { document in
                     guard let product = try? document.data(as: Product.self) else { return nil }
                     
-                    let quantity = product.purchasedQuantity > 0 ? product.purchasedQuantity : 1 // Убедимся, что количество не 0
+                    let quantity = product.purchasedQuantity > 0 ? product.purchasedQuantity : 1
                     return OrderedProduct(
                         id: document.documentID,
                         images: product.images,
@@ -58,14 +58,14 @@ class ReceiptUserRepositoryImplementation: ReceiptUserRepository {
                 }
                 let totalProductPrice = cartItems.reduce(0) { $0 + $1.totalPrice }
                 
-                // получаем метод доставки
+                // Holt die Versandmethode
                 let deliverySnapshot = try await userDeliveryMethodRef.getDocuments()
                 guard let deliveryDoc = deliverySnapshot.documents.first,
                       let deliveryMethods = try? deliveryDoc.data(as: DeliveryMethod.self) else {
                     throw NSError(domain: "Delivery method not found", code: -1)
                 }
                 
-                //получаем метод оплаты
+                // Holt die Zahlungsmethode
                 let paymentSnapshot = try await userPaymentMethodRef.getDocuments()
                 guard let paymentDoc = paymentSnapshot.documents.first,
                       let paymentMethod = try? paymentDoc.data(as: PaymentMethod.self) else {
@@ -75,7 +75,7 @@ class ReceiptUserRepositoryImplementation: ReceiptUserRepository {
                 let totalDeliveryPrice = deliveryMethods.deliveryPrice
                 let finalTotalPrice = totalProductPrice + totalDeliveryPrice
                 
-                // Создаём чек
+                // Erstellt den Beleg
                 let receipt = Receipt(
                     products: cartItems,
                     totalProductPrice: totalProductPrice,
@@ -95,7 +95,7 @@ class ReceiptUserRepositoryImplementation: ReceiptUserRepository {
         }
     }
     
-    //Наблюдаем за колекцией
+    // Beobachtet die Belege eines Benutzers und gibt sie zurück
     func observeReceiptsUsers(userId: String, completion: @escaping (Result<[Receipt], any Error>) -> Void) {
         let userReceiptRef = db.collection("users").document(userId).collection("receipts")
         
@@ -115,22 +115,4 @@ class ReceiptUserRepositoryImplementation: ReceiptUserRepository {
         }
     }
     
-//    func addNewUserInfo(receipt: Receipt) throws {
-//        do {
-//            try db.collection("receipts").addDocument(from: receipt)
-//        } catch {
-//            throw error
-//        }
-//    }
-//    
-//    func updateUserInfo(receipt: Receipt) throws {
-//        guard let receiptId = receipt.id else {
-//            throw NSError(domain: "No receipt ID", code: -1)
-//        }
-//        do {
-//            try db.collection("receipts").document(receiptId).setData(from: receipt)
-//        } catch {
-//            throw error
-//        }
-//    }
 }

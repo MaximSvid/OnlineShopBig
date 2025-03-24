@@ -12,6 +12,7 @@ class ProductRepositoryUserImplementation: ProductRepositoryUser {
     
     private let db = Firestore.firestore()
     
+    // Beobachtet Produkte für Benutzer und gibt sie zurück
     func observeProductsUser(completion: @escaping (Result<[Product], Error>) -> Void) {
         db.collection("products").addSnapshotListener { snapshot, error in
             if let error = error {
@@ -36,12 +37,12 @@ class ProductRepositoryUserImplementation: ProductRepositoryUser {
         }
     }
     
+    // Aktualisiert den Favoritenstatus eines Produkts für einen Benutzer
     func updateFavoriteStatus(userID: String, productID: String, product: Product, isFavorite: Bool, completion: @escaping (Result<Void, Error>) -> Void) {
         let userFavoritesRef = db.collection("users").document(userID).collection("favorites").document(productID)
         
         if isFavorite {
             do {
-                // Устанавливаем данные с обновленным статусом
                 var updatedProduct = product
                 updatedProduct.isFavorite = true
                 
@@ -56,8 +57,6 @@ class ProductRepositoryUserImplementation: ProductRepositoryUser {
                 completion(.failure(error))
             }
         } else {
-            // Удаляем документ из избранного
-            
             userFavoritesRef.delete { error in
                 if let error = error {
                     completion(.failure(error))
@@ -67,6 +66,8 @@ class ProductRepositoryUserImplementation: ProductRepositoryUser {
             }
         }
     }
+    
+    // Lädt die Favoritenprodukte eines Benutzers
     func loadFavoriteProducts(userID: String, completion: @escaping (Result<[Product], Error>) -> Void) {
         let favoritesRef = db.collection("users").document(userID).collection("favorites")
         
@@ -77,7 +78,7 @@ class ProductRepositoryUserImplementation: ProductRepositoryUser {
             }
             
             guard let documents = snapshot?.documents else {
-                completion(.success([])) // Пустой массив, если нет избранных товаров
+                completion(.success([]))
                 return
             }
             

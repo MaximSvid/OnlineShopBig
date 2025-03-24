@@ -27,13 +27,14 @@ class DeliveryAdminViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var isError: Bool = false
 
-    
+    // Initialisiert das ViewModel mit einem Delivery-Repository
     init(
         deliveryRepository: DeliveryRepoAdmin = DeliveryRepoAdminImplementation()
     ) {
         self.deliveryRepository = deliveryRepository
     }
     
+    // Fügt eine Versandmethode für den Benutzer hinzu
     func addUserDeliveryMethod() {
         guard let userId = FirebaseService.shared.userId else { return }
         let deliveryMethod = DeliveryMethod(
@@ -50,6 +51,7 @@ class DeliveryAdminViewModel: ObservableObject {
         }
     }
     
+    // Fügt eine neue Versandmethode hinzu
     func addNewDelivery() {
         let newDelivery = DeliveryMethod(
             deliveryName: deliveryName,
@@ -66,12 +68,14 @@ class DeliveryAdminViewModel: ObservableObject {
         }
     }
     
+    // Setzt die Eingabefelder zurück
     private func resetFields() {
         deliveryName = ""
         deliveryPrice = 0.0
         deliveryTime = ""
     }
     
+    // Beobachtet Änderungen an Versandmethoden
     func observeDeliveries() {
         deliveryRepository.observeDelivery { deliveries in
             switch deliveries {
@@ -80,13 +84,11 @@ class DeliveryAdminViewModel: ObservableObject {
                 
             case .failure(let error):
                 print("Error observing deliveries: \(error.localizedDescription)")
-                /*
-                 Используйте localizedDescription, когда вам нужно показать пользователю понятное сообщение об ошибке. Для логирования и отладки используйте более технические описания ошибок, такие как debugDescription или description.
-                 */
             }
         }
     }
     
+    // Entfernt eine Versandmethode
     func deleteDelivery(delivery: DeliveryMethod) {
         guard let deliveryId = delivery.id else {
             print("Error deleting delivery: deliveryId is nil")
@@ -105,6 +107,7 @@ class DeliveryAdminViewModel: ObservableObject {
         }
     }
     
+    // Bereitet eine Versandmethode für die Bearbeitung vor
     func prepareForEdit(_ delivery: DeliveryMethod) {
         self.selectedDelivery = delivery
         self.deliveryName = delivery.deliveryName
@@ -112,6 +115,7 @@ class DeliveryAdminViewModel: ObservableObject {
         self.deliveryTime = delivery.deliveryTime
     }
     
+    // Aktualisiert eine bestehende Versandmethode
     func updateDelivery() {
         guard let existingDelivery = selectedDelivery,
               let deliveryId = existingDelivery.id else {
@@ -127,7 +131,6 @@ class DeliveryAdminViewModel: ObservableObject {
         do {
             try deliveryRepository.updateDelivery(delivery: updateDelivery)
             print("Delivery updated successfully")
-            // Обновляем купон в локальном массиве
             if let index = deliveries.firstIndex(where: { $0.id == deliveryId }) {
                 deliveries[index] = updateDelivery
             }
@@ -137,6 +140,7 @@ class DeliveryAdminViewModel: ObservableObject {
         }
     }
     
+    // Gibt den Preis der ausgewählten Versandmethode zurück
     var selectedDeliveryPrice: Double  {
         if let selectedDelivery = deliveries.first(where: { $0.id == selectedDelivery?.id }) {
             return selectedDelivery.deliveryPrice
@@ -144,6 +148,7 @@ class DeliveryAdminViewModel: ObservableObject {
         return 0.0
     }
     
+    // Entfernt alle Versandmethoden eines Benutzers
     func deleteDeliveryFormUser() async {
         guard let userId = FirebaseService.shared.userId else { return }
         do {

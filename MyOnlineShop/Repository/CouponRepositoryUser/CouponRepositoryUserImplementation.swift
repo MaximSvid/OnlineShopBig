@@ -11,6 +11,7 @@ class CouponRepositoryUserImplementation: CouponRepositoryUser {
     
     private let db = Firestore.firestore()
     
+    // Überprüft, ob ein Coupon-Code gültig und aktiv ist
     func validateCoupon(code: String) async throws -> Coupon {
         let snapshot = try await db.collection("coupons")
             .whereField( "code", isEqualTo: code )
@@ -28,6 +29,7 @@ class CouponRepositoryUserImplementation: CouponRepositoryUser {
         return coupon
     }
     
+    // Wendet einen Coupon auf einen Betrag an und berechnet den Rabatt
     func applyCoupon(coupon: Coupon, to amount: Double) -> Double {
         switch coupon.discountType {
         case "percentage":

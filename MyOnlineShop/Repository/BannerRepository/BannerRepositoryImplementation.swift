@@ -12,6 +12,7 @@ class BannerRepositoryImplementation: BannerRepository {
     
     private let db = Firestore.firestore()
     
+    // Fügt ein neues Banner zur Datenbank hinzu
     func addNewBanner(banner: Banner) throws {
         do {
             try db.collection("banners").addDocument(from: banner)
@@ -20,6 +21,7 @@ class BannerRepositoryImplementation: BannerRepository {
         }
     }
     
+    // Beobachtet Änderungen an Bannern und gibt sie zurück
     func observeBanner(completion: @escaping (Result<[Banner], any Error>) -> Void) {
         db.collection( "banners").addSnapshotListener { snapshot, error in
             
@@ -46,6 +48,7 @@ class BannerRepositoryImplementation: BannerRepository {
         }
     }
     
+    // Aktualisiert ein bestehendes Banner in der Datenbank
     func updateBanner(banner: Banner) throws {
         guard let bannerId = banner.id else { return }
         
@@ -55,8 +58,5 @@ class BannerRepositoryImplementation: BannerRepository {
             throw error
         }
     }
-    
-   
-    
     
 }

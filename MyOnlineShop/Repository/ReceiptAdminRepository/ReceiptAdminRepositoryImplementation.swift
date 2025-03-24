@@ -12,9 +12,9 @@ class ReceiptAdminRepositoryImplementation: ReceiptAdminRepository {
     
     private let db = Firestore.firestore()
     
+    // Beobachtet und gibt alle Belege aller Benutzer zurück
     func observeReceipts() async throws -> [Receipt] {
         let usersRef = db.collection("users")
-        //            .collection("receipts")
         
         let userSnapshot = try await usersRef.getDocuments()
         print("Number on users \(userSnapshot.documents.count)")
@@ -36,6 +36,7 @@ class ReceiptAdminRepositoryImplementation: ReceiptAdminRepository {
         return allReceipts
     }
     
+    // Aktualisiert den Bestellstatus eines Belegs
     func updateOrderStatus(receiptId: String, newStatus: OrderStatus) async throws {
         let usersRef = db.collection("users")
         let userSnapshot = try await usersRef.getDocuments()
@@ -46,7 +47,6 @@ class ReceiptAdminRepositoryImplementation: ReceiptAdminRepository {
             let receiptsRef = userDocument.reference.collection("receipts").document(receiptId)
             
             do {
-                // Попробуем обновить, если документ существует
                 try await receiptsRef.updateData(["orderStatus": newStatus.rawValue])
                 documentFound = true
                 print("Order status updated for receiptId: \(receiptId)")
@@ -60,6 +60,7 @@ class ReceiptAdminRepositoryImplementation: ReceiptAdminRepository {
         }
     }
     
+    // Beobachtet den Bestellstatus eines bestimmten Belegs
     func observeOrderStatus(receiptId: String, userId: String, completion: @escaping (Result<OrderStatus, Error>) -> Void) {
         let receiptsRef = db.collection("users")
             .document(userId)

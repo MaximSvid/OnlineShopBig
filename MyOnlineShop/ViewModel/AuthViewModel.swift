@@ -20,29 +20,28 @@ class AuthViewModel: ObservableObject {
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var confirmPassword: String = ""
-    @Published var errorMessage: String? = ""// kommt eine message when fehler gibt
+    @Published var errorMessage: String? = ""// Zeigt eine Nachricht bei Fehlern
     
     private let userViewModel: UserViewModel
     private let userRepository: UserRepository
     
-    //для реальной работы
+    // Für reale Arbeit
     init(userViewModel: UserViewModel) {
         self.userViewModel = userViewModel
         self.userRepository = UserRepositoryImplementation()
         
     }
     
-    //для unit test
+    // Für Unit-Tests
     init(userViewModel: UserViewModel, userRepository: UserRepository) {
         self.userViewModel = userViewModel
         self.userRepository = userRepository
     }
     
-//    private let userRepository = UserRepositoryImplementation()
-    
     private let fb = FirebaseService.shared
     private let db = Firestore.firestore()
     
+    // Registriert einen neuen Benutzer mit E-Mail
     func registerWithEmail(name: String) {
             guard !email.isEmpty, !password.isEmpty, !confirmPassword.isEmpty, !userName.isEmpty else {
                 errorMessage = "Please fill all fields"
@@ -74,13 +73,14 @@ class AuthViewModel: ObservableObject {
             }
         }
     
+    // Meldet einen Benutzer mit E-Mail an
     func loginWithEmail(completion: @escaping () -> Void) {
             Task {
                 do {
                     try await userRepository.loginWithEmail(email: email, password: password)
                     self.user = fb.auth.currentUser
                     await checkUserRole()
-                    completion() // если пользователь успешно входит добавляю функцию чтобы загрузить количество товара уже при вызове loginWithEmail
+                    completion() // Ruft eine Funktion auf, um die Produktanzahl nach erfolgreichem Login zu laden
                 } catch let error as NSError {
                     switch AuthErrorCode(rawValue: error.code) {
                     case .invalidEmail:
@@ -98,7 +98,7 @@ class AuthViewModel: ObservableObject {
             }
         }
     
-    //func überpruft wer macht login user oder admin
+    // Prüft, ob der angemeldete Benutzer ein Admin oder User ist
     func checkUserRole() async {
             do {
                 try await userRepository.checkUserRole()
@@ -114,10 +114,12 @@ class AuthViewModel: ObservableObject {
             }
         }
     
+    // Gibt zurück, ob ein Benutzer angemeldet ist
     var userIsLoggedIn: Bool {
         user != nil
     }
     
+    // Meldet den Benutzer ab
     func logout() {
         do {
             
@@ -130,8 +132,7 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-
-    
+    // Prüft, ob ein Benutzer angemeldet ist und aktualisiert die Daten
     func checkIfUserIsLoggenIn() {
             Task {
                 do {
@@ -144,28 +145,4 @@ class AuthViewModel: ObservableObject {
                 }
             }
         }
-    
-//    func loginWithGoogle() {
-//        guard let rootViewController = UIApplication.shared.firstKeyWindow?.rootViewController else { return }
-//        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
-//        let config = GIDConfiguration(clientID: clientID)
-//        GIDSignIn.sharedInstance.configuration = config
-//        
-//        Task {
-//            do {
-//                let result = try await GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController)
-//                guard let idToken = result.user.idToken?.tokenString else { return }
-//                let accessToken = result.user.accessToken.tokenString
-//                let credentials = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
-//                let firebaseResult = try await fb.auth.signIn(with: credentials)
-//                
-//                // Check if user exists here
-//                let user = AppUser(id: firebaseResult.user.uid, email: firebaseResult.user.email ?? "")
-//                try self.fb.database.collection("users").document(user.id).setData(from: user)
-//            } catch {
-//                print(error)
-//            }
-//        }
-//    }
-
 }

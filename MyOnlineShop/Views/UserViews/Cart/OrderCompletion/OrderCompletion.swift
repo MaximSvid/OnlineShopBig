@@ -21,7 +21,6 @@ struct OrderCompletion: View {
     @State private var showError: Bool = false
     @State private var showAlert: Bool = false
     @State private var showFireworks: Bool = false
-    @State private var bursts: [FireworkBurst] = []
     
     @Binding var selectedTab: Int
     
@@ -82,18 +81,6 @@ struct OrderCompletion: View {
                     }
                     .padding([.leading, .trailing])
                 }
-                .blur(radius: showFireworks ? 4 : 0) // добавляем размытие при показе фейерверков
-                
-                if showFireworks {
-                    ZStack {
-                        Color.black.opacity(0.3)
-                            .ignoresSafeArea()
-                        
-                        ForEach(bursts) { burst in
-                            FireworkBurstView(burst: burst)
-                        }
-                    }
-                }
             }
         }
         .toolbar {
@@ -107,48 +94,13 @@ struct OrderCompletion: View {
             couponUserViewModel.updateFinalAmount(totalSum: userCartViewModel.totalSum)
             deliveryAdminViewModel.observeDeliveries()
         }
-        .onChange(of: showFireworks) { newValue in
-            if newValue {
-                startFireworks()
-            } else {
-                bursts.removeAll()
-            }
-        }
     }
-    //данную функцию нет необходимости хранить в репозитории так как это UI логика
-    private func startFireworks() {
-        var timerCount = 0 // Счетчик времени (нужно для того чтобы анимация продолжалась только 5 секунд а затем переставала иначе, если сразу сделать заказ анимация не даст соверишить заказ...
-        Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true) { timer in
-            if showFireworks {
-                let newBurst = FireworkBurst()
-                bursts.append(newBurst)
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    bursts.removeAll(where: { $0.id == newBurst.id })
-                }
-                timerCount += 1
-                if timerCount >= 10 { // 10 итераций = 5 секунд
-                    showFireworks = false
-                    timer.invalidate()
-                }
-            } else {
-                timer.invalidate()
-            }
-        }
-    }
+   
     
     private func handleOrderSubmission() {
         if paymentAdminViewModel.selectedPayment != nil {
             deliveryAdminViewModel.isError = false
             deliveryAdminViewModel.errorMessage = nil
-            
-//            if deliveryAdminViewModel.exist {
-//                deliveryUserInfoViewModel.addNewDeliveryUserInfo()
-//            } else {
-//                deliveryAdminViewModel.updateDelivery()
-//            }
-            
-//            deliveryUserInfoViewModel.addNewDeliveryUserInfo()
             deliveryUserInfoViewModel.addOrUpdateDeliveryUserInfo()// обновить или создать информацию о пользователе
             deliveryAdminViewModel.addUserDeliveryMethod()
             paymentAdminViewModel.addUserPaymentMethod()
@@ -163,7 +115,6 @@ struct OrderCompletion: View {
             Task {
                 await receiptUserViewModel.fetchAndSaveReceipt()
                 await paymentAdminViewModel.deletePaymentMethodFromUser()
-//                await deliveryUserInfoViewModel.deleteDeliveryUserInfoFromUser() удалять информацию о пользователе нет особого смысла. проще ее сохранять и затем отображать 
                 await deliveryAdminViewModel.deleteDeliveryFormUser()
                 await userCartViewModel.removeAllFromCart()
             }

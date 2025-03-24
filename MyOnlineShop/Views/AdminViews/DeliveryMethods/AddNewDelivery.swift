@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AddNewDelivery: View {
     @EnvironmentObject var deliveryAdminViewModel: DeliveryAdminViewModel
-    @State private var toast: Toast? = nil
+    @State private var showError: Bool = false
 
     var body: some View {
         VStack {
@@ -34,20 +34,22 @@ struct AddNewDelivery: View {
                             }
                         )
                     )
-                    
-                    /*
-                     Binding создаёт двустороннюю связь между интерфейсом и данными. Это позволяет передавать данные в текстовое поле и обновлять модель при изменении текста пользователем.
-                     get: Форматирование значения
-                     set: Обновление значения
-                     */
+
                     CustomTextField(placeholder: "Delivery description", text: $deliveryAdminViewModel.deliveryTime)
+                    
+                    if showError {
+                        Text("Please fill all fields")
+                            .font(.caption)
+                            .foregroundStyle(.red)
+                    }
+
                     
                     
                     Button(action: {
                         if !deliveryAdminViewModel.deliveryName.isEmpty || !deliveryAdminViewModel.deliveryPrice.isZero || !deliveryAdminViewModel.deliveryTime.isEmpty {
                             deliveryAdminViewModel.addNewDelivery()
                         } else {
-                            toast = Toast(style: .error, message: "Please fill all fields")
+                            showError = true
                         }
                         
                     }) {
@@ -61,11 +63,8 @@ struct AddNewDelivery: View {
                     }
                 }
                 .padding([.leading, .trailing])
-                
-//                Spacer()
             }
-//            .padding([.leading, .trailing])
-            .toastView(toast: $toast)
+
         }
         .padding([.leading, .trailing])
     }

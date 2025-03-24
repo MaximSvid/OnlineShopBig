@@ -27,10 +27,12 @@ class CouponViewModel: ObservableObject {
     
     private let couponRepository: CouponRepository
     
+    // Initialisiert das ViewModel mit einem Coupon-Repository
     init(couponRepository: CouponRepository = CouponRepositoryImplementation()) {
         self.couponRepository = couponRepository
     }
     
+    // Fügt einen neuen Coupon hinzu
     func addNewCoupon() {
         let newCoupone = Coupon(
             code: couponeCode,
@@ -49,6 +51,7 @@ class CouponViewModel: ObservableObject {
         }
     }
     
+    // Setzt die Eingabefelder zurück
     private func resetFields() {
         couponeCode = ""
         discountType = ""
@@ -57,6 +60,7 @@ class CouponViewModel: ObservableObject {
         isActive = false
     }
     
+    // Beobachtet Änderungen an Coupons
     func observeCoupons() {
         couponRepository.observeCoupons { result in
             switch result {
@@ -69,6 +73,7 @@ class CouponViewModel: ObservableObject {
         }
     }
     
+    // Entfernt einen Coupon
     func deleteCoupon(coupon: Coupon) {
         guard let couponId = coupon.id else {
             print("Error deleting coupon: couponId is: nil")
@@ -78,7 +83,7 @@ class CouponViewModel: ObservableObject {
         couponRepository.deleteCoupon(couponId: couponId) { result in
             switch result {
             case .success:
-                // Успешное удаление: обновляем локальный массив
+            
                 if let index = self.coupons.firstIndex(where: { $0.id == couponId}) {
                     self.coupons.remove(at: index)
                 }
@@ -89,7 +94,8 @@ class CouponViewModel: ObservableObject {
         }
     }
     
-    func prepareForEdit(_ coupon: Coupon) { 
+    // Bereitet einen Coupon für die Bearbeitung vor
+    func prepareForEdit(_ coupon: Coupon) {
         self.selectedCoupon = coupon
         self.couponeCode = coupon.code
         self.discountType = coupon.discountType
@@ -98,6 +104,7 @@ class CouponViewModel: ObservableObject {
         self.isActive = coupon.isActive
     }
     
+    // Aktualisiert einen bestehenden Coupon
     func updateCoupon() {
         guard let existingCoupon = selectedCoupon,
             let couponId = existingCoupon.id else {
@@ -116,11 +123,10 @@ class CouponViewModel: ObservableObject {
         do {
             try couponRepository.updateCoupon(coupone: updateCoupon)
             print("Coupone updated successfully")
-            // Обновляем купон в локальном массиве
             if let index = coupons.firstIndex(where: { $0.id == existingCoupon.id }) {
                 coupons[index] = updateCoupon
             }
-//            resetFields()
+
         } catch {
             print("Error updating coupon: \(error)")
         }

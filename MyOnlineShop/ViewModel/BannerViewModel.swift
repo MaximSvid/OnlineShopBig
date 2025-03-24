@@ -20,6 +20,7 @@ class BannerViewModel: ObservableObject {
     private let bannerRepository: BannerRepository
     @Published var imgurViewModel: ImgurViewModel
     
+    // Initialisiert das ViewModel mit einem Banner-Repository
     init(bannerRepository: BannerRepository = BannerRepositoryImplementation()) {
         self.bannerRepository = bannerRepository
         self.imgurViewModel = ImgurViewModel()
@@ -29,6 +30,7 @@ class BannerViewModel: ObservableObject {
         }
     }
     
+    // Fügt ein neues Banner hinzu
     func addNewBanner() {
         let newBanner = Banner(
             bannerName: bannerName,
@@ -45,6 +47,7 @@ class BannerViewModel: ObservableObject {
         }
     }
     
+    // Beobachtet Änderungen an Bannern
     func observeBanner() {
         bannerRepository.observeBanner { [weak self] result in
             switch result {
@@ -55,14 +58,4 @@ class BannerViewModel: ObservableObject {
             }
         }
     }
-//    func showAllBanners() {
-//        bannerRepository.observeBanner { [weak self] result in
-//            switch result {
-//            case .success(let banners):
-//                self?.banners = banners
-//            case .failure(let error):
-//                print("Error observing banner: \(error)")
-//            }
-//        }
-//    }
 }

@@ -12,14 +12,15 @@ class DeliveryUserInfoRepoImplementation: DeliveryUserInfoRepo {
     
     private let db = Firestore.firestore()
     
+    // Fügt Lieferinformationen für einen Benutzer hinzu
     func addDeliveryUserInfo(userId: String, deliveryInfo: DeliveryUserInfo) throws {
         let userDeliveryInfoRef = db.collection("users").document(userId).collection("userDeliveryInfo").document()
         var data = try Firestore.Encoder().encode(deliveryInfo)
         data["id"] = userDeliveryInfoRef.documentID
-        try userDeliveryInfoRef.setData(data)
+        userDeliveryInfoRef.setData(data)
     }
     
-    // Здесь ошибка, тебе не нужен array, тебе нужне только один обект
+    // Beobachtet Änderungen an den Lieferinformationen eines Benutzers
     func observeDeliveryUserInfo(userId: String, completion: @escaping (Result<[DeliveryUserInfo], any Error>) -> Void) {
         let userDeliveryInfoRef = db.collection("users").document(userId).collection("userDeliveryInfo")
         
@@ -40,6 +41,7 @@ class DeliveryUserInfoRepoImplementation: DeliveryUserInfoRepo {
         }
     }
     
+    // Entfernt alle Lieferinformationen eines Benutzers
     func deleteDeliveryUserInfoFromUser(userId: String) async throws {
         let deliveryUserInfoRef = db.collection("users").document(userId).collection("userDeliveryInfo")
         
@@ -49,6 +51,7 @@ class DeliveryUserInfoRepoImplementation: DeliveryUserInfoRepo {
         }
     }
     
+    // Aktualisiert die Lieferinformationen eines Benutzers
     func updateUserInfo(newDeliveryUserInfo: DeliveryUserInfo) throws {
         guard let userId = FirebaseService.shared.userId,
         let deliveryUserUnfoId = newDeliveryUserInfo.id
@@ -67,15 +70,15 @@ class DeliveryUserInfoRepoImplementation: DeliveryUserInfoRepo {
         }
     }
     
+    // Prüft, ob Lieferinformationen für einen Benutzer existieren
     func checkIfDeliveryUserInfoExists(userId: String, completion: @escaping (Bool) -> Void) {
         let userDeliveryInfoRef = db.collection("users").document(userId).collection("userDeliveryInfo")
         userDeliveryInfoRef.getDocuments { QuerySnapshot, error in
-            if let error = error {
+            if error != nil {
                 completion(false)
                 print("Error checkIfDeliveryUserInfoExist")
                 return
             }
-            //если есть хотя бы один документ возвращаем true
             completion(!QuerySnapshot!.documents.isEmpty)
         }
     }

@@ -9,7 +9,6 @@ import SwiftUI
 
 struct EditCoupon: View {
     @EnvironmentObject var couponViewModel: CouponViewModel
-    @State private var toast: Toast? = nil
     
     var body: some View {
         VStack {
@@ -51,15 +50,8 @@ struct EditCoupon: View {
                 .padding(.bottom)
             
             Button(action: {
-                
-                if !couponViewModel.couponeCode.isEmpty && !couponViewModel.discountValue.isZero {
-                    toast = Toast(style: .success, message: "Coupon updated successfully")
                     couponViewModel.updateCoupon()
                     couponViewModel.updateCouponSheet.toggle()
-                } else {
-                    toast = Toast(style: .error, message: "Please enter all fields")
-                }
-                
             }) {
                 Text("Update Coupone")
                     .font(.headline.bold())
@@ -72,6 +64,5 @@ struct EditCoupon: View {
             Spacer()
         }
         .padding([.leading, .trailing])
-        .toastView(toast: $toast)
     }
 }

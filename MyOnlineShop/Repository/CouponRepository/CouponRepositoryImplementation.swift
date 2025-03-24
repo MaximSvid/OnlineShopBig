@@ -12,6 +12,7 @@ class CouponRepositoryImplementation: CouponRepository {
     
     private let db = Firestore.firestore()
     
+    // Fügt einen neuen Coupon zur Datenbank hinzu
     func addNewCoupon(coupon: Coupon) throws {
         do {
             try db.collection("coupons").addDocument(from: coupon)
@@ -20,6 +21,7 @@ class CouponRepositoryImplementation: CouponRepository {
         }
     }
     
+    // Beobachtet Änderungen an Coupons und gibt sie zurück
     func observeCoupons(completion: @escaping (Result<[Coupon], any Error>) -> Void) {
         db.collection("coupons").addSnapshotListener { querySnapshot, error in
             if let error = error {
@@ -44,6 +46,7 @@ class CouponRepositoryImplementation: CouponRepository {
         }
     }
     
+    // Entfernt einen Coupon aus der Datenbank
     func deleteCoupon(couponId: String, completion: @escaping (Result<Void, any Error>) -> Void) {
         db.collection("coupons").document(couponId).delete { error in
             if let error {
@@ -54,6 +57,7 @@ class CouponRepositoryImplementation: CouponRepository {
         }
     }
     
+    // Aktualisiert einen bestehenden Coupon in der Datenbank
     func updateCoupon(coupone: Coupon) throws {
         guard let couponeId = coupone.id else {
             throw NSError(domain: "No coupon id", code: -1)

@@ -30,18 +30,19 @@ class DeliveryUserInfoViewModel: ObservableObject {
     @Published var houseNumber: String = ""
     @Published var apartmentNumber: String = ""
     
-    
+    // Initialisiert das ViewModel mit einem DeliveryUserInfo-Repository
     init(
         deliveryUserInfoRepo: DeliveryUserInfoRepo = DeliveryUserInfoRepoImplementation()
     ) {
         self.deliveryUserInfoRepo = deliveryUserInfoRepo
-        //для того чтобы правильно загрузить данные для конкретного пользователя по доставке
+        // Stellt sicher, dass die Lieferdaten für den aktuellen Benutzer korrekt geladen werden
         fb.auth.addStateDidChangeListener { auth, user  in
             guard user != nil else { return }
             self.observeDeliveryUserInfo()
         }
     }
     
+    // Fügt neue Lieferinformationen für den Benutzer hinzu
     func addNewDeliveryUserInfo() {
         guard let userId = FirebaseService.shared.userId else { return }
         let newDeliveryUserInfo = DeliveryUserInfo(
@@ -68,7 +69,7 @@ class DeliveryUserInfoViewModel: ObservableObject {
         }
     }
     
-    
+    // Beobachtet Änderungen an den Lieferinformationen des Benutzers
     func observeDeliveryUserInfo() {
         guard let userId = FirebaseService.shared.userId else { return }
         
@@ -83,7 +84,7 @@ class DeliveryUserInfoViewModel: ObservableObject {
         }
     }
     
-    //использую эту функцию для обновления состояния личных данных у пользователя когда он выходит из акаунта, чтобы у нового пользователя не сохранялись старые поля(тест)
+    // Setzt die Eingabefelder zurück
      func resetFields() {
         firstName = ""
         lastName = ""
@@ -99,6 +100,7 @@ class DeliveryUserInfoViewModel: ObservableObject {
          deliveryUserInfo = []
     }
     
+    // Entfernt alle Lieferinformationen des Benutzers
     func deleteDeliveryUserInfoFromUser() async {
         guard let userId = FirebaseService.shared.userId else { return }
         do {
@@ -108,6 +110,7 @@ class DeliveryUserInfoViewModel: ObservableObject {
         }
     }
     
+    // Bereitet Lieferinformationen für die Bearbeitung vor
     func prepareForEdit() {
         guard let deliveryUserInfo = self.deliveryUserInfo.first else { return }
         
@@ -129,6 +132,7 @@ class DeliveryUserInfoViewModel: ObservableObject {
         
     }
     
+    // Aktualisiert die Lieferinformationen des Benutzers
     func updateDeliveryUserInfo() {
         guard let deliveryUserInfo = selectedDeliveryUserInfo,
               let deliveryUserInfoId = deliveryUserInfo.id else {
@@ -152,8 +156,6 @@ class DeliveryUserInfoViewModel: ObservableObject {
         do {
             try deliveryUserInfoRepo.updateUserInfo(newDeliveryUserInfo: updatedDeliveryUserInfo)
             print("DeliveryUserInfo updated successfully")
-            
-            //обновляем локальный массив
             if let index = self.deliveryUserInfo.firstIndex(where: { $0.id == deliveryUserInfoId }) {
                 self.deliveryUserInfo[index] = updatedDeliveryUserInfo
             }
@@ -162,7 +164,8 @@ class DeliveryUserInfoViewModel: ObservableObject {
         }
     }
     
-    func addOrUpdateDeliveryUserInfo () { // проблема в этой функции
+    // Fügt neue oder aktualisiert vorhandene Lieferinformationen
+    func addOrUpdateDeliveryUserInfo () {
         guard let userId = FirebaseService.shared.userId else { return }
         
         deliveryUserInfoRepo.checkIfDeliveryUserInfoExists(userId: userId) { exists in

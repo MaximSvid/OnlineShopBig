@@ -11,6 +11,7 @@ class ProductRepositoryImplementation: ProductRepositoryAdmin {
     
     private let db = Firestore.firestore()
     
+    // Fügt ein neues Produkt zur Datenbank hinzu
     func addNewProduct(product: Product) throws {
         do {
             try db.collection("products").addDocument(from: product)
@@ -19,7 +20,7 @@ class ProductRepositoryImplementation: ProductRepositoryAdmin {
         }
     }
     
-    
+    // Beobachtet Änderungen an Produkten und gibt sie zurück
     func observeProducts(completion: @escaping (Result<[Product], Error>) -> Void) {
         db.collection("products").addSnapshotListener { querySnapshot, error in
             if let error = error {
@@ -39,6 +40,7 @@ class ProductRepositoryImplementation: ProductRepositoryAdmin {
         }
     }
     
+    // Entfernt ein Produkt aus der Datenbank
     func deleteProduct(productId: String, completion: @escaping (Result<Void, Error>) -> Void) {
             db.collection("products").document(productId).delete { error in
                 if let error = error {
@@ -49,6 +51,7 @@ class ProductRepositoryImplementation: ProductRepositoryAdmin {
             }
         }
     
+    // Schaltet die Sichtbarkeit eines Produkts um
     func toggleVisibility(for productId: String, isVisible: Bool, completion: @escaping (Result<Void, Error>) -> Void) {
             db.collection("products").document(productId).updateData([
                 "isVisible": isVisible
@@ -61,7 +64,7 @@ class ProductRepositoryImplementation: ProductRepositoryAdmin {
             }
         }
     
-    //edit waren bei Andim (adminDetail View)
+    // Aktualisiert ein bestehendes Produkt in der Datenbank
     func updateProduct(product: Product) throws {
             guard let productId = product.id else {
                 throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid product ID"])
