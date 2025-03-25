@@ -15,10 +15,12 @@ class ReceiptAdminViewModel: ObservableObject {
     
     private let receiptAdminReposiory: ReceiptAdminRepository
     
+    // Initialisiert das ViewModel mit einem ReceiptAdminRepository
     init(receiptAdminRepository: ReceiptAdminRepository = ReceiptAdminRepositoryImplementation()) {
         self.receiptAdminReposiory = receiptAdminRepository
     }
     
+    // Ruft alle Belege asynchron ab
     func fetchAllReceipts() async {
         do {
             let fetchedReceipts = try await receiptAdminReposiory.observeReceipts()
@@ -29,6 +31,7 @@ class ReceiptAdminViewModel: ObservableObject {
         }
     }
     
+    // Aktualisiert den Bestellstatus eines Belegs
     func updateOrderStatus (for receipt: Receipt, newStatus: OrderStatus) async {
         guard let receiptId = receipt.id else { return }
         do {
@@ -39,6 +42,7 @@ class ReceiptAdminViewModel: ObservableObject {
         }
     }
     
+    // Beobachtet Änderungen des Bestellstatus eines Belegs
     func observeOrderStatusChanges(receipt: Receipt)  {
         guard let userId = FirebaseService.shared.userId else { return }
         guard let receiptId = receipt.id else {return}
@@ -54,6 +58,8 @@ class ReceiptAdminViewModel: ObservableObject {
             }
         }
     }
+    
+    // Gibt die Anzahl der Belege zurück
     func receiptsCount() -> Int {
         return receipts.count
     }

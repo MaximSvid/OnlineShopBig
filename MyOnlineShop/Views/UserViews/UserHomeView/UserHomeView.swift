@@ -32,12 +32,6 @@ struct UserHomeView: View {
                     Text("Welcome")
                         .font(.title.bold())
                 }
-                
-//                ToolbarItem(placement: .topBarTrailing) {
-//                    Image(systemName: "bell.fill")
-//                        .padding(8)
-//                        .background(Circle().fill(Color.gray.opacity(0.2)))
-//                } 
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
                         userProductViewModel.isSearchVisible = true
@@ -58,9 +52,4 @@ struct UserHomeView: View {
         }
         .preferredColorScheme(isDarkMode ? .dark : .light)
     }
-}
-
-#Preview {
-//    UserHomeView()
-//        .environmentObject(UserProductViewModel())
 }

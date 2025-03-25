@@ -25,7 +25,6 @@ struct ProductGridAdmin: View {
                     Text("Add New Product+")
                         .font(.headline)
                         .foregroundStyle(.white)
-//                        .padding()
                         .background(Color.primaryBrown)
                         .clipShape(RoundedRectangle(cornerRadius: 3))
                         
@@ -34,7 +33,7 @@ struct ProductGridAdmin: View {
             }
             
             LazyVGrid(columns: columns, spacing: 10) {
-                ForEach(productViewModel.filteredProducts.sorted { $0.isVisible && !$1.isVisible }) { product in //sort: if !isVisble geht zum ende des Lists
+                ForEach(productViewModel.filteredProducts.sorted { $0.isVisible && !$1.isVisible }) { product in
                     NavigationLink (destination: DetailHomeAdmin(product: product)) {
                         AdminProductCard(product: product)
                             .frame(width: 170, height: 240)
@@ -45,10 +44,4 @@ struct ProductGridAdmin: View {
             }
         }
     }
-}
-
-#Preview {
-    //    ProductGrid()
-    //        .environmentObject(ProductViewModel())
-    //
 }

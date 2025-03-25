@@ -43,7 +43,7 @@ struct PriceOrderCompletion: View {
                 .font(.subheadline)
                 .foregroundStyle(.gray)
             Spacer()
-            //эта цена должна сохранятся, как финальная цена заказа в базу данных
+            
             Text(String(format: "€ %.2f", deliveryAdminViewModel.selectedDeliveryPrice + couponUserViewModel.finalAmount))
                 .font(.headline)
                 .foregroundStyle(couponUserViewModel.appliedCoupon != nil ? .green : .primary)

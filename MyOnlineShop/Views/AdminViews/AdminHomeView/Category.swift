@@ -47,7 +47,3 @@ struct Category: View {
         }
     }
 }
-
-//#Preview {
-//    Category()
-//}

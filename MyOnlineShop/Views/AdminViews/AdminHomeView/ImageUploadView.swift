@@ -24,8 +24,6 @@ struct ImageUploadView: View {
                         .scaledToFill()
                         .frame(width: 100, height: 100)
                         .clipShape(RoundedRectangle(cornerRadius: 3))
-//                        .overlay(RoundedRectangle(cornerRadius: 10)
-//                            .stroke(.gray.opacity(0.5), lineWidth: 2))
                 }
                 
                 if productViewModel.imgurViewModel.selectedImages.isEmpty {
@@ -34,8 +32,6 @@ struct ImageUploadView: View {
                         .scaledToFill()
                         .frame(width: 100, height: 100)
                         .clipShape(RoundedRectangle(cornerRadius: 3))
-//                        .overlay(RoundedRectangle(cornerRadius: 10)
-//                            .stroke(.gray.opacity(0.5), lineWidth: 2))
                 }
             }
             

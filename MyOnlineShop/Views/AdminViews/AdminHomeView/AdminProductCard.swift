@@ -15,7 +15,6 @@ struct AdminProductCard: View {
         var body: some View {
             ZStack(alignment: .topTrailing) {
                 VStack(spacing: 0) {
-                    // Карусель изображений
                     ZStack(alignment: .bottom) {
                         if !product.images.isEmpty {
                             TabView(selection: $currentImageIndex) {
@@ -35,7 +34,6 @@ struct AdminProductCard: View {
                             .frame(width: 170, height: 190)
                             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                             
-                            // Индикаторы страниц
                             if product.images.count > 1 {
                                 HStack(spacing: 6) {
                                     ForEach(0..<product.images.count, id: \.self) { index in
@@ -56,9 +54,7 @@ struct AdminProductCard: View {
                         }
                     }
                     
-                    // Контейнер для текста (оставляем без изменений)
                     VStack(alignment: .leading, spacing: 4) {
-                        // Название и рейтинг
                         HStack {
                             Text(product.title)
                                 .font(.caption)
@@ -77,14 +73,12 @@ struct AdminProductCard: View {
                             }
                         }
                         
-                        // Бренд
                         Text(product.brand)
                             .font(.caption)
                             .foregroundStyle(product.isVisible ? .black : .gray)
                             .lineLimit(1)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         
-                        // Цена
                         HStack {
                             if product.action && product.actionPrice > 0.0 {
                                 Text(String(format: "€%.2f", product.price))
@@ -113,7 +107,6 @@ struct AdminProductCard: View {
                     .background(.white)
                 }
                 
-                // Кнопки управления
                 HStack {
                     Button(action: {
                         productViewModel.toggleVisibility(for: product)

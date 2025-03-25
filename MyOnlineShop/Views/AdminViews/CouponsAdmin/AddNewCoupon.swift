@@ -10,7 +10,6 @@ import SwiftUI
 struct AddNewCoupon: View {
     @EnvironmentObject var couponViewModel: CouponViewModel
     @State private var errorMessage: Bool = false
-///
     var body: some View {
         
         VStack {

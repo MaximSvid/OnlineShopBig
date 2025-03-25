@@ -16,7 +16,7 @@ struct OrderCompletion: View {
     @EnvironmentObject var paymentAdminViewModel: PaymentAdminViewModel
     @EnvironmentObject var receiptUserViewModel: ReceiptUserViewModel
     
-    @Environment(\.dismiss) private var dismiss // для закрытия представления orderCompletion
+    @Environment(\.dismiss) private var dismiss
     
     @State private var showError: Bool = false
     @State private var showAlert: Bool = false
@@ -70,9 +70,9 @@ struct OrderCompletion: View {
                                 message: Text("Thank you for your order! We're already working on it. You can track your order progress in the order information section."),
                                 dismissButton: .default(Text("Ok"), action: {
                                     selectedTab = 4
-                                    //задержка в пол секудны, без нее происходят проблемы с navigationTab
+                                    
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                        dismiss() // закрываем представление
+                                        dismiss()
                                     }
                                     
                                 })
@@ -101,7 +101,7 @@ struct OrderCompletion: View {
         if paymentAdminViewModel.selectedPayment != nil {
             deliveryAdminViewModel.isError = false
             deliveryAdminViewModel.errorMessage = nil
-            deliveryUserInfoViewModel.addOrUpdateDeliveryUserInfo()// обновить или создать информацию о пользователе
+            deliveryUserInfoViewModel.addOrUpdateDeliveryUserInfo()
             deliveryAdminViewModel.addUserDeliveryMethod()
             paymentAdminViewModel.addUserPaymentMethod()
             userCartViewModel.updateCountGoods()
@@ -109,7 +109,7 @@ struct OrderCompletion: View {
             deliveryAdminViewModel.selectedDelivery = nil
             paymentAdminViewModel.selectedPayment = nil
             deliveryAdminViewModel.errorMessage = nil
-            couponUserViewModel.appliedCoupon = nil //обнуляю использование купона
+            couponUserViewModel.appliedCoupon = nil 
             
             
             Task {

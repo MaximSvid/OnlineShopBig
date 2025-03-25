@@ -26,7 +26,7 @@ struct AppNavigationUser: View {
                 .tabItem {
                     Label("My Cart", systemImage: "cart")
                 }
-                .badge(userCartViewModel.cartItemsCount) // отвечает за отображение количество товара в корзине 
+                .badge(userCartViewModel.cartItemsCount)
                 .tag(1)
             
             Favorite()
@@ -40,7 +40,6 @@ struct AppNavigationUser: View {
                 .tabItem {
                     Label("Receipts", systemImage: "list.clipboard")
                 }
-//                .badge(receiptsUserViewModel.receiptsCount())
                 .tag(4)
 
             

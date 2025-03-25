@@ -76,6 +76,3 @@ struct DeliveryListAdmin: View {
     }
 }
 
-#Preview {
-//    DeliveryListAdmin()
-}

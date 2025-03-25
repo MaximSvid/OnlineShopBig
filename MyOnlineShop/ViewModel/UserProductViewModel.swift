@@ -22,9 +22,10 @@ class UserProductViewModel: ObservableObject {
     
     private let productRepositoryUser: ProductRepositoryUser
 
+    // Initialisiert das ViewModel mit einem ProductRepositoryUser
     init(productRepositoryUser: ProductRepositoryUser = ProductRepositoryUserImplementation()) {
         self.productRepositoryUser = productRepositoryUser
-        // Наблюдаем за изменениями searchText
+        // Beobachtet Änderungen im Suchtext
         $searchText
             .debounce(for: .milliseconds(300), scheduler: RunLoop.main)
             .sink { [weak self] searchText in
@@ -32,6 +33,7 @@ class UserProductViewModel: ObservableObject {
             }
             .store(in: &cancellables)
     }
+    // Beobachtet Produkte für den Benutzer in Echtzeit
     func observeUserProducts() {
         productRepositoryUser.observeProductsUser {result in
             switch result {
@@ -45,31 +47,32 @@ class UserProductViewModel: ObservableObject {
         }
     }
     
+    // Gibt die Anzahl der Favoriten zurück
     func favoriteCount() -> Int {
         return favoriteProducts.count
     }
     
+    // Zeigt alle Produkte ohne Filter an
     func showAllProducts() {
         filteredProducts = products
         print("Showing all products. Ohne filter")
     }
     
+    // Filtert Produkte nach Kategorie
     func filterProducts(by category: Categories) {
         switch category {
         case .allProducts:
-            // Показать все продукты
             showAllProducts()
         case .action:
-            // Фильтрация по признаку action
             filteredProducts = products.filter { $0.action }
             print("Filtered products where action is true: \(filteredProducts.count)")
         default:
-            // Фильтрация по категории
             filteredProducts = products.filter { $0.category == category.rawValue }
             print("Filtered products by category: \(category.rawValue)")
         }
     }
     
+    // Schaltet den Favoritenstatus eines Produkts um
     func toggleFavorite(for product: Product) {
             guard let userID = FirebaseService.shared.userId,
                   let productID = product.id else { return }
@@ -92,6 +95,7 @@ class UserProductViewModel: ObservableObject {
             }
         }
     
+    // Lädt die Favoritenprodukte des Benutzers
     func loadFavorites() {
         guard let userID = FirebaseService.shared.userId else { return }
         
@@ -105,16 +109,17 @@ class UserProductViewModel: ObservableObject {
         }
     }
     
+    // Durchsucht Produkte basierend auf dem Suchtext
     func searchProducts(searchText: String) {
-        if searchText.isEmpty {
-            filteredProducts = products
-        } else {
-            filteredProducts = products.filter {product in
-                product.title.localizedCaseInsensitiveContains(searchText) || //Проверяет, содержит ли название продукта (title) текст из поля поиска.
-                product.description.localizedCaseInsensitiveContains(searchText) || //Проверяет, содержит ли название продукта (description) текст из поля поиска.
-                product.category.localizedCaseInsensitiveContains(searchText) || //Проверяет, содержит ли название продукта (category) текст из поля поиска.
-                product.brand.localizedCaseInsensitiveContains(searchText) //Проверяет, содержит ли название продукта (brand) текст из поля поиска.
+            if searchText.isEmpty {
+                filteredProducts = products
+            } else {
+                filteredProducts = products.filter { product in
+                    product.title.localizedCaseInsensitiveContains(searchText) || // Prüft, ob der Titel des Produkts den Suchtext enthält
+                    product.description.localizedCaseInsensitiveContains(searchText) || // Prüft, ob die Beschreibung des Produkts den Suchtext enthält
+                    product.category.localizedCaseInsensitiveContains(searchText) || // Prüft, ob die Kategorie des Produkts den Suchtext enthält
+                    product.brand.localizedCaseInsensitiveContains(searchText) // Prüft, ob die Marke des Produkts den Suchtext enthält
+                }
             }
         }
-    }
 }

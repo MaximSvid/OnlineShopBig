@@ -19,6 +19,7 @@ class ReceiptUserViewModel: ObservableObject {
     
     private let receiptUserRepository: ReceiptUserRepository
     
+    // Initialisiert das ViewModel mit einem ReceiptUserRepository
     init(
         receiptUserRepository: ReceiptUserRepository = ReceiptUserRepositoryImplementation()
     ) {
@@ -26,6 +27,7 @@ class ReceiptUserViewModel: ObservableObject {
     }
     
         
+    // Ruft einen Beleg ab und speichert ihn asynchron
     func fetchAndSaveReceipt() async {
         guard let userId = FirebaseService.shared.userId else { return }
         isLoading = true
@@ -36,7 +38,6 @@ class ReceiptUserViewModel: ObservableObject {
                 switch result {
                 case .success(let receipt):
                     self.receiptUser = receipt
-                    // Сразу сохраняем полученный чек
                     Task {
                         do {
                             try self.receiptUserRepository.saveReceipt(receipt)
@@ -57,6 +58,7 @@ class ReceiptUserViewModel: ObservableObject {
         }
     }
 
+    // Beobachtet Belege eines Benutzers in Echtzeit
     func observeReceipt() {
         guard let userId = FirebaseService.shared.userId else { return }
         
@@ -71,6 +73,7 @@ class ReceiptUserViewModel: ObservableObject {
         }
     }
     
+    // Gibt die Anzahl der Belege zurück
     func receiptsCount() -> Int {
         return receipts.count
     }

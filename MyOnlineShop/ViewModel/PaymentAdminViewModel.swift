@@ -24,13 +24,16 @@ class PaymentAdminViewModel: ObservableObject {
     
     private let paymentAdminRepository: PaymentAdminRepository
     
+    // Initialisiert das ViewModel mit einem PaymentAdminRepository
     init(
         paymentAdminRepository: PaymentAdminRepository = PaymentAdminRepositoryImplementation()
     ) {
         self.paymentAdminRepository = paymentAdminRepository
     }
     
+    // Fügt eine Zahlungsmethode für den Benutzer hinzu
     func addUserPaymentMethod() {
+        // Prüft, ob eine Benutzer-ID vorhanden ist, sonst Abbruch
         guard let userId = FirebaseService.shared.userId else { return }
         let paymentMethod = PaymentMethod(
             id: nil,
@@ -46,21 +49,22 @@ class PaymentAdminViewModel: ObservableObject {
         }
     }
     
+    // Beobachtet die Zahlungsmethoden und aktualisiert die Liste
     func observePayments() {
         paymentAdminRepository.observePayments(completion: { result in
             switch result {
             case .success(let payments):
-                self.payments = payments
-                //                self.filteredPayments = payments
+            self.payments = payments
             case .failure(let error):
                 print("Error observing products: \(error)")
             }
         })
     }
     
+    // Schaltet die Sichtbarkeit einer Zahlungsmethode um
     func toggleVisibility(for payment: PaymentMethod) {
+        // Prüft, ob eine Zahlungsmethode-ID vorhanden ist, sonst Abbruch
         guard let paymentId = payment.id else { return }
-        
         let newVisibility = !payment.isVisible
         
         paymentAdminRepository.toggleVisibility(for: paymentId, isVisible: newVisibility) { result in
@@ -75,7 +79,7 @@ class PaymentAdminViewModel: ObservableObject {
             }
         }
     }
-    
+//    Löscht die Zahlungsmethode eines Benutzers
     func deletePaymentMethodFromUser() async {
         guard let userId = FirebaseService.shared.userId else { return }
         

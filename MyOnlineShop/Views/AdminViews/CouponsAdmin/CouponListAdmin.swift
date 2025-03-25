@@ -22,9 +22,9 @@ struct CouponListAdmin: View {
                 
                 let dateFormatter: DateFormatter = {
                     let formatter = DateFormatter()
-                    formatter.dateStyle = .medium // Формат даты: короткий, средний, длинный
-                    formatter.timeStyle = .none  // Формат времени: можно указать .short, .medium, .long, или .none
-                    formatter.locale = Locale.current // Использование текущей локали пользователя
+                    formatter.dateStyle = .medium
+                    formatter.timeStyle = .none
+                    formatter.locale = Locale.current
                     return formatter
                 }()
                 
@@ -55,7 +55,6 @@ struct CouponListAdmin: View {
             }) {
                 Image(systemName: "pencil")
                     .font(.headline)
-//                    .foregroundStyle(.green)
                     .foregroundStyle(.white)
                     .padding(3)
                     .background(
@@ -63,7 +62,7 @@ struct CouponListAdmin: View {
                             .fill(Color.primaryBrown)
                     )
             }
-            .buttonStyle(.plain)// этот атрибут необходим, чтобы экранировать list и нажимались только кнопки
+            .buttonStyle(.plain)
 
         }
         .frame(maxWidth: .infinity, maxHeight: 80)
@@ -83,7 +82,4 @@ struct CouponListAdmin: View {
         }
     }
 }
-    
-    #Preview {
-        //    CouponListAdmin()
-    }
+

@@ -49,9 +49,8 @@ struct AddNewBanner: View {
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(Color.primaryBrown)
-                    .clipShape(RoundedRectangle(cornerRadius: 3))            }
-            
-            // Upload button
+                    .clipShape(RoundedRectangle(cornerRadius: 3))
+            }
 
                 Button(action: bannerViewModel.imgurViewModel.uploadImages) {
                     if bannerViewModel.imgurViewModel.isUploading {
@@ -102,8 +101,4 @@ struct AddNewBanner: View {
 
         }
     }
-}
-
-#Preview {
-    //    AddNewBanner()
 }

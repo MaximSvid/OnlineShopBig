@@ -25,10 +25,6 @@ struct CouponSheet: View {
             CustomTextField(placeholder: "Coupone code", text: $couponUserViewModel.couponCode)
                 .padding(.bottom)
             
-            //                TextField("Coupon code", text: $couponUserViewModel.couponCode)
-            //                    .textFieldStyle(.roundedBorder)
-            //                    .padding(.bottom)
-            
             if let errorMessage = couponUserViewModel.errorMessage {
                 Text(errorMessage)
                     .foregroundStyle(.red)
@@ -43,7 +39,7 @@ struct CouponSheet: View {
                     }
                 },
                 title: "Apply")
-            .disabled(couponUserViewModel.couponCode.isEmpty || couponUserViewModel.isLoading) // кнопка неактивна если купон не введен и IsLoading == true
+            .disabled(couponUserViewModel.couponCode.isEmpty || couponUserViewModel.isLoading)//button inactive when couponCode.isEmpty und couponUserViewModel.isLoading
             
             Spacer()
         }

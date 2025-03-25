@@ -31,7 +31,6 @@ struct BannerView: View {
             
             if let lastBanner = bannerViewModel.banners.last {
                 TabView {
-                    // Проходим по всем изображениям из последнего баннера
                     ForEach(lastBanner.bannerImage, id: \.self) { imageUrl in
                         if let url = URL(string: imageUrl) {
                             AsyncImage(url: url) { image in
@@ -62,7 +61,3 @@ struct BannerView: View {
     }
 }
 
-
-#Preview {
-    //    BannerView()
-}

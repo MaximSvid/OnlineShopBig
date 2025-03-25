@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ReceiptListUser: View {
     @EnvironmentObject var receiptUserViewModel: ReceiptUserViewModel
-    //    var product: Product
     var receipt: Receipt
     
     var body: some View {
@@ -41,14 +40,11 @@ struct ReceiptListUser: View {
                 }
             }
             
-            // Секция с информацией о заказе
             VStack(alignment: .leading, spacing: 8) {
                 
-                // Верхняя строка: статус и дата
                 HStack {
                     Text("Status: ")
                         .font(.caption)
-//                        .foregroundStyle(.gray)
                     
                     Text(receipt.orderStatus.rawValue)
                         .font(.caption)
@@ -74,7 +70,6 @@ struct ReceiptListUser: View {
                     Spacer()
                 }
                 
-                // Нижняя строка: итоговая цена
                 HStack {
                     Text("Total: ")
                         .font(.subheadline)

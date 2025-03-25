@@ -6,9 +6,6 @@
 //
 
 import SwiftUI
-//import GoogleSignIn
-//import GoogleSignInSwift
-
 struct AuthView: View {
     
     @EnvironmentObject var authViewModel: AuthViewModel
@@ -76,7 +73,6 @@ struct AuthView: View {
                         + Text("Sign up")
                             .foregroundStyle(.green)
                     }
-//                Felder beim Wechsel zu einer anderen Ansicht löschen
                     .onDisappear {
                         authViewModel.email = ""
                         authViewModel.password = ""

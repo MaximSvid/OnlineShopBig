@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct CouponsAdmin: View {
-//    var coupon: Coupon
     @EnvironmentObject var couponViewModel: CouponViewModel
     var body: some View {
         NavigationStack {
@@ -31,7 +30,6 @@ struct CouponsAdmin: View {
                     }) {
                         Image(systemName: "plus")
                             .font(.headline)
-//                            .background(Circle().fill(Color.green))
                             .foregroundStyle(.white)
                             .padding(3)
                             .background(

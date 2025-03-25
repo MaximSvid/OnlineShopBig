@@ -14,7 +14,7 @@ class ProductViewModel: ObservableObject {
     @Published var isEditSheetOpen: Bool = false
     
     @Published var products: [Product] = []
-    @Published var selectedProduct: Product? // Редактируемый продукт
+    @Published var selectedProduct: Product?
     
     @Published var title: String = ""
     @Published var price: Double = 0.0
@@ -39,6 +39,7 @@ class ProductViewModel: ObservableObject {
     
     @Published var imgurViewModel: ImgurViewModel
     
+    // Initialisiert das ViewModel mit einem Produkt-Repository und einem ImgurViewModel
     init(productRepository: ProductRepositoryAdmin = ProductRepositoryImplementation()) {
         self.productRepository = productRepository
         self.imgurViewModel = ImgurViewModel()
@@ -47,6 +48,8 @@ class ProductViewModel: ObservableObject {
             self?.images = urls
         }
     }
+    
+    // Fügt ein neues Produkt hinzu
     func addNewProduct() {
         let newProduct = Product(
             title: title,
@@ -75,6 +78,8 @@ class ProductViewModel: ObservableObject {
     
     @Published var category: Categories = .livingRoom
     @Published var selectedColor: ColorEnum = .caramelBrown
+    
+//    Setzt alle Eingabefelder zurück
     private func resetFields() {
         title = ""
         price = 0.0
@@ -93,8 +98,8 @@ class ProductViewModel: ObservableObject {
         imgurViewModel.resetState()
     }
     
-    //ich möchte im realTime producte becommen aus Firebase
     
+    // Beobachtet Produkte in Echtzeit aus Firebase
     func observeProducts() {
         productRepository.observeProducts { result in
             switch result {
@@ -107,35 +112,34 @@ class ProductViewModel: ObservableObject {
         }
     }
     
+    // Zeigt alle Produkte ohne Filter an
     func showAllProducts() {
         filteredProducts = products
         print("Showing all products. Ohne filter")
     }
     
+    // Löscht ein Produkt
     func deleteProduct(product: Product) {
         guard let productId = product.id else {
             productErrorMessage = "Product ID is missing"
             return
         }
         
-        // Удаление продукта из Firestore
         productRepository.deleteProduct(productId: productId) { result in
             switch result {
             case .success:
-                // Успешное удаление: обновляем локальный массив
                 if let index = self.products.firstIndex(where: { $0.id == productId }) {
                     self.products.remove(at: index)
                 }
                 print("Product deleted successfully")
             case .failure(let error):
-                // Обработка ошибок
                 self.productErrorMessage = "Error deleting product: \(error.localizedDescription)"
                 print("Error deleting product: \(error.localizedDescription)")
             }
         }
     }
     
-    //visibility bei admin
+    // Schaltet die Sichtbarkeit eines Produkts um (für Admin)
     func toggleVisibility(for product: Product) {
         guard let productId = product.id else {
             return
@@ -156,24 +160,21 @@ class ProductViewModel: ObservableObject {
     }
     
     
-    
+    // Filtert Produkte nach Kategorie
     func filterProducts(by category: Categories) {
         switch category {
         case .allProducts:
-            // Показать все продукты
             showAllProducts()
         case .action:
-            // Фильтрация по признаку action
             filteredProducts = products.filter { $0.action }
             print("Filtered products where action is true: \(filteredProducts.count)")
         default:
-            // Фильтрация по категории
             filteredProducts = products.filter { $0.category == category.rawValue }
             print("Filtered products by category: \(category.rawValue)")
         }
     }
     
-        // функции для редактирования продукта
+    // Setzt das ausgewählte Produkt für die Bearbeitung
     func setSelectedProduct(_ product: Product) {
         self.selectedProduct = product
         self.title = product.title
@@ -190,6 +191,7 @@ class ProductViewModel: ObservableObject {
         self.action = product.action
     }
     
+    // Aktualisiert ein bestehendes Produkt
     func updateProduct( ) {
         guard let existingProduct = selectedProduct else {
             print("No product selected for update.")

@@ -36,7 +36,6 @@ struct UserProductCard: View {
                         .frame(width: 170, height: 190)
                         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                         
-                        // Индикаторы страниц
                         if product.images.count > 1 {
                             HStack(spacing: 6) {
                                 ForEach(0..<product.images.count, id: \.self) { index in
@@ -61,7 +60,6 @@ struct UserProductCard: View {
                     HStack {
                         Text(product.title)
                             .font(.caption)
-//                            .foregroundStyle(product.isVisible ? .black : .gray) // isVisible color
                         
                         Spacer()
                         
@@ -72,7 +70,6 @@ struct UserProductCard: View {
                         
                         Text(String(format: "%.1f", product.rating))
                             .font(.caption2)
-//                            .foregroundStyle(product.isVisible ? .black : .gray)
                     }
                     .padding(.trailing, 4)
                     .padding(.leading, 4)
@@ -80,7 +77,6 @@ struct UserProductCard: View {
                     HStack {
                         Text(product.brand)
                             .font(.caption)
-//                            .foregroundStyle(product.isVisible ? .black : .gray)
                         
                         Spacer()
                     }
@@ -92,7 +88,6 @@ struct UserProductCard: View {
                             // main price mit linie
                             Text(String(format: "€%.2f", product.price))
                                 .font(.headline)
-//                                .foregroundStyle(product.isVisible ? .gray : .gray.opacity(0.5))
                                 .strikethrough(true, color: .gray) // linie
                             
                             Spacer()
@@ -105,7 +100,6 @@ struct UserProductCard: View {
                             // Nur main price
                             Text(String(format: "€%.2f", product.price))
                                 .font(.headline)
-//                                .foregroundStyle(product.isVisible ? .black : .gray)
                         }
                         Spacer()
                     }
@@ -113,7 +107,7 @@ struct UserProductCard: View {
                     .padding(.leading, 4)
                     .padding(.bottom, 4)
                 }
-//                .background(Color.backgroundColor)
+
             }
             
             HStack {
@@ -121,9 +115,7 @@ struct UserProductCard: View {
                 Spacer()
                 
                 Button(action: {
-//                    withAnimation(.spring()) {
                         userProductViewModel.toggleFavorite(for: product)
-//                    }
                 }) {
                     Image(systemName: userProductViewModel.favoriteProducts.map { product in
                         product.id ?? ""
@@ -132,10 +124,8 @@ struct UserProductCard: View {
                         .resizable()
                         .frame(width: 20, height: 20)
                         .foregroundStyle(product.isFavorite ? .red.opacity(0.8) : .red.opacity(0.8))
-//                        .scaleEffect(product.isFavorite ? 1.3 : 1.0)
                         .padding(8)
                 }
-//                .background(Color.backgroundColor)
                 .clipShape(RoundedRectangle(cornerRadius: 3))
                 .buttonStyle(BorderedButtonStyle())
             }

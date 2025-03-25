@@ -12,13 +12,12 @@ struct DetailHomeUser: View {
     @EnvironmentObject var userProductViewModel: UserProductViewModel
     @EnvironmentObject var userCartViewModel: UserCartViewModel
     
-    @Environment(\.dismiss) private var dismiss // для закрытия представления
+    @Environment(\.dismiss) private var dismiss
     
     @Binding var selectedTab: Int
     var product: Product
     @State private var currentImageIndex = 0
     
-    //для зумирования (ЕЩЕ не протестировал)
     @GestureState private var magnifyBy = 1.0
     var magnification: some Gesture {
         MagnifyGesture()
@@ -40,7 +39,6 @@ struct DetailHomeUser: View {
                                 AsyncImage(url: URL(string: product.images[index])) { image in
                                     image.resizable()
                                         .scaledToFill()
-//                                        .frame(maxWidth: .infinity, maxHeight: 250)
                                         .clipShape(RoundedRectangle(cornerRadius: 3))
                                         .clipped()
                                         .scaleEffect(magnifyBy)
@@ -52,9 +50,8 @@ struct DetailHomeUser: View {
                             }
                         }
                         .frame(height: 250)
-                        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never)) // это необходимо чтобы изображение не заходило наверх
+                        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                         
-                        // Индикаторы страниц
                         if product.images.count > 1 {
                             HStack(spacing: 6) {
                                 ForEach(0..<product.images.count, id: \.self) { index in
@@ -88,7 +85,6 @@ struct DetailHomeUser: View {
                             Text(String(format: "€%.2f", product.price))
                                 .font(.body)
                                 .foregroundStyle(Color.secondaryGray)
-                            //                                .foregroundStyle(product.isVisible ? .gray : .gray.opacity(0.5))
                                 .strikethrough(true, color: Color.secondaryGray) // linie
                             
                             // ActionPrice
@@ -99,7 +95,6 @@ struct DetailHomeUser: View {
                             // Nur main price
                             Text(String(format: "€%.2f", product.price))
                                 .font(.title3)
-                            //                                .foregroundStyle(product.isVisible ? .black : .gray)
                         }
                         
                     }
@@ -118,7 +113,8 @@ struct DetailHomeUser: View {
                             .font(.callout)
                             .foregroundStyle(.yellow)
                         
-                        Text(String(format: "%.1f", product.rating))                       .font(.callout)
+                        Text(String(format: "%.1f", product.rating))
+                            .font(.callout)
                     }
                 }
                 
@@ -157,7 +153,8 @@ struct DetailHomeUser: View {
                 
                 HStack {
                     Button(action: {
-                        userCartViewModel.addToCart(for: product)                     }) {
+                        userCartViewModel.addToCart(for: product)
+                    }) {
                             Text ("Buy Now")
                                 .font(.headline.bold())
                                 .frame(maxWidth: .infinity, maxHeight: 50)
@@ -203,14 +200,13 @@ struct DetailHomeUser: View {
                 
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        selectedTab = 1 // Переключаемся на вкладку корзины
+                        selectedTab = 1
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                             dismiss() // close view
                         }
                     } label: {
                         ZStack(alignment: .topTrailing) {
                             Image(systemName: "cart")
-                            //                                .foregroundStyle(.black)
                                 .padding(8)
                                 .background(Circle().fill(Color.gray.opacity(0.2)))
                             

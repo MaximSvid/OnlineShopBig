@@ -26,7 +26,6 @@ struct DetailHomeAdmin: View {
                                 AsyncImage(url: URL(string: product.images[index])) { image in
                                     image.resizable()
                                         .scaledToFill()
-//                                        .frame(width: .infinity, height: 250)
                                         .clipShape(RoundedRectangle(cornerRadius: 3))
                                         .clipped()
                                 } placeholder: {
@@ -39,7 +38,6 @@ struct DetailHomeAdmin: View {
                         .frame(maxWidth: .infinity, maxHeight: 250)
                         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                         
-                        // Индикаторы страниц
                         if product.images.count > 1 {
                             HStack(spacing: 6) {
                                 ForEach(0..<product.images.count, id: \.self) { index in
@@ -105,7 +103,8 @@ struct DetailHomeAdmin: View {
                             .font(.callout)
                             .foregroundStyle(.yellow)
                         
-                        Text(String(format: "%.1f", product.rating))                            .font(.callout)
+                        Text(String(format: "%.1f", product.rating))
+                            .font(.callout)
                     }
                 }
                 
@@ -134,26 +133,6 @@ struct DetailHomeAdmin: View {
                     Text("Color: \(productViewModel.selectedColor )")
                         .font(.headline)
                         .foregroundStyle(.gray)
-                    
-//                    ScrollView(.horizontal, showsIndicators: false) {
-//                        HStack(spacing: 16) {
-//                            ForEach(ColorEnum.allCases, id: \.self) { color in
-//                                Circle()
-//                                    .fill(color.color)
-//                                    .frame(width: 30, height: 30)
-//                                    .overlay(
-//                                        Circle()
-//                                            .stroke(productViewModel.selectedColor == color ? Color.gray : Color.clear, lineWidth: 2)
-//                                    )
-//                                    .onTapGesture {
-//                                        productViewModel.selectedColor = color
-//                                    }
-//                            }
-//                        }
-//                        .padding(.horizontal, 8)
-//                        .padding(.top, 3)
-//                        .padding(.bottom, 3)
-//                    }
                 }
                 .padding([.top, .bottom])
                 
@@ -189,9 +168,4 @@ struct DetailHomeAdmin: View {
             }
         }
     }
-}
-
-
-#Preview {
-    //    DetailHomeAdmin()
 }

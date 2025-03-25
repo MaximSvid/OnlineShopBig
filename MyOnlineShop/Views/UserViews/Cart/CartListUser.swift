@@ -54,20 +54,15 @@ struct CartListUser: View {
                         // main price mit linie
                         Text(String(format: "€%.2f", product.price))
                             .font(.subheadline)
-//                            .foregroundStyle(product.isVisible ? .gray : .gray.opacity(0.5))
                             .strikethrough(true, color: .gray) // linie
-                        
-//                        Spacer()
-                        
-                        // ActionPrice
+                    
                         Text(String(format: "€%.2f", product.actionPrice))
                             .font(.caption)
                             .foregroundStyle(.red)
                     } else {
-                        // Nur main price
                         Text(String(format: "€%.2f", product.price))
                             .font(.subheadline)
-//                            .foregroundStyle(product.isVisible ? .black : .gray)
+
                     }
                     Spacer()
                     
@@ -76,8 +71,7 @@ struct CartListUser: View {
                 .padding(.trailing, 4)
                 .padding(.leading, 4)
                 .padding(.bottom, 4)
-                
-                // Отображение итоговой цены
+            
                 Text(
                     String(
                         format: "€%.2f",
@@ -100,7 +94,6 @@ struct CartListUser: View {
                 HStack {
                     Button(action: {
                         userCartViewModel.updateCountProducts(for: product, increment: false)
-                        //increment false - Это значит уменьшается
                     }) {
                         Image(systemName: "minus")
                             .frame(width: 20, height: 20)
@@ -108,7 +101,7 @@ struct CartListUser: View {
                             .background(Color.primaryBrown)
                             .clipShape(RoundedRectangle(cornerRadius: 3))
                     }
-                    .buttonStyle(.plain)// этот атрибут необходим, чтобы экранировать list и нажимались только кнопки
+                    .buttonStyle(.plain)
                     
                     
                     Text("\(userCartViewModel.itemCount[product] ?? 1)")
@@ -116,7 +109,6 @@ struct CartListUser: View {
                     
                     Button(action: {
                         userCartViewModel.updateCountProducts(for: product, increment: true)
-                        //increment true - Это значит увеличивается
                     }) {
                         Image(systemName: "plus")
                             .frame(width: 20, height: 20)
@@ -129,7 +121,6 @@ struct CartListUser: View {
                 Spacer()
             }
         }
-        //        .padding()
         .frame(maxWidth: .infinity, maxHeight: 100)
         .clipShape(RoundedRectangle(cornerRadius: 3))
         .shadow(radius: 3)

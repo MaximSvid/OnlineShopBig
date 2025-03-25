@@ -16,7 +16,6 @@ struct ProductGridUser: View {
         VStack {
             HStack {
                 Text("Products")
-//                    .font(.headline)
                 
                 Spacer()
                 
@@ -31,8 +30,4 @@ struct ProductGridUser: View {
             }
         }
     }
-}
-
-#Preview {
-//    ProductGridUser()
 }

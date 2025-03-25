@@ -56,6 +56,3 @@ struct DeliveryMethodsAdmin: View {
     }
 }
 
-#Preview {
-    //    DeliveryMethodsAdmin()
-}

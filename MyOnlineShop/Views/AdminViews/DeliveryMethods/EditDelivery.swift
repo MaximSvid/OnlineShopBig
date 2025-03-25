@@ -9,7 +9,6 @@ import SwiftUI
 
 struct EditDelivery: View {
     @EnvironmentObject var deliveryAdminViewModel: DeliveryAdminViewModel
-//    @State private var toast: Toast? = nil
     
     var body: some View {
         VStack {
@@ -39,7 +38,6 @@ struct EditDelivery: View {
                     
                     Button(action: {
                         deliveryAdminViewModel.updateDelivery()
-//                        deliveryAdminViewModel.sheetEditDelivery.toggle()
                     }) {
                         Text("Update Delivery")
                             .font(.headline.bold())
@@ -52,9 +50,7 @@ struct EditDelivery: View {
                 }
                 .padding([.leading, .trailing])
                 
-                //                Spacer()
             }
-//            .toastView(toast: $toast)
         }
         .padding([.leading, .trailing])
     }

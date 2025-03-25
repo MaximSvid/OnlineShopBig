@@ -73,7 +73,3 @@ struct PaymentListAdmin: View {
         
     }
 }
-
-#Preview {
-    //    PaymentListAdmin()
-}

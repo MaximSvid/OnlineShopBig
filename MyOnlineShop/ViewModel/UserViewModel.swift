@@ -16,6 +16,7 @@ class UserViewModel: ObservableObject {
     
     private let db = Firestore.firestore()
     
+    // Erstellt einen neuen Benutzer in Firestore
     func createUser(id: String, name: String, role: String) async {
         let newUser = FireUser(
             id: id,
@@ -37,6 +38,7 @@ class UserViewModel: ObservableObject {
         }
     }
     
+    // Ruft die Daten eines Benutzers aus Firestore ab
     func fetchUser(id: String, name: String, role: String) async {
         do {
             let document = try await

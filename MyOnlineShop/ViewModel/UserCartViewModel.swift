@@ -18,12 +18,11 @@ class UserCartViewModel: ObservableObject {
     
     init(cartRepositoryUser: CartRepositoryUser = CartRepositoryUserImplementation()) {
         self.cartRepositoryUser = cartRepositoryUser
-        loadCart() // для отображения количества товаров в корзине
+        loadCart() // Lädt den Warenkorb, um die Anzahl der Produkte anzuzeigen
     }
     
+    // Aktualisiert die Produktanzahl im Warenkorb
     func updateCountGoods() {
-//        guard let userId = FirebaseService.shared.userId else {return}
-        
         for product in products {
             let orderedQuantity = itemCount[product] ?? 0
             guard let productId = product.id else { continue }
@@ -33,6 +32,7 @@ class UserCartViewModel: ObservableObject {
         }
     }
         
+    // Fügt ein Produkt dem Warenkorb hinzu
     func addToCart(for product: Product) {
         guard let userId = FirebaseService.shared.userId,
               let productId = product.id else {
@@ -54,12 +54,13 @@ class UserCartViewModel: ObservableObject {
             }
     }
     
+    // Lädt die Produkte aus dem Warenkorb
     func loadCart() {
         guard let userId = FirebaseService.shared.userId else {
             return
         }
         cartRepositoryUser.loadCartProducts(userId: userId) { [weak self] result in
-            //weak self - против утечек памяти
+            // weak self wird verwendet, um Speicherlecks zu vermeiden
             switch result {
             case .success(let products):
                 self?.products = products
@@ -69,9 +70,10 @@ class UserCartViewModel: ObservableObject {
         }
     }
     
+    // Berechnet die Gesamtsumme des Warenkorbs
     var totalSum: Double {
         products.reduce(0) { sum, product in
-                let count = itemCount[product] ?? 1 // Получаем количество товара, если его нет в словаре, берём 1
+                let count = itemCount[product] ?? 1
                 if product.action && product.actionPrice > 0 {
                     return sum + (product.actionPrice * Double(count))
                 } else {
@@ -79,20 +81,21 @@ class UserCartViewModel: ObservableObject {
                 }
             }    }
     
+    // Gibt die Anzahl der Elemente im Warenkorb zurück
     var cartItemsCount: Int {
         products.count
     }
     
+    // Aktualisiert die Anzahl eines Produkts im Warenkorb (erhöht oder verringert)
     func updateCountProducts(for product: Product, increment: Bool) {
-        //increment Increment — это термин, который обычно используется для обозначения увеличения значения на определённое число, чаще всего на единицу. В программировании это очень часто встречающаяся операция, которая используется для работы с числовыми переменными, счётчиками или для изменения значения в циклах, интерфейсах и других сценариях.
+        // increment - Increment ist ein Begriff, der üblicherweise verwendet wird, um die Erhöhung eines Wertes um eine bestimmte Zahl, meistens um eins, zu bezeichnen. In der Programmierung ist dies eine sehr häufig vorkommende Operation, die bei der Arbeit mit numerischen Variablen, Zählern oder zur Änderung von Werten in Schleifen, Benutzeroberflächen und anderen Szenarien genutzt wird.
         guard let userId = FirebaseService.shared.userId,
               let productId = product.id else {
             return
         }
-        // Получаем текущее количество товара
+        
         let currentCount = itemCount[product] ?? 0
         
-        // Увеличиваем или уменьшаем количество в зависимости от параметра `increment`
         let newCount = increment ? currentCount + 1 : currentCount - 1
         
         if newCount <= 0 {
@@ -101,10 +104,10 @@ class UserCartViewModel: ObservableObject {
             return
         }
         
-        // Обновляем количество в словаре
         itemCount[product] = newCount
     }
     
+    // Entfernt ein Produkt aus dem Warenkorb
     func removeFromCart(product: Product) {
         guard let userId = FirebaseService.shared.userId,
               let productId = product.id else { return }
@@ -124,9 +127,9 @@ class UserCartViewModel: ObservableObject {
         }
     }
     
+    // Entfernt alle Produkte aus dem Warenkorb
     func removeAllFromCart() async {
         guard let userId = FirebaseService.shared.userId else { return }
-        
         do {
             try await cartRepositoryUser.removeAllFromCart(userId: userId)
             print("Debug: All products removed from cart")

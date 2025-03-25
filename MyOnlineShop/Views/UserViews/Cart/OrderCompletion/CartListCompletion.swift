@@ -74,7 +74,6 @@ struct CartListCompletion: View {
                 .padding(.trailing, 4)
                 .padding(.bottom, 4)
                 
-                // Отображение итоговой цены
                 
                 HStack {
                     Text("Total price: ")

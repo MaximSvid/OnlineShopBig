@@ -9,7 +9,7 @@ import SwiftUI
 
 struct UserInfoView: View {
     @EnvironmentObject var deliveryUserInfoViewModel: DeliveryUserInfoViewModel
-    @Environment(\.dismiss) private var dismiss // для закрытия представления
+    @Environment(\.dismiss) private var dismiss //um eine Anzicht zu machen
     
     var body: some View {
         NavigationStack {
@@ -79,7 +79,6 @@ struct UserInfoView: View {
                     }
                 }
                 .onAppear {
-//                    deliveryUserInfoViewModel.observeDeliveryUserInfo()
                     
                     if !deliveryUserInfoViewModel.deliveryUserInfo.isEmpty {
                         let firstInfo = deliveryUserInfoViewModel.deliveryUserInfo.first

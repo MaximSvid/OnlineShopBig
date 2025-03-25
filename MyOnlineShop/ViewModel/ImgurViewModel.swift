@@ -17,9 +17,11 @@ class ImgurViewModel: ObservableObject {
     @Published var uploadError: String? = nil
     private let imageRepository = ImageRepositoryImplementation()
     
+    // Rückruf, der aufgerufen wird, wenn Bilder hochgeladen wurden
     var onImagesUploaded: (([String]) -> Void)?
     
     @MainActor
+    // Funktion zum Hochladen von Bildern
     func uploadImages() {
         guard !selectedItems.isEmpty else { return }
         Task {
@@ -27,6 +29,7 @@ class ImgurViewModel: ObservableObject {
                 isUploading = true
                 var urls: [String] = []
                 
+                // Lädt die Bilddaten und konvertiert sie in SwiftUI Image-Objekte
                 for item in selectedItems {
                     if let imageData = try await item.loadTransferable(type: Data.self) {
                         let url = try await imageRepository.uploadImage(imageData: imageData)
@@ -46,6 +49,7 @@ class ImgurViewModel: ObservableObject {
         }
     }
     
+    // Funktion zum Laden der Bilder aus den ausgewählten Elementen
     func loadImages() {
         Task {
             var loadedImages: [Image] = []
@@ -60,20 +64,21 @@ class ImgurViewModel: ObservableObject {
         }
     }
     
-    //Обнулить состояние изображений, чтобы при выборе новых состояние сбрасывалось, так как будто выбора небыло
+    // Setzt den Zustand der Bilder zurück, damit bei einer neuen Auswahl alles wie unberührt wirkt
     func resetState() {
         selectedImages = []
         selectedItems = []
         uploadedImageURLs = []
     }
     
+    // Aktualisiert die Liste der Bilder und fügt neue zu bestehenden hinzu
     func updateImages(existingImages: [String]) -> [String] {
-        // Сохраняем старые изображения, если новых нет
+        // Behält alte Bilder, wenn keine neuen hochgeladen wurden
         if uploadedImageURLs.isEmpty {
             return existingImages
         }
         
-        // Добавляем новые изображения к существующим
+        // Fügt neue Bilder zu den bestehenden hinzu
         return existingImages + uploadedImageURLs
     }
 }

@@ -25,7 +25,6 @@ struct EditProductSheet: View {
     
     
     @State private var category: Categories = .livingRoom
-    //    @State private var selectedColor: ColorEnum = .red
     @State private var selectedColor: ColorEnum = .caramelBrown
     @State private var isVisible: Bool = true
     
@@ -216,9 +215,3 @@ struct EditProductSheet: View {
         }
     }
 }
-
-//#Preview {
-//    EditProductSheet()
-//        .environmentObject(ProductViewModel())
-//}
-
