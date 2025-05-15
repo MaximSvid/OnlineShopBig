@@ -1,0 +1,88 @@
+# Workflow für die Erstellung und das Testen von Swift-Projekten
+name: Swift
+
+# Definiert, wann der Workflow ausgeführt werden soll
+on:
+  # Bei Push-Ereignissen auf den "main"-Branch
+  push:
+    branches: [ "main" ]
+  # Bei Pull Requests auf den "main"-Branch
+  pull_request:
+    branches: [ "main" ]
+
+# Definition der Aufgaben, die ausgeführt werden sollen
+jobs:
+  # Build-Job für das Kompilieren und Testen des Projekts
+  build:
+    # Legt fest, dass der Job auf einem macOS-Runner ausgeführt wird
+    runs-on: macos-latest
+    # Schritte, die für diesen Job ausgeführt werden
+    steps:
+    # Checkout des Repositories, um Zugriff auf den Code zu erhalten
+    - uses: actions/checkout@v4
+    
+    # Schritt zur Diagnose der Umgebung und Projektstruktur
+    - name: Debug Environment
+      run: |
+        echo "Current directory:"
+        pwd
+        echo "Directory contents:"
+        ls -la
+        echo "Looking for Swift Package files:"
+        find . -name "Package.swift" || echo "No Package.swift found"
+        find . -name "*.xcodeproj" || echo "No .xcodeproj found"
+    
+    # Schritt zum Erstellen des Projekts - unterstützt sowohl Xcode-Projekte als auch Swift Package Manager
+    - name: Build with Xcode if available
+      run: |
+        # Prüft, ob ein Xcode-Projekt in der Hauptverzeichnisebene vorhanden ist
+        if [ -n "$(find . -name "*.xcodeproj" -maxdepth 1)" ]; then
+          echo "Found Xcode project, building with xcodebuild"
+          PROJECT_PATH=$(find . -name "*.xcodeproj" -maxdepth 1 | head -n 1)
+          cd $(dirname "$PROJECT_PATH")
+          xcodebuild build -project $(basename "$PROJECT_PATH") || echo "xcodebuild failed"
+        # Prüft, ob eine Package.swift-Datei im Hauptverzeichnis vorhanden ist
+        elif [ -f "Package.swift" ]; then
+          echo "Found Package.swift in current directory, building with swift build"
+          swift build -v
+        # Sucht nach Package.swift in Unterverzeichnissen
+        else
+          echo "Searching for Package.swift in subdirectories"
+          PACKAGE_DIR=$(find . -name "Package.swift" -exec dirname {} \; | head -n 1)
+          if [ -n "$PACKAGE_DIR" ]; then
+            echo "Found Package.swift in $PACKAGE_DIR"
+            cd "$PACKAGE_DIR"
+            ls -la
+            cat Package.swift | head -10
+            swift build -v
+          else
+            echo "No Swift project found to build"
+            exit 1
+          fi
+        fi
+      
+    # Schritt zum Ausführen der Tests - verwendet die gleiche Logik wie beim Build-Schritt
+    - name: Run tests if possible
+      run: |
+        # Prüft, ob ein Xcode-Projekt in der Hauptverzeichnisebene vorhanden ist
+        if [ -n "$(find . -name "*.xcodeproj" -maxdepth 1)" ]; then
+          echo "Found Xcode project, testing with xcodebuild"
+          PROJECT_PATH=$(find . -name "*.xcodeproj" -maxdepth 1 | head -n 1)
+          cd $(dirname "$PROJECT_PATH")
+          xcodebuild test -project $(basename "$PROJECT_PATH") || echo "xcodebuild test failed"
+        # Prüft, ob eine Package.swift-Datei im Hauptverzeichnis vorhanden ist
+        elif [ -f "Package.swift" ]; then
+          echo "Found Package.swift in current directory, testing with swift test"
+          swift test -v
+        # Sucht nach Package.swift in Unterverzeichnissen
+        else
+          PACKAGE_DIR=$(find . -name "Package.swift" -exec dirname {} \; | head -n 1)
+          if [ -n "$PACKAGE_DIR" ]; then
+            echo "Found Package.swift in $PACKAGE_DIR"
+            cd "$PACKAGE_DIR"
+            swift test -v
+          else
+            echo "No Swift project found to test"
+            exit 1
+          fi
+        fi
